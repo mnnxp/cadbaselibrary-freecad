@@ -223,7 +223,7 @@ class ExpCdbsWidget(QtGui.QDockWidget):
                 if component_file.exists():
                     component_data = \
                         DataHandler.read_object_info(component_file, 'component')
-                    CdbsApi(QueriesApi().component_modifications(component_data.uuid))
+                    CdbsApi(QueriesApi.component_modifications(component_data.uuid))
                     update_component(click_path)
                 modification_file = click_path / 'modification'
                 if modification_file.exists():
@@ -231,7 +231,7 @@ class ExpCdbsWidget(QtGui.QDockWidget):
                         DataHandler.read_object_info(modification_file, 'modification')
                     # save the uuid of the selected modification for uploading files
                     g_selected_modification_uuid = modification_data.uuid
-                    CdbsApi(QueriesApi().target_fileset(modification_data.uuid))
+                    CdbsApi(QueriesApi.target_fileset(modification_data.uuid))
                     update_component_modificaion(click_path)
             else:
                 DataHandler.logger('error', 'Token not found')
@@ -255,9 +255,6 @@ class ExpCdbsWidget(QtGui.QDockWidget):
         update_components_list()
 
     def upload_files(self):
-        App.Console.PrintError('Click...\n')
-        # uploading files if modification uuid is set
-        # DataHandler.logger('message', 'Uploading files...')
         arg = (g_selected_modification_uuid, g_last_clicked_dir)
         CdbsStorage(arg)
 
@@ -358,7 +355,7 @@ def update_component_modificaion(modification_path):
     data = DataHandler.parsing_gpl()
     if isinstance(data, SimpleNamespace):
         if data.componentModificationFilesets:
-            CdbsApi(QueriesApi().fileset_files(data.componentModificationFilesets[0].uuid))
+            CdbsApi(QueriesApi.fileset_files(data.componentModificationFilesets[0].uuid))
             data = DataHandler.parsing_gpl()
             if isinstance(data, SimpleNamespace):
                 if data.componentModificationFilesetFiles:

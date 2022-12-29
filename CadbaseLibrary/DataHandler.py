@@ -14,6 +14,8 @@ import CadbaseLibrary.CdbsEvn as CdbsEvn
 
 
 def logger(type_msg, msg):
+    ''' this function is used to shorten the code for logging '''
+
     if type_msg == 'error':
         App.Console.PrintError(f'{msg}\n')
     elif type_msg == 'warning':
@@ -22,6 +24,12 @@ def logger(type_msg, msg):
         App.Console.PrintMessage(f'{msg}\n')
     else:
         App.Console.PrintLog(f'{msg}\n')
+
+    if CdbsEvn.g_log_file_path.is_file():
+        # Save message to log
+        log_file = open(CdbsEvn.g_log_file_path, 'a')
+        log_file.write(f'\nConsole log {time.time()}: {msg}')
+        log_file.close()
 
 
 def handle_response(reply):
@@ -36,11 +44,6 @@ def handle_response(reply):
     else:
         logger('error', f'Error occurred: {er}')
         logger('error', f'{reply.errorString()}')
-
-
-def validation_uuid(check_uuid):
-    # used for check valid uuid
-    return len(check_uuid) == 36
 
 
 def get_file(args):
@@ -86,21 +89,15 @@ def download_parallel(args):
 def parsing_gpl():
     logger('message', 'Data processing, please wait.')
     if CdbsEvn.g_response_path.exists():
-        temp = CdbsEvn.g_response_path.open('r', encoding='UTF-8').readline()
-        logger('log', f'Response data: {temp}')
-        # get only first line if expecting uuid or boolean value
-        # if validation_uuid(CdbsEvn.g_response_path) or len(CdbsEvn.g_response_path) < 7:
-        #     # get first line from file with response
-        #     return CdbsEvn.g_response_path.open('r', encoding='UTF-8').readline()
         with CdbsEvn.g_response_path.open('rb', buffering=0) as f:
             res = json.loads(f.readall(),
                              object_hook=lambda d: SimpleNamespace(**d))
-        if res.data:
-            return res.data
-        else:
-            logger('error', 'Error occured:')
-            for error in res.errors:
-                logger('error', error.message)
+            if res.data:
+                return res.data
+            else:
+                logger('error', 'Error occured:')
+                for error in res.errors:
+                    logger('error', error.message)
     else:
         logger('error', 'No file with response')
 
@@ -109,6 +106,16 @@ def parsing_gpl():
 
 def remove_object(rm_object: pathlib.Path):
     ''' delete directory or file from local storage '''
+    if rm_object == CdbsEvn.g_response_path and CdbsEvn.g_log_file_path.is_file():
+        # saving the previous server response to the log
+        with open(CdbsEvn.g_response_path) as response_file:
+            with open(CdbsEvn.g_log_file_path, 'a') as log_file:
+                log_file.write(f'\nResponse before {time.time()}\n')
+                for line in response_file:
+                    log_file.write(line)
+        response_file.close()
+        log_file.close()
+
     if rm_object.exists():
         if rm_object.is_dir():
             os.rmdir(rm_object)
@@ -143,3 +150,41 @@ def read_object_info(info_file: pathlib.Path, select_object: str):
         return object_info
 
 
+def deep_parsing_gpl(target, try_dict=False):
+    ''' Parse response data with SimpleNamespace by target key and then return structure '''
+    temp = CdbsEvn.g_response_path.open('r', encoding='UTF-8').readline()
+    logger('log', f'Response data: {temp}')
+    if parsing_gpl():
+        data: SimpleNamespace = parsing_gpl()
+        logger('log', f'Deep parsing data: {data}')
+        pre_result = getattr(data, target)
+        logger('log', f'Deep parsing result: {pre_result}')
+        if try_dict:
+            result = []
+            for rd in pre_result:
+                result.append(vars(rd))  # converting namespace to dict
+            return result
+        return pre_result
+
+
+def get_uuid(structure_data):
+    ''' Returns uuid if it exists in the data '''
+    target_uuid = None
+    logger('log', f'Structure data: {structure_data}')
+    if structure_data:
+        vars_data = structure_data[0]
+        logger('log', f'Structure vars: {vars_data}')
+        # are the known fields that store the uuid of the object
+        if vars_data.get('uuid'):
+            target_uuid = vars_data.get('uuid')
+        if vars_data.get('fileUuid'):
+            target_uuid = vars_data.get('fileUuid')
+    logger('log', f'Uuid of structure data: {target_uuid}')
+    return validation_uuid(target_uuid)
+
+
+def validation_uuid(target_uuid):
+    ''' Returns None if uuid fails validation '''
+    if target_uuid and len(target_uuid) == CdbsEvn.g_len_uuid:
+        return target_uuid
+    return None

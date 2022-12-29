@@ -25,7 +25,7 @@ class CdbsApi:
     ''' class for sending requests and handling responses '''
 
     def __init__(self, query):
-        # DataHandler.logger('message', 'Getting data...')
+        DataHandler.logger('message', 'Getting data...')
         DataHandler.logger('warning', f'Query data: {query}')
         self.nam = QtNetwork.QNetworkAccessManager(None)
         self.do_request(query)
@@ -39,6 +39,7 @@ class CdbsApi:
         req.setRawHeader(b'Content-Type', CdbsEvn.g_content_type)
         req.setRawHeader(b'Authorization', auth_header.encode())
         body = json.dumps(query).encode('utf-8')
+        DataHandler.logger('warning', f'Query include body: {body}')
         reply = self.nam.post(req, body)
         loop = QtCore.QEventLoop()
         reply.finished.connect(loop.quit)
