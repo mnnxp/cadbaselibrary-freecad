@@ -1,13 +1,9 @@
-''' Functionality for processing requests to the CADBase platform '''
+""" Functionality for processing requests to the CADBase platform """
 
 import json
-import pathlib
-from PySide import QtCore  # FreeCAD's PySide
-from PySide2 import QtNetwork
-import FreeCAD as App
+from PySide2 import QtCore, QtNetwork
 import CadbaseLibrary.CdbsEvn as CdbsEvn
 import CadbaseLibrary.DataHandler as DataHandler
-# from DataHandler import DataHandler.logger
 
 
 def parsing_response(reply):
@@ -22,26 +18,29 @@ def parsing_response(reply):
 
 
 class CdbsApi:
-    ''' class for sending requests and handling responses '''
+    """ Sending a request to the CADBase API and processing the response """
 
     def __init__(self, query):
         DataHandler.logger('message', 'Getting data...')
-        DataHandler.logger('warning', f'Query data: {query}')
+        DataHandler.logger('log', f'Query data: {query}')
         self.nam = QtNetwork.QNetworkAccessManager(None)
         self.do_request(query)
 
     def do_request(self, query):
-        api_url = CdbsEvn.g_param.GetString('api-url', '')
-        req = QtNetwork.QNetworkRequest()
-        req.setUrl(QtCore.QUrl(api_url))
-        auth_header = 'Bearer ' + CdbsEvn.g_param.GetString('auth-token', '')
-        header = {'Authorization': auth_header}
-        req.setRawHeader(b'Content-Type', CdbsEvn.g_content_type)
-        req.setRawHeader(b'Authorization', auth_header.encode())
-        body = json.dumps(query).encode('utf-8')
-        DataHandler.logger('warning', f'Query include body: {body}')
-        reply = self.nam.post(req, body)
-        loop = QtCore.QEventLoop()
-        reply.finished.connect(loop.quit)
-        loop.exec_()
-        parsing_response(reply)
+        try:
+            api_url = CdbsEvn.g_param.GetString('api-url', '')
+            request = QtNetwork.QNetworkRequest()
+            request.setUrl(QtCore.QUrl(api_url))
+            auth_header = 'Bearer ' + CdbsEvn.g_param.GetString('auth-token', '')
+            request.setRawHeader(b'Content-Type', CdbsEvn.g_content_type)
+            request.setRawHeader(b'Authorization', auth_header.encode())
+            body = json.dumps(query).encode('utf-8')
+            DataHandler.logger('log', f'Query include body: {body}')
+            reply = self.nam.post(request, body)
+            loop = QtCore.QEventLoop()
+            reply.finished.connect(loop.quit)
+            loop.exec_()
+        except Exception as e:
+            DataHandler.logger('error', f'Exception when trying to sending the request: {e}')
+        else:
+            parsing_response(reply)

@@ -1,7 +1,7 @@
-'''
+"""
 This file stores GraphQL requests for CADbase platform.
 Contains queries for the CADBase (using GraphQL API).
-'''
+"""
 
 import json
 import CadbaseLibrary.CdbsEvn as CdbsEvn
@@ -28,7 +28,7 @@ class QueriesApi:
                   }
                 }''')
 
-    def component_modifications(object_uuid):
+    def component_modifications(object_uuid: str):
         return dict(query=f'''query {{
                   componentModifications (args: {{
                     componentUuid: "{object_uuid}"
@@ -38,7 +38,7 @@ class QueriesApi:
                   }}
                 }}''')
 
-    def target_fileset(object_uuid):
+    def target_fileset(object_uuid: str):
         return dict(query=f'''query {{
                   componentModificationFilesets (args: {{
                     modificationUuid: "{object_uuid}"

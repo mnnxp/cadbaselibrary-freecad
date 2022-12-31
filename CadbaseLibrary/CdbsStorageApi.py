@@ -1,18 +1,12 @@
-''' Functionality for processing requests to the storage of CADBase platform '''
+""" Functionality for processing requests to the storage (S3) of CADBase platform """
 
-import os
-import json
-import pathlib
-# from PySide import QtCore  # FreeCAD's PySide
 from PySide2 import QtCore, QtNetwork
 from PySide2.QtCore import QFile
-import FreeCAD as App
-# from CadbaseLibrary.CdbsEvn import g_param, g_content_type, g_response_path
 import CadbaseLibrary.DataHandler as DataHandler
 
 
 class CdbsStorageApi:
-    ''' class for sending a file to CADBase storage and handling responses '''
+    """ Sending a file to CADBase storage and handling response (empty response - good case) """
 
     def __init__(self, presigned_url, file_path):
         DataHandler.logger('message', 'Preparing for upload file...')
@@ -29,7 +23,6 @@ class CdbsStorageApi:
         try:
             request = QtNetwork.QNetworkRequest()
             request.setUrl(QtCore.QUrl(self.presigned_url))
-            # reply = self.nam.put(request, open(self.file_path, 'rb'))
             reply = self.nam.put(request, file)
             loop = QtCore.QEventLoop()
             DataHandler.logger('message', f'Upload file...: {reply}')

@@ -1,36 +1,27 @@
-''' Functionality for processing requests to the storage of CADBase platform '''
+""" Functionality for processing requests to the storage of CADBase platform """
 
 import os
 import time
-# import json
-# import pathlib
-# # import blake3
+# import blake3
 from multiprocessing import cpu_count
 from multiprocessing.pool import ThreadPool
-from typing import Any
-from PySide import QtCore  # FreeCAD's PySide
-from PySide2 import QtNetwork
-import FreeCAD as App
-# from CadbaseLibrary.CdbsEvn import g_param, g_content_type, g_response_path
-import CadbaseLibrary.CdbsEvn as CdbsEvn
 from CadbaseLibrary.CdbsApi import CdbsApi
 from CadbaseLibrary.CdbsStorageApi import CdbsStorageApi
-# from CadbaseLibrary.QueriesApi import target_fileset, register_modification_fileset, fileset_files, \
-#     upload_files_to_fileset, upload_completed, delete_files_from_fileset
 from CadbaseLibrary.QueriesApi import QueriesApi
 import CadbaseLibrary.DataHandler as DataHandler
 
 
 class CdbsStorage:
-    '''
-    Class for saving files on the CADBase storage.
-    Sending requests for saving files, upload files and handling responses.
-    '''
+    """
+    The class functions determine which files are suitable for uploading to the CADBase storage,
+    request data for uploading files, and call functions to upload files to storage.
+    """
 
     def __init__(self, arg):
-        DataHandler.logger('message', 'Uploading files...')
+        """ Validation the modification uuid and creating variables for next parsing data """
+        DataHandler.logger('message', 'Preparing for uploading files...')
         self.modification_uuid = arg[0]
-        self.last_clicked_dir = arg[1]
+        self.last_clicked_dir = arg[1]  # set directory from which files will be pushed
         DataHandler.logger('log', f'Modification uuid: {self.modification_uuid}')
         if not DataHandler.validation_uuid(self.modification_uuid):
             DataHandler.logger('warning', 'To upload files, you must select a modification '
@@ -41,12 +32,13 @@ class CdbsStorage:
         self.completed_files = []  # uuid of successfully uploaded files
         self.fileset_uuid = None
         self.new_fileset = False
-        self.data_processing()
+        self.processing_manager()
 
-    def data_processing(self):
-        # getting uuid a fileset for FreeCAD
-        # count_up_files = 0  # for save the response with the number of uploaded files
+    def processing_manager(self):
+        """ Manager sending files to the storage: defines the uuid for fileset,
+        calls the functions for processing, loading and confirm successful uploading files """
         DataHandler.logger('log', 'Getting fileset uuid...')
+        # getting the uuid of a set of files for FreeCAD
         CdbsApi(QueriesApi.target_fileset(self.modification_uuid))
         self.fileset_uuid = \
             DataHandler.get_uuid(DataHandler.deep_parsing_gpl('componentModificationFilesets', True))
@@ -57,7 +49,7 @@ class CdbsStorage:
             self.fileset_uuid = DataHandler.deep_parsing_gpl('registerModificationFileset')
             self.new_fileset = True
         if not DataHandler.validation_uuid(self.fileset_uuid):
-            DataHandler.logger('warning', 'An error occurred while getting the uuid of the file set')
+            DataHandler.logger('warning', 'Error occurred while getting the uuid of the file set')
             return
         if self.fileset_uuid:
             self.define_files()
@@ -65,7 +57,7 @@ class CdbsStorage:
             # trying to upload files and save a count of successful uploads
             count_up_files = self.upload()
             if not count_up_files:
-                DataHandler.logger('warning', 'An error occurred while confirming the upload of files, '
+                DataHandler.logger('warning', 'Error occurred while confirming the upload of files, '
                                               'the files were not uploaded to correctly')
                 return
         else:
@@ -81,7 +73,8 @@ class CdbsStorage:
         self.completed_files.clear()
 
     def define_files(self):
-        ''' define files for upload to CADBase storage '''
+        """ Determine files to upload to CADBase storage: getting files from local and remote storage,
+        identify duplicates and compare hashes """
         local_files = []  # files from local storage
         # files from the local storage that are not in the CADBase storage
         DataHandler.logger('log', f'Last clicked dir: {self.last_clicked_dir}')
@@ -129,21 +122,26 @@ class CdbsStorage:
             #     self.delete_files.append(cloud_files[df]['uuid'])
 
     def upload(self):
-        ''' get information (pre-signed URL etc) for upload files to CADBase storage '''
+        """ Getting information (file IDs, pre-signed URLs) to upload files to CADBase storage
+        and calling the function to upload files in parallel """
         CdbsApi(QueriesApi.upload_files_to_fileset(self.fileset_uuid, self.upload_filenames))
         args = DataHandler.deep_parsing_gpl('uploadFilesToFileset', True)  # data for uploading by each file
         DataHandler.logger('log', f'Data for upload files to fileset: {args}')
-        if args:
-            self.upload_parallel(args)
-            if self.completed_files:
-                CdbsApi(QueriesApi.upload_completed(self.completed_files))
-                res = DataHandler.deep_parsing_gpl('uploadCompleted')
-                DataHandler.logger('log', f'Upload completed: {res}')
-                return res
-        return 0
+        if not args:
+            return 0
+        # data for uploading files to storage received
+        self.upload_parallel(args)
+        if not self.completed_files:
+            DataHandler.logger('log', f'Failed to upload files')
+            return 0
+        # at least some files were uploaded successfully
+        CdbsApi(QueriesApi.upload_completed(self.completed_files))
+        res = DataHandler.deep_parsing_gpl('uploadCompleted')
+        DataHandler.logger('log', f'Upload completed: {res}')
+        return res
 
     def put_file(self, arg: dict):
-        ''' upload a file via pre-signed URL to the CADBase storage '''
+        """ Uploading a file via presigned URL to the CADBase storage """
         t0 = time.time()
         filename = arg.get('filename')
         file_path = self.last_clicked_dir / filename
@@ -153,7 +151,8 @@ class CdbsStorage:
         return filename, time.time() - t0
 
     def upload_parallel(self, args: list):
-        ''' asynchronous upload of files to CADBase storage '''
+        """ Asynchronous calling of the function of uploading files to the CADBase storage
+        in several threads (if available) """
         t0 = time.time()
         results = ThreadPool(cpu_count() - 1).imap_unordered(self.put_file, args)
         for result in results:
@@ -162,7 +161,7 @@ class CdbsStorage:
 
     @property
     def delete_old_files(self):
-        ''' remove obsolete files from CADBase storage '''
+        """ Deleting obsolete files from CADBase storage """
         if self.delete_files:
             CdbsApi(QueriesApi.delete_files_from_fileset(self.fileset_uuid, self.delete_files))
             res = DataHandler.deep_parsing_gpl('deleteFilesFromFileset')
