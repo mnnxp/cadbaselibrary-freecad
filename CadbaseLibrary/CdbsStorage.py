@@ -22,6 +22,9 @@ class CdbsStorage:
         DataHandler.logger('message', 'Preparing for uploading files...')
         self.modification_uuid = arg[0]
         self.last_clicked_dir = arg[1]  # set directory from which files will be pushed
+        if not os.path.isdir(self.last_clicked_dir):
+            DataHandler.logger('warning', 'To upload files, you must select the modification folder')
+            return
         DataHandler.logger('log', f'Modification uuid: {self.modification_uuid}')
         if not DataHandler.validation_uuid(self.modification_uuid):
             DataHandler.logger('warning', 'To upload files, you must select a modification '
