@@ -178,12 +178,11 @@ class ExpCdbsWidget(QtGui.QDockWidget):
         self.previewframe.preview.clear()  # clear preview frame
         if g_last_clicked_object.suffix.lower() == '.fcstd':
             self.set_preview_img()
+        if g_last_clicked_object.is_dir():
+            update_selected_object_uuid()
 
     def doubleclicked(self, index):
-        global g_selected_component_uuid
-        global g_selected_modification_uuid
         global g_last_clicked_object
-
         g_last_clicked_object = pathlib.Path(self.dirmodel.filePath(index))
         if not g_last_clicked_object.is_dir():
             self.add_part()
@@ -191,24 +190,12 @@ class ExpCdbsWidget(QtGui.QDockWidget):
         if not CdbsEvn.g_param.GetString('auth-token'):
             DataHandler.logger('error', 'Token not found')
             return
-        # the click was on a directory, clear the uuid of the selected component and modification
-        g_selected_component_uuid = ''
-        g_selected_modification_uuid = ''
-        component_file: Path = g_last_clicked_object / 'component'
-        # check file with component info
-        if component_file.exists():
-            component_data = \
-                DataHandler.read_object_info(component_file, 'component')
-            g_selected_component_uuid = component_data.uuid
+        # user-clicked was on directory, need updating uuid of selected component or modification
+        update_selected_object_uuid()
+        if g_selected_component_uuid:
             update_component()
             return
-        modification_file = g_last_clicked_object / 'modification'
-        # check file with modification info
-        if modification_file.exists():
-            modification_data = \
-                DataHandler.read_object_info(modification_file, 'modification')
-            # save the uuid of the selected modification for uploading files
-            g_selected_modification_uuid = modification_data.uuid
+        if g_selected_modification_uuid:
             update_component_modificaion()
 
     def update_library(self):
@@ -389,3 +376,24 @@ def update_component_modificaion():
     DataHandler.download_parallel(inputs)
     DataHandler.logger('message', f'Download is completed ({len(urls)} file(s))')
     DataHandler.logger('message', 'Component modification files update completed')
+
+
+def update_selected_object_uuid():
+    """ Upgrading selected uuid for a object, get data from user-selected a folder """
+    global g_selected_component_uuid
+    global g_selected_modification_uuid
+    # clearing old uuids
+    g_selected_component_uuid = ''
+    g_selected_modification_uuid = ''
+    component_file = g_last_clicked_object / 'component'
+    # check file with component info
+    if component_file.exists():
+        component_data = DataHandler.read_object_info(component_file, 'component')
+        g_selected_component_uuid = component_data.uuid
+        return
+    modification_file = g_last_clicked_object / 'modification'
+    # check file with modification info
+    if modification_file.exists():
+        modification_data = DataHandler.read_object_info(modification_file, 'modification')
+        # save the uuid of the selected modification for uploading files
+        g_selected_modification_uuid = modification_data.uuid
