@@ -100,6 +100,7 @@ except Exception as e:
     DataHandler.logger('error', f'Failed to set path for local library: {e}')
 try:
     CdbsEvn.set_base_param()  # set default options if they weren't set before
+    CdbsEvn.update_api_points()  # update api points (in case a non-official server is used)
 except Exception as e:
     DataHandler.logger('error', f'Failed with settings base parameters: {e}')
 g_selected_component_uuid: str = ''
@@ -259,6 +260,7 @@ class ConfigDialog(QtGui.QDialog):
         self._connect_widgets()
         self.form.show()
         self.form.lineEdit_3.setText(CdbsEvn.g_param.GetString('destination', ''))
+        self.form.lineEdit.setText(CdbsEvn.g_param.GetString('api-url', ''))
 
     def _connect_widgets(self):
         self.form.buttonBox.accepted.connect(self.accept)
@@ -267,7 +269,7 @@ class ConfigDialog(QtGui.QDialog):
         self.form.pushButton_3.clicked.connect(self.changepath)
 
     def setdefaulturl(self):
-        self.form.lineEdit.setText(CdbsEvn.g_cdbs_api)
+        self.form.lineEdit.setText(CdbsEvn.g_base_api)
 
     def changepath(self):
         CdbsEvn.g_library_path = CdbsEvn.g_param.GetString('destination', '')
@@ -284,6 +286,7 @@ class ConfigDialog(QtGui.QDialog):
     def accept(self):
         if self.form.lineEdit.text():
             CdbsEvn.g_param.SetString('api-url', self.form.lineEdit.text())
+            CdbsEvn.update_api_points()
         if self.form.lineEdit_3.text() != CdbsEvn.g_library_path:
             CdbsEvn.g_param.SetString('destination', self.form.lineEdit_3.text())
             DataHandler.logger('warning', 'Please restart FreeCAD')
