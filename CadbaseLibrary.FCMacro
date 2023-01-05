@@ -323,7 +323,7 @@ def update_components_list():
         DataHandler.logger('warning', "You don't have favorite components")
         return
     for component in data.components:
-        DataHandler.logger('log', component.uuid)
+        DataHandler.logger('log', f'Component uuid: {component.uuid}')
         new_dir: Path = \
             pathlib.Path(CdbsEvn.g_library_path) / f'{component.name} (from  {component.ownerUser.username})'
         DataHandler.create_object_path(new_dir, component, 'component')
