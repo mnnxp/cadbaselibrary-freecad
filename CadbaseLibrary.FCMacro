@@ -227,7 +227,7 @@ class ExpCdbsWidget(QtGui.QDockWidget):
             return
 
     def set_preview_img(self):
-        """ Setting image in preview tab (trying to get image of FC file or CB storage) """
+        """ Setting image in preview tab (trying to get image of FreeCAD file) """
         try:
             zfile = zipfile.ZipFile(g_last_clicked_object)
             files = zfile.namelist()
