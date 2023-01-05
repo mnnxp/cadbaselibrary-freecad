@@ -73,14 +73,14 @@ __Help__ = 'Requires CADBase account to correct use the macro.'
 __Status__ = 'Stable'
 __Requires__ = 'FreeCAD >= 0.19'
 __Communication__ = 'https://forum.freecadweb.org/viewtopic.php?f=22&t=69389'
-__Files__ = 'CadbaseLibrary/cadbase_library_config.ui,CadbaseLibrary/cadbase_library.ui,CadbaseLibrary/CdbsApi.py,CadbaseLibrary/CdbsAuth.py,CadbaseLibrary/CdbsEvn.py,CadbaseLibrary/DataHandler.py,CadbaseLibrary/py,CadbaseLibrary/README.md,CadbaseLibrary.svg'
+__Files__ = 'CadbaseLibrary/cadbase_library_config.ui,CadbaseLibrary/cadbase_library.ui,CadbaseLibrary/CdbsApi.py,CadbaseLibrary/CdbsAuth.py,CadbaseLibrary/CdbsEvn.py,CadbaseLibrary/DataHandler.py,CadbaseLibrary/QueriesApi.py,CadbaseLibrary/CdbsStorage.py,CadbaseLibrary/CdbsStorageApi.py,CadbaseLibrary/README.md,CadbaseLibrary.svg'
 
 import zipfile
 import tempfile
 import pathlib
 from pathlib import Path
 from types import SimpleNamespace
-from PySide import QtGui, QtCore # FreeCAD's PySide
+from PySide import QtGui, QtCore  # FreeCAD's PySide
 import Part
 import FreeCADGui as Gui
 import CadbaseLibrary.CdbsEvn as CdbsEvn
@@ -91,12 +91,17 @@ from CadbaseLibrary.QueriesApi import QueriesApi
 import CadbaseLibrary.DataHandler as DataHandler
 
 try:
-    QtCore.QTextCodec.setCodecForTr(QTextCodec.codecForName('UTF-8'))
-except:
-    pass  # Will fallback to Latin-1
-
-CdbsEvn.set_library_path()  # get the location for the CADBase library
-CdbsEvn.set_base_param()  # set default options if they weren't set before
+    QtCore.QTextCodec.setCodecForTr(QtCore.QTextCodec.codecForName('UTF-8'))
+except Exception as e:
+    DataHandler.logger('log', f'Will fall back to Latin-1: {e}')
+try:
+    CdbsEvn.set_library_path()  # get the location for the CADBase library
+except Exception as e:
+    DataHandler.logger('error', f'Failed to set path for local library: {e}')
+try:
+    CdbsEvn.set_base_param()  # set default options if they weren't set before
+except Exception as e:
+    DataHandler.logger('error', f'Failed with settings base parameters: {e}')
 g_selected_component_uuid: str = ''
 g_selected_modification_uuid: str = ''
 g_last_clicked_object: Path = Path('')
@@ -280,8 +285,8 @@ class ConfigDialog(QtGui.QDialog):
     def changepath(self):
         CdbsEvn.g_library_path = CdbsEvn.g_param.GetString('destination', '')
         np = QtGui.QFileDialog.getExistingDirectory(self,
-                'Local location of your existing CADBase library',
-                CdbsEvn.g_library_path)
+                                                    'Local location of your existing CADBase library',
+                                                    CdbsEvn.g_library_path)
         if np:
             self.form.lineEdit_3.setText(np)
 
@@ -383,4 +388,4 @@ def update_component_modificaion():
     inputs = zip(urls, fns)
     DataHandler.download_parallel(inputs)
     DataHandler.logger('message', f'Download is completed ({len(urls)} file(s))')
-    DataHandler.logger('message', 'The component modification files update complete')
+    DataHandler.logger('message', 'Component modification files update completed')

@@ -30,6 +30,14 @@ def logger(type_msg, msg):
         log_file.close()
 
 
+def validation_uuid(target_uuid):
+    """ Checking an uuid length. Return target UUID if valid
+    or None if the uuid failed the test """
+    if target_uuid and len(target_uuid) == CdbsEvn.g_len_uuid:
+        return target_uuid
+    return None
+
+
 def handle_response(reply):
     er = reply.error()
     if er == QtNetwork.QNetworkReply.NoError:
@@ -69,9 +77,9 @@ def get_file(args):
             response_bytes = reply.readAll()
             with filepath.open('wb') as f:
                 f.write(response_bytes)
-            return filepath, time.time() - t0
         else:
-            logger('error', 'Error')
+            logger('error', f'Error: {reply.error()}')
+    return filepath, time.time() - t0
 
 
 def download_parallel(args):
@@ -157,15 +165,17 @@ def read_object_info(info_file: pathlib.Path, select_object: str):
 
 def deep_parsing_gpl(target, try_dict=False):
     """ Parsing response data with SimpleNamespace by target key and then return structure """
-    temp = CdbsEvn.g_response_path.open('r', encoding='UTF-8').readline()
-    logger('log', f'Response data: {temp}')
     data = parsing_gpl()
     if not data:
         logger('log', f'Failed to parse gpl before deep parsing: {data}')
         return
     logger('log', f'Deep parsing data: {data}')
-    pre_result = getattr(data, target)
-    logger('log', f'Deep parsing result: {pre_result}')
+    try:
+        pre_result = getattr(data, target)
+        logger('log', f'Deep parsing result: {pre_result}')
+    except Exception as e:
+        logger('warning', f'Received data about "{target}" is not suitable for processing: {e}')
+        return
     if not try_dict:
         return pre_result
     # converting namespace to dict
@@ -176,7 +186,7 @@ def deep_parsing_gpl(target, try_dict=False):
 
 
 def get_uuid(structure_data):
-    """ Getting a uuid if it exists in the data. Returning None if not found uuid. """
+    """ Getting an uuid if it exists in the data. Returning None if not found uuid. """
     target_uuid = None
     logger('log', f'Structure data: {structure_data}')
     if not structure_data:
@@ -191,11 +201,3 @@ def get_uuid(structure_data):
         target_uuid = vars_data.get('fileUuid')
     logger('log', f'Uuid of structure data: {target_uuid}')
     return validation_uuid(target_uuid)
-
-
-def validation_uuid(target_uuid):
-    """ Checking a uuid length. Return target UUID if valid
-    or None if the uuid failed the test """
-    if target_uuid and len(target_uuid) == CdbsEvn.g_len_uuid:
-        return target_uuid
-    return None

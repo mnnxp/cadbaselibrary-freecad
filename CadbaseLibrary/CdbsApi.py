@@ -22,15 +22,13 @@ class CdbsApi:
 
     def __init__(self, query):
         DataHandler.logger('message', 'Getting data...')
-        DataHandler.logger('log', f'Query data: {query}')
         self.nam = QtNetwork.QNetworkAccessManager(None)
         self.do_request(query)
 
     def do_request(self, query):
         try:
-            api_url = CdbsEvn.g_param.GetString('api-url', '')
             request = QtNetwork.QNetworkRequest()
-            request.setUrl(QtCore.QUrl(api_url))
+            request.setUrl(QtCore.QUrl(CdbsEvn.g_cdbs_api))
             auth_header = 'Bearer ' + CdbsEvn.g_param.GetString('auth-token', '')
             request.setRawHeader(b'Content-Type', CdbsEvn.g_content_type)
             request.setRawHeader(b'Authorization', auth_header.encode())
