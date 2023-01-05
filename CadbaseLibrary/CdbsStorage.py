@@ -2,7 +2,6 @@
 
 import os
 import time
-# import blake3
 from multiprocessing import cpu_count
 from multiprocessing.pool import ThreadPool
 from CadbaseLibrary.CdbsApi import CdbsApi
@@ -109,20 +108,38 @@ class CdbsStorage:
                 # save the name of the new file to upload
                 self.upload_filenames.append(l_filename)  # add new files to upload
         DataHandler.logger('log', f'Selected files to upload:{self.upload_filenames}')
-        # compare hash for local and CADBase storage files
+        self.parsing_duplicate(dup_files, cloud_files)
+
+    def parsing_duplicate(self, dup_files, cloud_files):
+        """ Compare hash for local and CADBase storage files, add files for update if hash don't equally """
+        import pathlib
+        try:
+            from blake3 import blake3
+        except Exception as e:
+            DataHandler.logger('error', f'Blake3 import error: {e}')
+            DataHandler.logger('warning', 'Warning: for compare hashes need install `blake3`. '
+                                          'Please try to install it with: `pip install blake3` or some other way.')
+            return
         for df in dup_files:
             local_file_hash = ''
-            if df in cloud_files:
-                # local_file = self.last_clicked_dir / df
-                # hasher = blake3()
-                # hasher = open(local_file, "rb", buffering=0)
-                # local_file_hash = hasher.digest()
-                local_file_hash = 'hasher.digest()'
+            local_file_path = pathlib.Path(self.last_clicked_dir) / df
+            if not local_file_path.is_file():
+                DataHandler.logger('warning', f'Warning: {df} is not file and skipped')
+                break
+            try:
+                file = local_file_path.open('rb', buffering=0)
+                local_file_hash = blake3(file.read()).hexdigest()
+                file.close()
+            except Exception as e:
+                DataHandler.logger('error', f'Error calculating hash for local file {local_file_hash}: {e}')
+                break
+            cloud_file = next(item for item in cloud_files if item['filename'] == df)
             DataHandler.logger('log', f'Hash local file {df}: {local_file_hash}')
-            # DataHandler.logger('log', f'Hash cloud file {df}: {cloud_files[df]['hash']}')
-            # if local_file_hash != cloud_files[df]['hash']:
-            #     self.upload_filenames.append(df)
-            #     self.delete_files.append(cloud_files[df]['uuid'])
+            DataHandler.logger('log', f'Hash cloud file {df}: {cloud_file["hash"]}')
+            # check the hash if it exists for both files
+            if local_file_hash and cloud_file['hash'] and local_file_hash != cloud_file['hash']:
+                self.upload_filenames.append(df)
+                self.delete_files.append(cloud_file['uuid'])
 
     def upload(self):
         """ Getting information (file IDs, pre-signed URLs) to upload files to CADBase storage
@@ -133,6 +150,7 @@ class CdbsStorage:
         if not args:
             return 0
         # data for uploading files to storage received
+        DataHandler.logger('message', f'Uploading files to storage (this can take a long time)')
         self.upload_parallel(args)
         if not self.completed_files:
             DataHandler.logger('log', f'Failed to upload files')
