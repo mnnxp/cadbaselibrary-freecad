@@ -20,11 +20,6 @@ class QueriesApi:
                       uuid
                       username
                     }
-                    imageFile {
-                      uuid
-                      filename
-                      downloadUrl
-                    }
                   }
                 }''')
 
