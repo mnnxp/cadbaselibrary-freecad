@@ -40,7 +40,7 @@ Open **Macro** in the ToolBar, select **Macros...**, choose the `CadbaseLibrary.
 
 On first run, the macro will ask you for the location of your library. This location can be changed in the macro settings in the field **Library path**.
 
-Create an account on the platform [CADBase](https://cadbase.rs/#/register) for yourself (skip if you already have a CADBase account).
+Create an account on the platform [CADBase](https://cadbase.rs) for yourself (skip if you already have a CADBase account).
 
 In the **CADBase library** window, in the **Options** tab, click the **Settings** button, in the **CADBase library configuration** window that opens, you need to set the **username** and **password** to gain access to CADBase. Wait for the token to be received after pressing the **OK** button.
 
