@@ -98,10 +98,10 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>Get data</string>
+        <string>Update components</string>
        </property>
        <property name="icon">
-        <iconset theme="emblem-downloads">
+        <iconset theme="emblem-synchronizing">
          <normaloff>.</normaloff>.</iconset>
        </property>
        <property name="toolButtonStyle">
@@ -150,10 +150,10 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>Push local to cloud</string>
+        <string>Upload files</string>
        </property>
        <property name="icon">
-        <iconset theme="emblem-synchronizing"/>
+        <iconset theme="emblem-documents"/>
        </property>
        <property name="toolButtonStyle">
         <enum>Qt::ToolButtonTextBesideIcon</enum>
