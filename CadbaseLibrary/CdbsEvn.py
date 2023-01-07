@@ -57,5 +57,5 @@ def update_api_points():
 set_library_path()  # update library path
 update_api_points()  # update api points
 # Please don't use this name as the name of files or folders in the CADBase Library folder.
-g_response_path = pathlib.Path(g_library_path) / 'cadbase_response_file_2018'
+g_response_path = pathlib.Path(g_library_path) / 'cadbase_file_2018'
 g_log_file_path = g_response_path.with_suffix('.log')

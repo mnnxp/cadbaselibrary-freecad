@@ -48,7 +48,9 @@ In the **CADBase library** window, in the **Options** tab, click the **Settings*
 
 In FreeCAD, you can find which is your user **modules folder** by entering or pasting `App.getUserAppDataDir()+"Mod"` and your usr **macros folder** by entering `App.getUserMacroDir()` in the Python console (found under menu View->Panels)
 
-Please don't use `cadbase_response_file_2018` as the name of files or folders in the CADBase library folder. Server responses are stored in this file, if you'll use this filename for your data, you may lose them.
+If you need to save logs to a file (for example, for debugging, studying, or other purposes), you need to create a `cadbase_file_2018.log` file in the local library folder.
+
+Please don't use `cadbase_file_2018` and `cadbase_file_2018.log` as file or folder names in the CADBase library folder. These files store server responses and logs, if you use these filenames for your data, you may lose them.
 
 ## Link
 
