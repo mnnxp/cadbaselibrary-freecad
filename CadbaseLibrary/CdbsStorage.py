@@ -93,7 +93,6 @@ class CdbsStorage:
             # get file list with hash from CADBase storage
             CdbsApi(QueriesApi.fileset_files(self.fileset_uuid))
             cloud_files = DataHandler.deep_parsing_gpl('componentModificationFilesetFiles', True)
-            DataHandler.logger('log', f'Cloud files: {cloud_files}')
         for cf in cloud_files:
             cloud_filenames.append(cf.get('filename'))  # selecting cloud filenames for validation with locale files
         DataHandler.logger('log', f'Cloud filenames: {cloud_filenames}')
@@ -107,7 +106,7 @@ class CdbsStorage:
                 DataHandler.logger('log', f'Local file "{l_filename}" does not have a cloud version')
                 # save the name of the new file to upload
                 self.upload_filenames.append(l_filename)  # add new files to upload
-        DataHandler.logger('log', f'Selected files to upload:{self.upload_filenames}')
+        DataHandler.logger('message', f'New files to upload:{self.upload_filenames}')
         self.parsing_duplicate(dup_files, cloud_files)
 
     def parsing_duplicate(self, dup_files, cloud_files):
@@ -121,6 +120,10 @@ class CdbsStorage:
                                           'Please try to install it with: `pip install blake3` or some other way.')
             return
         for df in dup_files:
+            cloud_file = next(item for item in cloud_files if item['filename'] == df)
+            if not cloud_file['hash']:
+                DataHandler.logger('warning', f'File hash "{df}" from CADBase not found, this file is skipped.')
+                continue
             local_file_hash = ''
             local_file_path = pathlib.Path(self.last_clicked_dir) / df
             if not local_file_path.is_file():
@@ -133,9 +136,7 @@ class CdbsStorage:
             except Exception as e:
                 DataHandler.logger('error', f'Error calculating hash for local file {local_file_hash}: {e}')
                 break
-            cloud_file = next(item for item in cloud_files if item['filename'] == df)
-            DataHandler.logger('log', f'Hash local file {df}: {local_file_hash}')
-            DataHandler.logger('log', f'Hash cloud file {df}: {cloud_file["hash"]}')
+            DataHandler.logger('log', f'Hash file {df}:\n{local_file_hash} (local)\n{cloud_file["hash"]} (cloud)')
             # check the hash if it exists for both files
             if local_file_hash and cloud_file['hash'] and local_file_hash != cloud_file['hash']:
                 self.upload_filenames.append(df)
@@ -144,9 +145,9 @@ class CdbsStorage:
     def upload(self):
         """ Getting information (file IDs, pre-signed URLs) to upload files to CADBase storage
         and calling the function to upload files in parallel """
+        DataHandler.logger('message', f'Selected files to upload: {self.upload_filenames}')
         CdbsApi(QueriesApi.upload_files_to_fileset(self.fileset_uuid, self.upload_filenames))
         args = DataHandler.deep_parsing_gpl('uploadFilesToFileset', True)  # data for uploading by each file
-        DataHandler.logger('log', f'Data for upload files to fileset: {args}')
         if not args:
             return 0
         # data for uploading files to storage received

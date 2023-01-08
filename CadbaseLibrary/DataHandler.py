@@ -169,10 +169,8 @@ def deep_parsing_gpl(target, try_dict=False):
     if not data:
         logger('log', f'Failed to parse gpl before deep parsing: {data}')
         return
-    logger('log', f'Deep parsing data: {data}')
     try:
         pre_result = getattr(data, target)
-        logger('log', f'Deep parsing result: {pre_result}')
     except Exception as e:
         logger('warning', f'Received data about "{target}" is not suitable for processing: {e}')
         return

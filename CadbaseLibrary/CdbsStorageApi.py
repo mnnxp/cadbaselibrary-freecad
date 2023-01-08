@@ -25,11 +25,11 @@ class CdbsStorageApi:
             request.setUrl(QtCore.QUrl(self.presigned_url))
             reply = self.nam.put(request, file)
             loop = QtCore.QEventLoop()
-            DataHandler.logger('message', f'Upload file...: {reply}')
+            DataHandler.logger('message', f'Upload file...')
             reply.finished.connect(loop.quit)
             loop.exec_()
         except Exception as e:
             DataHandler.logger('error', f'Exception in upload file: {e}')
         else:
             response_bytes = DataHandler.handle_response(reply)
-            DataHandler.logger('message', f'Upload file, response bytes: {response_bytes}')
+            DataHandler.logger('log', f'Upload file, response bytes: {response_bytes}')
