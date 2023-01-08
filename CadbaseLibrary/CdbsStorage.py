@@ -35,6 +35,7 @@ class CdbsStorage:
         self.fileset_uuid = None
         self.new_fileset = False
         self.processing_manager()
+        DataHandler.logger('message', 'Upload completed')
 
     def processing_manager(self):
         """ Manager sending files to the storage: defines the uuid for fileset,

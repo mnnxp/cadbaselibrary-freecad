@@ -26,7 +26,7 @@ def logger(type_msg, msg):
     # Save the message to the log file if there is a log file in the folder
     if CdbsEvn.g_log_file_path.is_file():
         log_file = open(CdbsEvn.g_log_file_path, 'a')
-        log_file.write(f'\nConsole log {time.time()}: {msg}')
+        log_file.write(f'\nConsole {type_msg} {time.time()}: {msg}')
         log_file.close()
 
 
