@@ -83,7 +83,7 @@ from types import SimpleNamespace
 from PySide import QtGui, QtCore  # FreeCAD's PySide
 import Part
 import FreeCADGui as Gui
-import CadbaseLibrary.CdbsEvn as CdbsEvn
+import CadbaseLibrary.CdbsEvn
 from CadbaseLibrary.CdbsAuth import CdbsAuth
 from CadbaseLibrary.CdbsApi import CdbsApi
 from CadbaseLibrary.CdbsStorage import CdbsStorage
@@ -95,12 +95,12 @@ try:
 except Exception as e:
     DataHandler.logger('log', f'Will fall back to Latin-1: {e}')
 try:
-    CdbsEvn.set_library_path()  # get the location for the CADBase library
+    CadbaseLibrary.CdbsEvn.set_library_path()  # get the location for the CADBase library
 except Exception as e:
     DataHandler.logger('error', f'Failed to set path for local library: {e}')
 try:
-    CdbsEvn.set_base_param()  # set default options if they weren't set before
-    CdbsEvn.update_api_points()  # update api points (in case a non-official server is used)
+    CadbaseLibrary.CdbsEvn.set_base_param()  # set default options if they weren't set before
+    CadbaseLibrary.CdbsEvn.update_api_points()  # update api points (in case a non-official server is used)
 except Exception as e:
     DataHandler.logger('error', f'Failed with settings base parameters: {e}')
 g_selected_component_uuid: str = ''
@@ -129,10 +129,10 @@ class ExpCdbsWidget(QtGui.QDockWidget):
     def __init__(self):
         QtGui.QDockWidget.__init__(self)
         self.setObjectName('CADBaseLibrary')
-        self.form = Gui.PySideUic.loadUi(CdbsEvn.g_ui_file)
+        self.form = Gui.PySideUic.loadUi(CadbaseLibrary.CdbsEvn.g_ui_file)
 
         self.dirmodel = ExpFileSystemModel()
-        self.dirmodel.setRootPath(CdbsEvn.g_library_path)
+        self.dirmodel.setRootPath(CadbaseLibrary.CdbsEvn.g_library_path)
         self.dirmodel.setNameFilters([
             '*.fcstd',
             '*.FcStd',
@@ -151,7 +151,7 @@ class ExpCdbsWidget(QtGui.QDockWidget):
         self.form.folder.hideColumn(1)
         self.form.folder.hideColumn(2)
         self.form.folder.hideColumn(3)
-        self.form.folder.setRootIndex(self.dirmodel.index(CdbsEvn.g_library_path))
+        self.form.folder.setRootIndex(self.dirmodel.index(CadbaseLibrary.CdbsEvn.g_library_path))
 
         self.previewframe = self.form.toolBox.widget(0)
         self.previewframe.preview = \
@@ -188,7 +188,7 @@ class ExpCdbsWidget(QtGui.QDockWidget):
         if not g_last_clicked_object.is_dir():
             self.add_part()
             return
-        if not CdbsEvn.g_param.GetString('auth-token'):
+        if not CadbaseLibrary.CdbsEvn.g_param.GetString('auth-token'):
             DataHandler.logger('error', 'Token not found')
             return
         # user-clicked was on directory, need updating uuid of selected component or modification
@@ -256,11 +256,11 @@ class ConfigDialog(QtGui.QDialog):
     def __init__(self, parent=None):
         QtGui.QDialog.__init__(self, parent)
         self.setObjectName('CADBaseLibraryConfig')
-        self.form = Gui.PySideUic.loadUi(CdbsEvn.g_ui_file_config)
+        self.form = Gui.PySideUic.loadUi(CadbaseLibrary.CdbsEvn.g_ui_file_config)
         self._connect_widgets()
         self.form.show()
-        self.form.lineEdit_3.setText(CdbsEvn.g_param.GetString('destination', ''))
-        self.form.lineEdit.setText(CdbsEvn.g_param.GetString('api-url', ''))
+        self.form.lineEdit_3.setText(CadbaseLibrary.CdbsEvn.g_param.GetString('destination', ''))
+        self.form.lineEdit.setText(CadbaseLibrary.CdbsEvn.g_param.GetString('api-url', ''))
 
     def _connect_widgets(self):
         self.form.buttonBox.accepted.connect(self.accept)
@@ -269,13 +269,13 @@ class ConfigDialog(QtGui.QDialog):
         self.form.pushButton_3.clicked.connect(self.changepath)
 
     def setdefaulturl(self):
-        self.form.lineEdit.setText(CdbsEvn.g_base_api)
+        self.form.lineEdit.setText(CadbaseLibrary.CdbsEvn.g_base_api)
 
     def changepath(self):
-        CdbsEvn.g_library_path = CdbsEvn.g_param.GetString('destination', '')
+        CadbaseLibrary.CdbsEvn.g_library_path = CadbaseLibrary.CdbsEvn.g_param.GetString('destination', '')
         np = QtGui.QFileDialog.getExistingDirectory(self,
                                                     'Local location of your existing CADBase library',
-                                                    CdbsEvn.g_library_path)
+                                                    CadbaseLibrary.CdbsEvn.g_library_path)
         if np:
             self.form.lineEdit_3.setText(np)
 
@@ -285,10 +285,10 @@ class ConfigDialog(QtGui.QDialog):
 
     def accept(self):
         if self.form.lineEdit.text():
-            CdbsEvn.g_param.SetString('api-url', self.form.lineEdit.text())
-            CdbsEvn.update_api_points()
-        if self.form.lineEdit_3.text() != CdbsEvn.g_library_path:
-            CdbsEvn.g_param.SetString('destination', self.form.lineEdit_3.text())
+            CadbaseLibrary.CdbsEvn.g_param.SetString('api-url', self.form.lineEdit.text())
+            CadbaseLibrary.CdbsEvn.update_api_points()
+        if self.form.lineEdit_3.text() != CadbaseLibrary.CdbsEvn.g_library_path:
+            CadbaseLibrary.CdbsEvn.g_param.SetString('destination', self.form.lineEdit_3.text())
             DataHandler.logger('warning', 'Please restart FreeCAD')
         if self.form.lineEdit_2.text() and self.form.lineEdit_4.text():
             username = self.form.lineEdit_2.text()
@@ -298,7 +298,7 @@ class ConfigDialog(QtGui.QDialog):
         self.form.close()
 
 
-if QtCore.QDir(CdbsEvn.g_library_path).exists():
+if QtCore.QDir(CadbaseLibrary.CdbsEvn.g_library_path).exists():
     m = Gui.getMainWindow()
     w = m.findChild(QtGui.QDockWidget, 'CADBaseLibrary')
     if w and hasattr(w, 'isVisible'):
@@ -309,7 +309,7 @@ if QtCore.QDir(CdbsEvn.g_library_path).exists():
     else:
         m.addDockWidget(QtCore.Qt.RightDockWidgetArea, ExpCdbsWidget())
 else:
-    DataHandler.logger('warning', f'Library path "{CdbsEvn.g_library_path}" not found.')
+    DataHandler.logger('warning', f'Library path "{CadbaseLibrary.CdbsEvn.g_library_path}" not found.')
 
 
 def update_components_list():
@@ -325,7 +325,7 @@ def update_components_list():
     for component in data.components:
         DataHandler.logger('log', f'Component uuid: {component.uuid}')
         new_dir: Path = \
-            pathlib.Path(CdbsEvn.g_library_path) / f'{component.name} (from  {component.ownerUser.username})'
+            pathlib.Path(CadbaseLibrary.CdbsEvn.g_library_path) / f'{component.name} (from  {component.ownerUser.username})'
         DataHandler.create_object_path(new_dir, component, 'component')
     DataHandler.logger('message', 'Component list update finished')
 
