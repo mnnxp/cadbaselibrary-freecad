@@ -89,19 +89,28 @@ Click the **Upload files** button for upload local files of select modification 
 Information about the upload process will be displayed in the log.  
 After uploading the files, a message will be displayed in the log with information about the number of successfully uploaded files.
 
-## Info
+## Additional Information
 
-In FreeCAD, you can find which is your user **modules folder** by entering or pasting `App.getUserAppDataDir()+"Mod"` and your usr **macros folder** by entering `App.getUserMacroDir()` in the Python console (found under menu View->Panels)
+##### FreeCAD modules and macros folders
 
-If you need to save logs to a file (for example, for debugging, studying, or other purposes), you need to create a `cadbase_file_2018.log` file in the local library folder.
+In FreeCAD, you can find your user _modules folder_ by typing or pasting `App.getUserAppDataDir()+"Mod"` and the user _macros folder_ by typing `App.getUserMacroDir()` in the Python console (found under View->Panels menu).
+
+##### Used (reserved) names in the macro
 
 Please don't use `cadbase_file_2018` and `cadbase_file_2018.log` as file or folder names in the CADBase library folder. These files store server responses and logs, if you use these filenames for your data, you may lose them.
 
-To avoid losing local data when downloading from CADBase storage, files already in local storage are skipped when downloading from the cloud.
+If you need to save logs to a file (for example, for debugging, studying, or other purposes), you need to create a _cadbase_file_2018.log_ file in the local library folder.
 
-Before uploading files to the cloud (CADBase storage), the macro checks for existing files on the cloud and excludes files from an upload list if their local and cloud hashes are the same. A hash is calculated using the Blake3 library.
+In the component folders, a `component` file is created with the technical data about the component.  
 
-This check is skipped and previously downloaded files (whe already in the cloud) are not updated if the Blake3 library is not installed.
+In the modification folders, a `modification` file is created with the technical data about the component modification.
+
+##### How the macro work with data
+
+To avoid losing local data when downloading from CADBase storage (from the cloud), files already in local storage are skipped.
+
+Before uploading files to CADBase storage (to the cloud), the macro checks for existing files in the cloud and excludes files from the upload list if their local and cloud hashes match. A hash is calculated using the Blake3 library.  
+This check is skipped and previously uploaded files (already in the cloud) are not updated unless the Blake3 library is installed.
 
 ## Links
 
