@@ -1,9 +1,10 @@
 """ This file contains one class for authorization on the CADBase platform """
 
 import json
-from PySide2 import QtCore, QtNetwork
-import CadbaseLibrary.CdbsEvn as CdbsEvn
-import CadbaseLibrary.DataHandler as DataHandler
+from PySide import QtCore, QtNetwork  # FreeCAD's PySide
+import CdbsModules.CdbsEvn as CdbsEvn
+import CdbsModules.DataHandler as DataHandler
+from CdbsModules.Translate import translate
 
 
 def parsing_response(reply):
@@ -11,16 +12,19 @@ def parsing_response(reply):
     if response_bytes:
         token = json.loads(str(response_bytes, 'utf-8'))
         CdbsEvn.g_param.SetString('auth-token', token['bearer'])
-        DataHandler.logger('message', 'Successful authorization')
+        DataHandler.logger('message', translate('CdbsAuth', 'Successful authorization'))
     else:
-        DataHandler.logger('error', 'Failed authorization')
+        DataHandler.logger('error', translate('CdbsAuth', 'Failed authorization'))
 
 
 class CdbsAuth:
-    """ Getting a token to access the CADBase platform """
+    """Getting a token to access the CADBase platform"""
 
     def __init__(self, username, password):
-        DataHandler.logger('message', 'Getting a new token, please wait.')
+        DataHandler.logger(
+            'message',
+            translate('CdbsAuth', 'Getting a new token, please wait.'),
+        )
         self.query = {'user': {'username': username, 'password': password}}
         self.nam = QtNetwork.QNetworkAccessManager(None)
         self.do_request()
@@ -39,6 +43,10 @@ class CdbsAuth:
             del body
             del self.query
         except Exception as e:
-            DataHandler.logger('error', f'Exception when trying to login: {e}')
+            DataHandler.logger(
+                'error',
+                translate('CdbsAuth', 'Exception when trying to login:')
+                + f' {e}',
+            )
         else:
             parsing_response(reply)

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<package format="1" xmlns="https://wiki.freecad.org/Package_Metadata">
+  <name>CADBase Library</name>
+  <description>The workbench is designed to use components (parts) from CADBase in the FreeCAD interface.
+Component modifications contain sets of files for various CAD systems.
+This workbench will work with data from the FreeCAD set, without downloading documentation and data from other file sets.</description>
+  <version>0.3.0</version>
+  <date>2023-09-21</date>
+  <maintainer email="in@cadbase.rs">mnnxp</maintainer>
+  <license file="LICENSE">LGPL-3.0-or-later</license>
+  <url branch="master" type="repository">https://github.com/mnnxp/cadbaselibrary-freecad</url>
+  <url type="readme">https://github.com/mnnxp/cadbaselibrary-freecad/blob/main/README.md</url>
+  <url type="discussion">https://forum.freecadweb.org/viewtopic.php?t=69389</url>
+
+  <content>
+    <workbench>
+      <name>CADBase Library</name>
+      <classname>CADBaseLibrary</classname>
+      <description>Designed to works with CADBase Platform in the FreeCAD interface.</description>
+      <subdirectory>./</subdirectory>
+      <icon>Icons/CadbaseLibrary.svg</icon>
+      <freecadmin>0.19.0</freecadmin>
+      <tag>cadbase</tag>
+      <tag>database</tag>
+      <tag>cloud</tag>
+      <tag>storage</tag>
+    </workbench>
+  </content>
+
+</package>
