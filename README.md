@@ -1,7 +1,6 @@
 # Workbench Cadbase Library
 
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
-
 [![FreeCAD >= 0.19.0](https://img.shields.io/badge/FreeCAD->=0.19.0-gren)](https://www.freecad.org)
 
 This workbench allows the user to interact with CADBase (upload and download parts) via the FreeCAD interface.
