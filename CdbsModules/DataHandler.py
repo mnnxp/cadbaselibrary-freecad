@@ -187,6 +187,10 @@ def create_object_path(new_dir: Path, object_info: str, object_type: str):
         return
     if not new_dir.is_dir():
         Path.mkdir(new_dir)
+    if object_type == 'modification':
+        new_dir = Path(new_dir / CdbsEvn.g_program_name)
+        if not new_dir.is_dir():
+            Path.mkdir(new_dir)
     new_info_file = new_dir / object_type
     try:
         with new_info_file.open('w') as f:

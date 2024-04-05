@@ -381,6 +381,8 @@ def update_selected_object_uuid():
     """Upgrading selected uuid for a object, get data from user-selected a folder"""
     global g_selected_component_uuid
     global g_selected_modification_uuid
+    global g_last_clicked_object
+
     # clearing old uuids
     g_selected_component_uuid = ''
     g_selected_modification_uuid = ''
@@ -390,9 +392,14 @@ def update_selected_object_uuid():
         component_data = DataHandler.read_object_info(component_file, 'component')
         g_selected_component_uuid = component_data.uuid
         return
-    modification_file = g_last_clicked_object / 'modification'
+    path_item = g_last_clicked_object
+    if Path(path_item / CdbsModules.CdbsEvn.g_program_name / 'modification').is_file():
+        # switch to a set of files if the modification folder is selected for opening
+        path_item = path_item / CdbsModules.CdbsEvn.g_program_name
+    modification_file = path_item / 'modification'
     # check file with modification info
     if modification_file.exists():
         modification_data = DataHandler.read_object_info(modification_file, 'modification')
         # save the uuid of the selected modification for uploading files
         g_selected_modification_uuid = modification_data.uuid
+        g_last_clicked_object = path_item
