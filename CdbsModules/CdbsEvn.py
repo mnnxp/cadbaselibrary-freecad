@@ -22,6 +22,10 @@ g_ui_file_config = (
     app.getUserAppDataDir()
     + 'Mod/CadbaseLibrary/CdbsModules/cadbase_library_config.ui'
 )
+g_ui_file_token = (
+    app.getUserAppDataDir()
+    + 'Mod/CadbaseLibrary/CdbsModules/cadbase_library_token.ui'
+)
 g_len_uuid = 36  # for a little uuid validation
 # for save the path to the local CADBase library
 g_library_path = g_param.GetString('destination')

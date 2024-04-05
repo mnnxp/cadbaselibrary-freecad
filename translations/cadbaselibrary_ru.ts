@@ -4,147 +4,134 @@
 <context>
     <name>CADBaseLibrary</name>
     <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="14"/>
+        <source>CADBase Library</source>
+        <translation>Библиотека CADBase</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="54"/>
+        <source>Preview</source>
+        <translation>Предпросмотр</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="81"/>
+        <source>Options</source>
+        <translation>Опции</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="96"/>
+        <source>Update components</source>
+        <translation>Обновить компоненты</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="112"/>
+        <source>Settings</source>
+        <translation>Настройки</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="128"/>
+        <source>Upload files</source>
+        <translation>Выгрузить файлы</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="144"/>
+        <source>Authorization</source>
+        <translation>Авторизация</translation>
+    </message>
+    <message>
         <location filename="../CdbsModules/CdbsEvn.py" line="30"/>
         <source>Location of your existing CADBase library</source>
         <translation>Локальное расположение данных библиотеки CADBase</translation>
     </message>
 </context>
 <context>
-    <name>CadbaseMacro</name>
+    <name>Config</name>
     <message>
-        <location filename="../CadbaseMacro.py" line="101"/>
-        <source>Failed to set path for local library:</source>
-        <translation>Не удалось установить путь к локальной библиотеке:</translation>
-    </message>
-    <message>
-        <location filename="../CadbaseMacro.py" line="106"/>
-        <source>Failed with settings base parameters:</source>
-        <translation>Не удалось установить основные параметры: </translation>
-    </message>
-    <message>
-        <location filename="../CadbaseMacro.py" line="132"/>
-        <source>CADBase Library</source>
-        <translation>Библиотека CADBase</translation>
-    </message>
-    <message>
-        <location filename="../CadbaseMacro.py" line="193"/>
-        <source>Token not found</source>
-        <translation>Токен не найден</translation>
-    </message>
-    <message>
-        <location filename="../CadbaseMacro.py" line="215"/>
-        <source>Processing the part...</source>
-        <translation>Обработка детали...</translation>
-    </message>
-    <message>
-        <location filename="../CadbaseMacro.py" line="239"/>
-        <source>Processing for preview the part...</source>
-        <translation>Обработка для предпросмотра детали...</translation>
-    </message>
-    <message>
-        <location filename="../CadbaseMacro.py" line="260"/>
+        <location filename="../CdbsModules/cadbase_library_config.ui" line="14"/>
         <source>CADBase Library Configuration</source>
         <translation>Конфигурация библиотеки CADBase</translation>
     </message>
     <message>
-        <location filename="../CadbaseMacro.py" line="278"/>
-        <source>Local location of your existing CADBase library</source>
-        <translation>Локальное расположение данных библиотеки CADBase</translation>
+        <location filename="../CdbsModules/cadbase_library_config.ui" line="20"/>
+        <source>Library path</source>
+        <translation>Путь к библиотеке</translation>
     </message>
     <message>
-        <location filename="../CadbaseMacro.py" line="285"/>
-        <source>Changes not accepted</source>
-        <translation>Изменения отменены</translation>
+        <location filename="../CdbsModules/cadbase_library_config.ui" line="37"/>
+        <source>The addon will use this directory to save downloaded files. Be careful, data in this directory may be overwritten.
+Changing the library path will require restarting FreeCAD.</source>
+        <translation>Это расширение будет использовать этот каталог для сохранения загруженных файлов. Будьте осторожны, данные в этом каталоге могут быть перезаписаны.
+Изменение пути к библиотеке потребует перезапуска FreeCAD.</translation>
     </message>
     <message>
-        <location filename="../CadbaseMacro.py" line="294"/>
-        <source>Please restart FreeCAD</source>
-        <translation>Пожалуйста, перезапустите FreeCAD</translation>
+        <location filename="../CdbsModules/cadbase_library_config.ui" line="50"/>
+        <source>Enter the path to the local CADBase library.</source>
+        <translation>Введите путь к локальной библиотеке CADBase.</translation>
     </message>
     <message>
-        <location filename="../CadbaseMacro.py" line="299"/>
-        <source>Configuration updated</source>
-        <translation>Конфигурация обновлена</translation>
+        <location filename="../CdbsModules/cadbase_library_config.ui" line="69"/>
+        <source>...</source>
+        <translation>...</translation>
     </message>
     <message>
-        <location filename="../CadbaseMacro.py" line="314"/>
-        <source>Library path not found:</source>
-        <translation>Путь к библиотеке не найден:</translation>
+        <location filename="../CdbsModules/cadbase_library_config.ui" line="83"/>
+        <source>Server URL</source>
+        <translation>Адрес сервера</translation>
     </message>
     <message>
-        <location filename="../CadbaseMacro.py" line="322"/>
-        <source>Received data about components is not suitable for processing</source>
-        <translation>Полученные данные о компонентах не пригодны для обработки.</translation>
+        <location filename="../CdbsModules/cadbase_library_config.ui" line="91"/>
+        <source>Here you can specify the server on which the CADBase platform. Specify the server (URL or IP) if you need to connect to the unofficial CADBase platform server.</source>
+        <translation>Здесь указывается адрес сервера, на котором расположена платформа CADBase. Укажите сервер (URL или IP) вручную, если есть необходимость использовать не основной сервер платформы CADBase.</translation>
     </message>
     <message>
-        <location filename="../CadbaseMacro.py" line="325"/>
-        <source>You don&apos;t have favorite components</source>
-        <translation>У вас нет избранных компонентов</translation>
+        <location filename="../CdbsModules/cadbase_library_config.ui" line="103"/>
+        <source>Enter data server URL here</source>
+        <translation>Введите адрес сервра тут</translation>
     </message>
     <message>
-        <location filename="../CadbaseMacro.py" line="328"/>
-        <source>Component UUID:</source>
-        <translation>Идентификатор компонента (UUID):</translation>
+        <location filename="../CdbsModules/cadbase_library_config.ui" line="113"/>
+        <source>Set official</source>
+        <translation>Сбросить</translation>
+    </message>
+</context>
+<context>
+    <name>Token</name>
+    <message>
+        <location filename="../CdbsModules/cadbase_library_token.ui" line="14"/>
+        <source>Authorization on CADBase</source>
+        <translation>Авторизация на CADBase</translation>
     </message>
     <message>
-        <location filename="../CadbaseMacro.py" line="332"/>
-        <source>Component list update finished</source>
-        <translation>Завершенно обновление списка компонентов</translation>
+        <location filename="../CdbsModules/cadbase_library_token.ui" line="20"/>
+        <source>Authorization</source>
+        <translation>Данные для авторизации</translation>
     </message>
     <message>
-        <location filename="../CadbaseMacro.py" line="338"/>
-        <source>Not set UUID for select component</source>
-        <translation>Не установлен UUID для выбранного компонента</translation>
+        <location filename="../CdbsModules/cadbase_library_token.ui" line="26"/>
+        <source>CADBase platform access token will be saved locally, after successful authorization.
+When the authorization token expires, you will need to request a new authorization token by re-entering your username and password.</source>
+        <translation>Токен доступа к платформе CADBase будет сохранен локально после успешной авторизации. 
+Когда срок действия токена авторизации истечет, вам нужно будет запросить новый токен авторизации, повторно введя имя пользователя и пароль.</translation>
     </message>
     <message>
-        <location filename="../CadbaseMacro.py" line="343"/>
-        <source>Received data about component is not suitable for processing</source>
-        <translation>Полученные данные о компоненте не подходят для обработки</translation>
+        <location filename="../CdbsModules/cadbase_library_token.ui" line="39"/>
+        <source>Username</source>
+        <translation>Имя пользователя</translation>
     </message>
     <message>
-        <location filename="../CadbaseMacro.py" line="346"/>
-        <source>No modifications for the component</source>
-        <translation>У компонента нет модификаций</translation>
+        <location filename="../CdbsModules/cadbase_library_token.ui" line="46"/>
+        <source>Enter your username from CADBase</source>
+        <translation>Введите имя пользователя от учётной записи CADBase</translation>
     </message>
     <message>
-        <location filename="../CadbaseMacro.py" line="350"/>
-        <source>Updated the list of component modifications</source>
-        <translation>Обновить список компонентов модификации</translation>
+        <location filename="../CdbsModules/cadbase_library_token.ui" line="53"/>
+        <source>Password</source>
+        <translation>Пароль</translation>
     </message>
     <message>
-        <location filename="../CadbaseMacro.py" line="356"/>
-        <source>Not set UUID for select modification</source>
-        <translation>Не установлен UUID для выбранной модификации</translation>
-    </message>
-    <message>
-        <location filename="../CadbaseMacro.py" line="361"/>
-        <source>Received data about fileset is not suitable for processing</source>
-        <translation>Полученные данные о наборе файлов не подходят для обработки</translation>
-    </message>
-    <message>
-        <location filename="../CadbaseMacro.py" line="364"/>
-        <source>Fileset not found for FreeCAD</source>
-        <translation>Набор файлов для FreeCAD не найден</translation>
-    </message>
-    <message>
-        <location filename="../CadbaseMacro.py" line="369"/>
-        <source>Received data about files of fileset is not suitable for processing</source>
-        <translation>Получены данные о файлах набора файлов, не пригодны для обработки</translation>
-    </message>
-    <message>
-        <location filename="../CadbaseMacro.py" line="372"/>
-        <source>No files in fileset</source>
-        <translation>В наборе файлов нет файлов</translation>
-    </message>
-    <message>
-        <location filename="../CadbaseMacro.py" line="382"/>
-        <source>Download file(s):</source>
-        <translation>Скачанных файлов: </translation>
-    </message>
-    <message>
-        <location filename="../CadbaseMacro.py" line="383"/>
-        <source>Component modification files update completed</source>
-        <translation>Файлы модификации компонента обновлены</translation>
+        <location filename="../CdbsModules/cadbase_library_token.ui" line="63"/>
+        <source>Enter your password from CADBase</source>
+        <translation>Введите пароль от учётной записи CADBase</translation>
     </message>
 </context>
 <context>
@@ -207,8 +194,8 @@
     </message>
     <message>
         <location filename="../CdbsModules/CdbsStorage.py" line="25"/>
-        <source>To upload files, you must select the modification folder</source>
-        <translation>Для загрузки файлов необходимо выбрать папку модификации</translation>
+        <source>To upload files, you must select a modification folder or a set of files</source>
+        <translation>Для выгрузки файлов необходимо выбрать папку модификации или набора файлов</translation>
     </message>
     <message>
         <location filename="../CdbsModules/CdbsStorage.py" line="27"/>
@@ -217,8 +204,13 @@
     </message>
     <message>
         <location filename="../CdbsModules/CdbsStorage.py" line="29"/>
-        <source>To upload files, you must select a modification (so that the macro can determine the target set of files)</source>
-        <translation>Для загрузки файлов необходимо выбрать модификацию (чтобы макрос мог определить целевой набор файлов)</translation>
+        <source>To upload files, you must select a modification (set of files for FreeCAD will be selected) or a set of files</source>
+        <translation>Для выгрузки файлов необходимо выбрать модификацию (будет выбран набор файлов для FreeCAD) или набор файлов</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/CdbsStorage.py" line="38"/>
+        <source>Files in the CADBase storage have been updated successfully</source>
+        <translation>Файлы в хранилище CADBase успешно обновлены</translation>
     </message>
     <message>
         <location filename="../CdbsModules/CdbsStorage.py" line="43"/>
@@ -254,11 +246,6 @@
         <location filename="../CdbsModules/CdbsStorage.py" line="70"/>
         <source>Success upload files to CADBase storage:</source>
         <translation>Файлы успешно загружены в хранилище CADBase:</translation>
-    </message>
-    <message>
-        <location filename="../CdbsModules/CdbsStorage.py" line="38"/>
-        <source>Files in the CADBase storage have been updated successfully</source>
-        <translation>Файлы в хранилище CADBase успешно обновлены</translation>
     </message>
     <message>
         <location filename="../CdbsModules/CdbsStorage.py" line="80"/>
@@ -417,11 +404,6 @@
         <translation>Ошибка, код состояния:</translation>
     </message>
     <message>
-        <location filename="../CdbsModules/DataHandler.py" line="111"/>
-        <source>Error occurred:</source>
-        <translation>Возникла ошибка:</translation>
-    </message>
-    <message>
         <location filename="../CdbsModules/DataHandler.py" line="62"/>
         <source>File already exists and skipped:</source>
         <translation>Файл уже существует и пропущен:</translation>
@@ -450,6 +432,11 @@
         <location filename="../CdbsModules/DataHandler.py" line="104"/>
         <source>Not found file with response</source>
         <translation>Не найден файл с ответом</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/DataHandler.py" line="111"/>
+        <source>Error occurred:</source>
+        <translation>Возникла ошибка:</translation>
     </message>
     <message>
         <location filename="../CdbsModules/DataHandler.py" line="115"/>
@@ -523,12 +510,145 @@
     </message>
 </context>
 <context>
-    <name>InitGui</name>
+    <name>CadbaseMacro</name>
     <message>
-        <location filename="../InitGui.py" line="8"/>
+        <location filename="../CadbaseMacro.py" line="101"/>
+        <source>Failed to set path for local library:</source>
+        <translation>Не удалось установить путь к локальной библиотеке:</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="106"/>
+        <source>Failed with settings base parameters:</source>
+        <translation>Не удалось установить основные параметры: </translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="132"/>
         <source>CADBase Library</source>
         <translation>Библиотека CADBase</translation>
     </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="193"/>
+        <source>Token not found</source>
+        <translation>Токен не найден</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="215"/>
+        <source>Processing the part...</source>
+        <translation>Обработка детали...</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="239"/>
+        <source>Processing for preview the part...</source>
+        <translation>Обработка для предпросмотра детали...</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="260"/>
+        <source>CADBase Library Configuration</source>
+        <translation>Конфигурация библиотеки CADBase</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="278"/>
+        <source>Local location of your existing CADBase library</source>
+        <translation>Локальное расположение данных библиотеки CADBase</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="285"/>
+        <source>Changes not accepted</source>
+        <translation>Изменения отменены</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="294"/>
+        <source>Please restart FreeCAD</source>
+        <translation>Пожалуйста, перезапустите FreeCAD</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="299"/>
+        <source>Configuration updated</source>
+        <translation>Конфигурация обновлена</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="314"/>
+        <source>Library path not found:</source>
+        <translation>Путь к библиотеке не найден:</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="322"/>
+        <source>Received data about components is not suitable for processing</source>
+        <translation>Полученные данные о компонентах не пригодны для обработки.</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="325"/>
+        <source>You don&apos;t have favorite components</source>
+        <translation>У вас нет избранных компонентов</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="328"/>
+        <source>Component UUID:</source>
+        <translation>Идентификатор компонента (UUID):</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="332"/>
+        <source>Component list update finished</source>
+        <translation>Завершенно обновление списка компонентов</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="338"/>
+        <source>Not set UUID for select component</source>
+        <translation>Не установлен UUID для выбранного компонента</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="343"/>
+        <source>Received data about component is not suitable for processing</source>
+        <translation>Полученные данные о компоненте не подходят для обработки</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="346"/>
+        <source>No modifications for the component</source>
+        <translation>У компонента нет модификаций</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="350"/>
+        <source>Updated the list of component modifications</source>
+        <translation>Обновить список компонентов модификации</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="356"/>
+        <source>Not set UUID for select modification</source>
+        <translation>Не установлен UUID для выбранной модификации</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="361"/>
+        <source>Received data about fileset is not suitable for processing</source>
+        <translation>Полученные данные о наборе файлов не подходят для обработки</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="364"/>
+        <source>Fileset not found for FreeCAD</source>
+        <translation>Набор файлов для FreeCAD не найден</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="369"/>
+        <source>Received data about files of fileset is not suitable for processing</source>
+        <translation>Получены данные о файлах набора файлов, не пригодны для обработки</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="372"/>
+        <source>No files in fileset</source>
+        <translation>В наборе файлов нет файлов</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="382"/>
+        <source>Download file(s):</source>
+        <translation>Скачанных файлов: </translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="383"/>
+        <source>Component modification files update completed</source>
+        <translation>Файлы модификации компонента обновлены</translation>
+    </message>
+</context>
+<context>
+    <name>InitGui</name>
     <message>
         <location filename="../InitGui.py" line="7"/>
         <source>The workbench is designed to use components (parts) from CADBase in the FreeCAD interface. \
@@ -537,6 +657,11 @@ This workbench will work with data from the FreeCAD set, without downloading doc
         <translation>Верстак предназначен для использования компонентов (деталей) из CADBase в интерфейсе FreeCAD.
 Модификации компонента содержат наборы файлов для различных САПР. \
 Этот верстак будет работать данными из набора для FreeCAD, без скачивания документации и данных из других наборов файлов.</translation>
+    </message>
+    <message>
+        <location filename="../InitGui.py" line="8"/>
+        <source>CADBase Library</source>
+        <translation>Библиотека CADBase</translation>
     </message>
 </context>
 </TS>
