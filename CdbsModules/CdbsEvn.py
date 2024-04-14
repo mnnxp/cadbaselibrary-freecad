@@ -10,6 +10,7 @@ g_base_api = 'https://api.cadbase.rs'  # default CADBase platform point
 g_api_login = f'{g_base_api}/login'
 g_cdbs_api = f'{g_base_api}/graphql'
 g_program_id = 42  # this is FreeCAD ID in CADBase
+g_program_name = 'FreeCAD'
 g_user_agent = b'Mozilla/5.0 (Macintosh; Intel Mac OS 10 12.3; rv:42.0) \
                 Gecko/20100101 Firefox/42.0'
 g_content_type = b'application/json'
@@ -20,6 +21,10 @@ g_ui_file = (
 g_ui_file_config = (
     app.getUserAppDataDir()
     + 'Mod/CadbaseLibrary/CdbsModules/cadbase_library_config.ui'
+)
+g_ui_file_token = (
+    app.getUserAppDataDir()
+    + 'Mod/CadbaseLibrary/CdbsModules/cadbase_library_token.ui'
 )
 g_len_uuid = 36  # for a little uuid validation
 # for save the path to the local CADBase library

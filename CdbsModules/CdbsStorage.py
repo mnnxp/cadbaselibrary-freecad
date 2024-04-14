@@ -30,7 +30,7 @@ class CdbsStorage:
                 'warning',
                 translate(
                     'CdbsStorage',
-                    'To upload files, you must select the modification folder',
+                    'To upload files, you must select a modification folder or a set of files',
                 ),
             )
             return
@@ -45,7 +45,7 @@ class CdbsStorage:
                 translate(
                     'CdbsStorage',
                     'To upload files, you must select a modification \
-(so that the macro can determine the target set of files)',
+(set of files for FreeCAD will be selected) or a set of files',
                 ),
             )
             return
