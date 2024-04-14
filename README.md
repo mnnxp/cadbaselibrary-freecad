@@ -154,12 +154,19 @@ Mirrors on [GitHub](https://github.com/mnnxp/cadbaselibrary-freecad) and [Codebe
 
 ## Version
 
-v0.3.0 2023-09-21    * Change type add-on from macro to workbench.
+v1.0.0 2023-04-07    * Support for working with one local library from different programs.
+Changes:
+- In modifications, separate folders are created for FreeCAD file sets;
+- Changed the folder naming for components, it now looks like "Component Name (@user-owner)";
+- Authentication moved to a separate window;
+- Corrected typos in the log and comments.
+
+v0.3.0 2023-09-21    * Changed type add-on from macro to workbench.
 Other changes:
-- Fix window name display;
-- Disable deletion of old versions of files;
-- Add interface translation;
-- Reverse log this release notes.
+- Fixed window name display;
+- Disabled deletion of old versions of files;
+- Added interface translation;
+- Reversed log this release notes.
 
 v0.2.0 2023-02-02    * Added the ability to upload files to the CADBase storage. Added comparing local and cloud-stored files using Blake3 hash.
 
