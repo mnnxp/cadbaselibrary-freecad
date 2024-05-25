@@ -25,7 +25,6 @@ The tool (workbench) is designed to load and use components (parts) from CADBase
 
 import zipfile
 import tempfile
-import pathlib
 from pathlib import Path
 from types import SimpleNamespace
 from PySide import QtGui, QtCore  # FreeCAD's PySide
@@ -138,7 +137,7 @@ class ExpCdbsWidget(QtGui.QDockWidget):
 
     def clicked(self, index):
         global g_last_clicked_object
-        g_last_clicked_object = pathlib.Path(self.dirmodel.filePath(index))
+        g_last_clicked_object = Path(self.dirmodel.filePath(index))
         self.previewframe.preview.clear()  # clear preview frame
         if g_last_clicked_object.suffix.lower() == '.fcstd':
             self.set_preview_img()
@@ -147,7 +146,7 @@ class ExpCdbsWidget(QtGui.QDockWidget):
 
     def doubleclicked(self, index):
         global g_last_clicked_object
-        g_last_clicked_object = pathlib.Path(self.dirmodel.filePath(index))
+        g_last_clicked_object = Path(self.dirmodel.filePath(index))
         if not g_last_clicked_object.is_dir():
             self.add_part()
             return
@@ -308,7 +307,7 @@ class TokenDialog(QtGui.QDialog):
                 )
                 CdbsRegUser(username, password)
             CdbsAuth(username, password)
-        DataHandler.logger('message', translate('CadbaseMacro', 'Configuration updated'))
+        DataHandler.logger('debug', translate('CadbaseMacro', 'Configuration updated'))
         self.form.close()
 
 
@@ -353,7 +352,7 @@ def update_components_list():
             + f' {component.uuid}',
         )
         new_dir: Path = (
-            pathlib.Path(CdbsModules.CdbsEvn.g_library_path)
+            Path(CdbsModules.CdbsEvn.g_library_path)
             / f'{component.name} (@{component.ownerUser.username})'
         )
         DataHandler.create_object_path(new_dir, component, 'component')
