@@ -24,14 +24,14 @@
         <translation>Обновить компоненты</translation>
     </message>
     <message>
-        <location filename="../CdbsModules/cadbase_library.ui" line="112"/>
-        <source>Settings</source>
-        <translation>Настройки</translation>
-    </message>
-    <message>
         <location filename="../CdbsModules/cadbase_library.ui" line="128"/>
         <source>Upload files</source>
         <translation>Выгрузить файлы</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="112"/>
+        <source>Settings</source>
+        <translation>Настройки</translation>
     </message>
     <message>
         <location filename="../CdbsModules/cadbase_library.ui" line="144"/>
@@ -132,6 +132,11 @@ When the authorization token expires, you will need to request a new authorizati
         <location filename="../CdbsModules/cadbase_library_token.ui" line="63"/>
         <source>Enter your password from CADBase</source>
         <translation>Введите пароль от учётной записи CADBase</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library_token.ui" line="72"/>
+        <source>Set to create a new user with the specified credentials</source>
+        <translation>Устанавливается для создания нового пользователя с указанными учетными данными</translation>
     </message>
 </context>
 <context>
@@ -510,6 +515,24 @@ When the authorization token expires, you will need to request a new authorizati
     </message>
 </context>
 <context>
+    <name>cdbs</name>
+    <message>
+        <location filename="../CdbsModules/CdbsNewUser.py" line="24"/>
+        <source>API Point:</source>
+        <translation>Адрес сервера (API):</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/CdbsNewUser.py" line="25"/>
+        <source>New user registration, please wait.</source>
+        <translation>Регистрация нового пользователя, пожалуйста, подождите...</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/CdbsNewUser.py" line="28"/>
+        <source>New user UUID:</source>
+        <translation>Идентификатор (UUID) нового пользователя:</translation>
+    </message>
+</context>
+<context>
     <name>CadbaseMacro</name>
     <message>
         <location filename="../CadbaseMacro.py" line="101"/>
@@ -565,6 +588,11 @@ When the authorization token expires, you will need to request a new authorizati
         <location filename="../CadbaseMacro.py" line="299"/>
         <source>Configuration updated</source>
         <translation>Конфигурация обновлена</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="305"/>
+        <source>Sending a request to create a new user</source>
+        <translation>Отправка запроса на создание нового пользователя</translation>
     </message>
     <message>
         <location filename="../CadbaseMacro.py" line="314"/>
