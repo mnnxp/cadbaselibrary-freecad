@@ -32,6 +32,7 @@ from PySide import QtGui, QtCore  # FreeCAD's PySide
 import Part
 import FreeCADGui as Gui
 import CdbsModules.CdbsEvn
+from CdbsModules.CdbsNewUser import CdbsRegUser
 from CdbsModules.CdbsAuth import CdbsAuth
 from CdbsModules.CdbsApi import CdbsApi
 from CdbsModules.CdbsStorage import CdbsStorage
@@ -281,6 +282,8 @@ class TokenDialog(QtGui.QDialog):
         self.setObjectName('CADBaseLibraryAuthorization')
         self.setWindowTitle(translate('CadbaseMacro', "Authorization on CADBase"))
         self.form = Gui.PySideUic.loadUi(CdbsModules.CdbsEvn.g_ui_file_token)
+        self.form.lineEdit_2.setText(CdbsModules.CdbsEvn.g_param.GetString('cdbs_username', ''))
+        self.form.lineEdit_4.setText(CdbsModules.CdbsEvn.g_param.GetString('cdbs_password', ''))
         self._connect_widgets()
         self.form.show()
 
@@ -296,6 +299,14 @@ class TokenDialog(QtGui.QDialog):
         if self.form.lineEdit_2.text() and self.form.lineEdit_4.text():
             username = self.form.lineEdit_2.text()
             password = self.form.lineEdit_4.text()
+            CdbsModules.CdbsEvn.g_param.SetString('cdbs_username', username)
+            CdbsModules.CdbsEvn.g_param.SetString('cdbs_password', password)
+            if self.form.checkBox.isChecked():
+                DataHandler.logger(
+                    'debug',
+                    translate('CadbaseMacro', 'Sending a request to create a new user')
+                )
+                CdbsRegUser(username, password)
             CdbsAuth(username, password)
         DataHandler.logger('message', translate('CadbaseMacro', 'Configuration updated'))
         self.form.close()
