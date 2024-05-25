@@ -24,6 +24,11 @@
         <translation>Обновить компоненты</translation>
     </message>
     <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="140"/>
+        <source>Create component</source>
+        <translation>Создание компонента</translation>
+    </message>
+    <message>
         <location filename="../CdbsModules/cadbase_library.ui" line="128"/>
         <source>Upload files</source>
         <translation>Выгрузить файлы</translation>
@@ -42,6 +47,34 @@
         <location filename="../CdbsModules/CdbsEvn.py" line="30"/>
         <source>Location of your existing CADBase library</source>
         <translation>Локальное расположение данных библиотеки CADBase</translation>
+    </message>
+</context>
+<context>
+    <name>Component</name>
+    <message>
+        <location filename="../CdbsModules/cadbase_library_object.ui" line="14"/>
+        <source>New component</source>
+        <translation>Новый компонент</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library_object.ui" line="20"/>
+        <source>Create a new component (part) on CADBase platform</source>
+        <translation>Создание нового компонента (детали) на платформе CADBase</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library_object.ui" line="26"/>
+        <source>A new component with the specified name will be created for the authorized user. After successfully creating a new component, the list of favorite components will be updated.</source>
+        <translation>Для авторизованного пользователя будет создан новый компонент с указанным именем. После успешного создания нового компонента список избранных компонентов будет обновлен.</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library_object.ui" line="38"/>
+        <source>Name component</source>
+        <translation>Наименование компонента</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library_object.ui" line="45"/>
+        <source>Enter a name for the new component on CADBase platform</source>
+        <translation>Введите имя для нового компонента на платформе CADBase</translation>
     </message>
 </context>
 <context>
@@ -626,8 +659,8 @@ When the authorization token expires, you will need to request a new authorizati
     </message>
     <message>
         <location filename="../CadbaseMacro.py" line="343"/>
-        <source>Received data about component is not suitable for processing</source>
-        <translation>Полученные данные о компоненте не подходят для обработки</translation>
+        <source>It is not possible to create a component without a name</source>
+        <translation>Невозможно создать компонент без имени</translation>
     </message>
     <message>
         <location filename="../CadbaseMacro.py" line="346"/>
@@ -636,8 +669,8 @@ When the authorization token expires, you will need to request a new authorizati
     </message>
     <message>
         <location filename="../CadbaseMacro.py" line="350"/>
-        <source>Updated the list of component modifications</source>
-        <translation>Обновить список компонентов модификации</translation>
+        <source>Updated the list of modifications to the component</source>
+        <translation>Список модификаций компонентa обновлён</translation>
     </message>
     <message>
         <location filename="../CadbaseMacro.py" line="356"/>
@@ -673,6 +706,11 @@ When the authorization token expires, you will need to request a new authorizati
         <location filename="../CadbaseMacro.py" line="383"/>
         <source>Component modification files update completed</source>
         <translation>Файлы модификации компонента обновлены</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="418"/>
+        <source>Received data about component is not suitable for processing</source>
+        <translation>Полученные данные о компоненте не подходят для обработки</translation>
     </message>
 </context>
 <context>
