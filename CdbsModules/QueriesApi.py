@@ -75,6 +75,20 @@ class QueriesApi:
             }}'''
         )
 
+    def register_component(component_name, component_description):
+        return dict(
+          query=f'''mutation {{
+                registerComponent (args: {{
+                    name: "{component_name}"
+                    description: "{component_description}"
+                    typeAccessId: 1
+                    componentTypeId: 1
+                    actualStatusId: 1
+                    isBase: false
+                }})
+            }}'''
+        )
+
     def register_modification_fileset(modification_uuid):
         return dict(
           query=f'''mutation {{

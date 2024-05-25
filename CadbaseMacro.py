@@ -118,6 +118,8 @@ class ExpCdbsWidget(QtGui.QDockWidget):
         self.optbuttons = self.form.toolBox.widget(1)
         self.optbuttons.updatebutton = \
             self.optbuttons.findChild(QtGui.QToolButton, 'updatebutton')
+        self.optbuttons.newcomponentbtn = \
+            self.optbuttons.findChild(QtGui.QToolButton, 'newcomponentbtn')
         self.optbuttons.uploadbutton = \
             self.optbuttons.findChild(QtGui.QToolButton, 'uploadbutton')
         self.optbuttons.configbutton = \
@@ -131,6 +133,7 @@ class ExpCdbsWidget(QtGui.QDockWidget):
         self.form.folder.clicked.connect(self.clicked)
         self.form.folder.doubleClicked.connect(self.doubleclicked)
         self.optbuttons.updatebutton.clicked.connect(self.update_library)
+        self.optbuttons.newcomponentbtn.clicked.connect(self.new_component)
         self.optbuttons.uploadbutton.clicked.connect(self.upload_files)
         self.optbuttons.configbutton.clicked.connect(self.setconfig)
         self.optbuttons.tokenbutton.clicked.connect(self.settoken)
@@ -163,6 +166,9 @@ class ExpCdbsWidget(QtGui.QDockWidget):
 
     def update_library(self):
         update_components_list()
+
+    def new_component(self):
+        ComponentDialog(parent=self)
 
     def upload_files(self):
         arg = (g_selected_modification_uuid, g_last_clicked_object)
@@ -218,7 +224,7 @@ class ExpCdbsWidget(QtGui.QDockWidget):
 
 
 class ConfigDialog(QtGui.QDialog):
-    """A dialog for workbench settings and get access token"""
+    """A dialog for workbench settings"""
 
     def __init__(self, parent=None):
         QtGui.QDialog.__init__(self, parent)
@@ -274,7 +280,7 @@ class ConfigDialog(QtGui.QDialog):
         self.form.close()
 
 class TokenDialog(QtGui.QDialog):
-    """A dialog for workbench settings and get access token"""
+    """A dialog for obtaining an access token"""
 
     def __init__(self, parent=None):
         QtGui.QDialog.__init__(self, parent)
@@ -308,6 +314,44 @@ class TokenDialog(QtGui.QDialog):
                 CdbsRegUser(username, password)
             CdbsAuth(username, password)
         DataHandler.logger('debug', translate('CadbaseMacro', 'Configuration updated'))
+        self.form.close()
+
+class ComponentDialog(QtGui.QDialog):
+    """A dialog for create a new component"""
+
+    def __init__(self, parent=None):
+        QtGui.QDialog.__init__(self, parent)
+        self.setObjectName('CADBaseLibraryAuthorization')
+        self.setWindowTitle(translate('CadbaseMacro', "Authorization on CADBase"))
+        self.form = Gui.PySideUic.loadUi(CdbsModules.CdbsEvn.g_ui_file_component)
+        self._connect_widgets()
+        self.form.show()
+
+    def _connect_widgets(self):
+        self.form.buttonBox.accepted.connect(self.accept)
+        self.form.buttonBox.rejected.connect(self.reject)
+
+    def reject(self):
+        DataHandler.logger('message', translate('CadbaseMacro', 'Changes not accepted'))
+        self.form.close()
+
+    def accept(self):
+        if not self.form.lineEdit_2.text():
+            DataHandler.logger(
+                'debug',
+                translate(
+                    'CadbaseMacro', 'It is not possible to create a component without a name'
+                ),
+            )
+            self.form.close()
+            return
+        component_name = self.form.lineEdit_2.text()
+        component_description = '♥ FreeCAD'
+        CdbsApi(QueriesApi.register_component(component_name, component_description))
+        self.component_uuid = DataHandler.deep_parsing_gpl('registerComponent')
+        if len(self.component_uuid) == CdbsModules.CdbsEvn.g_len_uuid:
+            update_components_list()
+        DataHandler.logger('info', f'UUID: {self.component_uuid}')
         self.form.close()
 
 
@@ -380,7 +424,10 @@ def update_component():
     for modification in data.componentModifications:
         new_dir = g_last_clicked_object / modification.modificationName
         DataHandler.create_object_path(new_dir, modification, 'modification')
-    DataHandler.logger('message', translate('CadbaseMacro', 'Updated the list of component modifications'))
+    DataHandler.logger(
+        'message',
+        translate('CadbaseMacro', 'Updated the list of modifications to the component')
+    )
 
 
 def update_component_modificaion():
