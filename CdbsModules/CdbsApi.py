@@ -35,7 +35,7 @@ class CdbsApi:
             request.setRawHeader(b'Authorization', auth_header.encode())
             body = json.dumps(query).encode('utf-8')
             DataHandler.logger(
-                'log', translate('CdbsApi', 'Query include body:') + f' {body}'
+                'debug', translate('CdbsApi', 'Query include body:') + f' {body}'
             )
             reply = self.nam.post(request, body)
             loop = QtCore.QEventLoop()

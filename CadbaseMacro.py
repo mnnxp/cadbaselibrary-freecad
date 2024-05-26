@@ -308,7 +308,7 @@ class TokenDialog(QtGui.QDialog):
             CdbsModules.CdbsEvn.g_param.SetString('cdbs_password', password)
             if self.form.checkBox.isChecked():
                 DataHandler.logger(
-                    'debug',
+                    'message',
                     translate('CadbaseMacro', 'Sending a request to create a new user')
                 )
                 CdbsRegUser(username, password)
@@ -338,7 +338,7 @@ class ComponentDialog(QtGui.QDialog):
     def accept(self):
         if not self.form.lineEdit_2.text():
             DataHandler.logger(
-                'debug',
+                'message',
                 translate(
                     'CadbaseMacro', 'It is not possible to create a component without a name'
                 ),
