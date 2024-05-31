@@ -154,7 +154,7 @@ class ExpCdbsWidget(QtGui.QDockWidget):
             self.add_part()
             return
         if not CdbsModules.CdbsEvn.g_param.GetString('auth-token'):
-            DataHandler.logger('error', translate('CadbaseMacro', "Token not found"))
+            DataHandler.logger('error', translate('CadbaseMacro', 'Token not found'))
             return
         # user-clicked was on directory, need updating uuid of selected component or modification
         update_selected_object_uuid()
@@ -163,6 +163,14 @@ class ExpCdbsWidget(QtGui.QDockWidget):
             return
         if g_selected_modification_uuid:
             update_component_modificaion()
+            return
+        DataHandler.logger(
+            'error',
+            translate(
+                'CadbaseMacro',
+                'Please update the modification list for this component.'
+            )
+        )
 
     def update_library(self):
         update_components_list()
@@ -171,8 +179,14 @@ class ExpCdbsWidget(QtGui.QDockWidget):
         ComponentDialog(parent=self)
 
     def upload_files(self):
-        arg = (g_selected_modification_uuid, g_last_clicked_object)
-        CdbsStorage(arg)
+        if (
+            Path(g_last_clicked_object / CdbsModules.CdbsEvn.g_program_name).is_dir()
+            or g_last_clicked_object.name == CdbsModules.CdbsEvn.g_program_name
+        ):
+            arg = (g_selected_modification_uuid, g_last_clicked_object)
+            CdbsStorage(arg)
+            return
+        DataHandler.logger("error", "Unable to find information about a set of files.")
 
     def setconfig(self):
         ConfigDialog(parent=self)
@@ -488,10 +502,19 @@ def update_selected_object_uuid():
     if Path(path_item / CdbsModules.CdbsEvn.g_program_name / 'modification').is_file():
         # switch to a set of files if the modification folder is selected for opening
         path_item = path_item / CdbsModules.CdbsEvn.g_program_name
+        DataHandler.logger('debug', translate('CadbaseMacro', 'Focus shifted to the fileset folder.'))
     modification_file = path_item / 'modification'
     # check file with modification info
     if modification_file.exists():
+        # check in case a set of files is selected for another program
+        if not Path(path_item).name == CdbsModules.CdbsEvn.g_program_name:
+            DataHandler.logger(
+                'warning',
+                translate('CadbaseMacro', 'The selected file set does not belong to FreeCAD.')
+            )
+            return
         modification_data = DataHandler.read_object_info(modification_file, 'modification')
         # save the uuid of the selected modification for uploading files
         g_selected_modification_uuid = modification_data.uuid
         g_last_clicked_object = path_item
+        return
