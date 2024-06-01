@@ -583,6 +583,16 @@ When the authorization token expires, you will need to request a new authorizati
         <translation>Библиотека CADBase</translation>
     </message>
     <message>
+        <location filename="../CadbaseMacro.py" line="171"/>
+        <source>Please update the modification list for this component.</source>
+        <translation>Пожалуйста, обновите список модификаций для этого компонента.</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="181"/>
+        <source>Unable to find information about a set of files.</source>
+        <translation>Невозможно найти информацию о наборе файлов.</translation>
+    </message>
+    <message>
         <location filename="../CadbaseMacro.py" line="193"/>
         <source>Token not found</source>
         <translation>Токен не найден</translation>
@@ -711,6 +721,16 @@ When the authorization token expires, you will need to request a new authorizati
         <location filename="../CadbaseMacro.py" line="418"/>
         <source>Received data about component is not suitable for processing</source>
         <translation>Полученные данные о компоненте не подходят для обработки</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="505"/>
+        <source>Focus shifted to the fileset folder.</source>
+        <translation>Фокус переместился на папку с набором файлов.</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="513"/>
+        <source>The selected file set does not belong to FreeCAD.</source>
+        <translation>Выбранный набор файлов не принадлежит FreeCAD.</translation>
     </message>
 </context>
 <context>

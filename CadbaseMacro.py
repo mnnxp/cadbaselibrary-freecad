@@ -86,7 +86,7 @@ class ExpCdbsWidget(QtGui.QDockWidget):
     def __init__(self):
         QtGui.QDockWidget.__init__(self)
         self.setObjectName('CADBaseLibrary')
-        self.setWindowTitle(translate("InitGui", "CADBase Library"))
+        self.setWindowTitle(translate('InitGui', 'CADBase Library'))
         self.form = Gui.PySideUic.loadUi(CdbsModules.CdbsEvn.g_ui_file)
         self.dirmodel = ExpFileSystemModel()
         self.dirmodel.setRootPath(CdbsModules.CdbsEvn.g_library_path)
@@ -186,7 +186,10 @@ class ExpCdbsWidget(QtGui.QDockWidget):
             arg = (g_selected_modification_uuid, g_last_clicked_object)
             CdbsStorage(arg)
             return
-        DataHandler.logger("error", "Unable to find information about a set of files.")
+        DataHandler.logger(
+            'error',
+            translate('CadbaseMacro', 'Unable to find information about a set of files.')
+        )
 
     def setconfig(self):
         ConfigDialog(parent=self)
@@ -243,7 +246,7 @@ class ConfigDialog(QtGui.QDialog):
     def __init__(self, parent=None):
         QtGui.QDialog.__init__(self, parent)
         self.setObjectName('CADBaseLibrarySettings')
-        self.setWindowTitle(translate('CadbaseMacro', "CADBase Library settings"))
+        self.setWindowTitle(translate('CadbaseMacro', 'CADBase Library settings'))
         self.form = Gui.PySideUic.loadUi(CdbsModules.CdbsEvn.g_ui_file_config)
         self._connect_widgets()
         self.form.show()
@@ -299,7 +302,7 @@ class TokenDialog(QtGui.QDialog):
     def __init__(self, parent=None):
         QtGui.QDialog.__init__(self, parent)
         self.setObjectName('CADBaseLibraryAuthorization')
-        self.setWindowTitle(translate('CadbaseMacro', "Authorization on CADBase"))
+        self.setWindowTitle(translate('CadbaseMacro', 'Authorization on CADBase'))
         self.form = Gui.PySideUic.loadUi(CdbsModules.CdbsEvn.g_ui_file_token)
         self.form.lineEdit_2.setText(CdbsModules.CdbsEvn.g_param.GetString('cdbs_username', ''))
         self.form.lineEdit_4.setText(CdbsModules.CdbsEvn.g_param.GetString('cdbs_password', ''))
@@ -336,7 +339,7 @@ class ComponentDialog(QtGui.QDialog):
     def __init__(self, parent=None):
         QtGui.QDialog.__init__(self, parent)
         self.setObjectName('CADBaseLibraryAuthorization')
-        self.setWindowTitle(translate('CadbaseMacro', "Authorization on CADBase"))
+        self.setWindowTitle(translate('CadbaseMacro', 'Authorization on CADBase'))
         self.form = Gui.PySideUic.loadUi(CdbsModules.CdbsEvn.g_ui_file_component)
         self._connect_widgets()
         self.form.show()
@@ -382,7 +385,7 @@ if QtCore.QDir(CdbsModules.CdbsEvn.g_library_path).exists():
 else:
     DataHandler.logger(
         'warning',
-        translate('CadbaseMacro', "Library path not found:")
+        translate('CadbaseMacro', 'Library path not found:')
         + f' "{CdbsModules.CdbsEvn.g_library_path}"',
     )
 
