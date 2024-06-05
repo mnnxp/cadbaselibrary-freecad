@@ -2,16 +2,16 @@ import os
 import FreeCAD as App
 
 
-class CadbaseLibrary (Workbench):
+class CadbaseLibrary(Workbench):
 
     from CdbsModules.Translate import translate
 
-    MenuText = translate("InitGui", "CADBase Library")
+    MenuText = translate('InitGui', 'CADBase Library')
     ToolTip = translate(
-        "InitGui",
-        "The workbench is designed to use components (parts) from CADBase in the FreeCAD interface. \
+        'InitGui',
+        'The workbench is designed to use components (parts) from CADBase in the FreeCAD interface. \
 Component modifications contain sets of files for various CAD systems. \
-This workbench will work with data from the FreeCAD set, without downloading documentation and data from other file sets."
+This workbench will work with data from the FreeCAD set, without downloading documentation and data from other file sets.'
     )
     Icon = os.path.join(
         App.getUserAppDataDir() + 'Mod/CadbaseLibrary/Icons',
@@ -44,6 +44,6 @@ This workbench will work with data from the FreeCAD set, without downloading doc
     def GetClassName(self):
         # This function is mandatory if this is a full Python workbench
         # This is not a template, the returned string should be exactly "Gui::PythonWorkbench"
-        return "Gui::PythonWorkbench"
+        return 'Gui::PythonWorkbench'
 
 Gui.addWorkbench(CadbaseLibrary())

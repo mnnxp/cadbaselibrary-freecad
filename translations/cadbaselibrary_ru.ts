@@ -24,14 +24,19 @@
         <translation>Обновить компоненты</translation>
     </message>
     <message>
-        <location filename="../CdbsModules/cadbase_library.ui" line="112"/>
-        <source>Settings</source>
-        <translation>Настройки</translation>
+        <location filename="../CdbsModules/cadbase_library.ui" line="140"/>
+        <source>Create component</source>
+        <translation>Создание компонента</translation>
     </message>
     <message>
         <location filename="../CdbsModules/cadbase_library.ui" line="128"/>
         <source>Upload files</source>
         <translation>Выгрузить файлы</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="112"/>
+        <source>Settings</source>
+        <translation>Настройки</translation>
     </message>
     <message>
         <location filename="../CdbsModules/cadbase_library.ui" line="144"/>
@@ -42,6 +47,34 @@
         <location filename="../CdbsModules/CdbsEvn.py" line="30"/>
         <source>Location of your existing CADBase library</source>
         <translation>Локальное расположение данных библиотеки CADBase</translation>
+    </message>
+</context>
+<context>
+    <name>Component</name>
+    <message>
+        <location filename="../CdbsModules/cadbase_library_object.ui" line="14"/>
+        <source>New component</source>
+        <translation>Новый компонент</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library_object.ui" line="20"/>
+        <source>Create a new component (part) on CADBase platform</source>
+        <translation>Создание нового компонента (детали) на платформе CADBase</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library_object.ui" line="26"/>
+        <source>A new component with the specified name will be created for the authorized user. After successfully creating a new component, the list of favorite components will be updated.</source>
+        <translation>Для авторизованного пользователя будет создан новый компонент с указанным именем. После успешного создания нового компонента список избранных компонентов будет обновлен.</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library_object.ui" line="38"/>
+        <source>Name component</source>
+        <translation>Наименование компонента</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library_object.ui" line="45"/>
+        <source>Enter a name for the new component on CADBase platform</source>
+        <translation>Введите имя для нового компонента на платформе CADBase</translation>
     </message>
 </context>
 <context>
@@ -132,6 +165,11 @@ When the authorization token expires, you will need to request a new authorizati
         <location filename="../CdbsModules/cadbase_library_token.ui" line="63"/>
         <source>Enter your password from CADBase</source>
         <translation>Введите пароль от учётной записи CADBase</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library_token.ui" line="72"/>
+        <source>Set to create a new user with the specified credentials</source>
+        <translation>Устанавливается для создания нового пользователя с указанными учетными данными</translation>
     </message>
 </context>
 <context>
@@ -510,6 +548,24 @@ When the authorization token expires, you will need to request a new authorizati
     </message>
 </context>
 <context>
+    <name>cdbs</name>
+    <message>
+        <location filename="../CdbsModules/CdbsNewUser.py" line="24"/>
+        <source>API Point:</source>
+        <translation>Адрес сервера (API):</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/CdbsNewUser.py" line="25"/>
+        <source>New user registration, please wait.</source>
+        <translation>Регистрация нового пользователя, пожалуйста, подождите...</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/CdbsNewUser.py" line="28"/>
+        <source>New user UUID:</source>
+        <translation>Идентификатор (UUID) нового пользователя:</translation>
+    </message>
+</context>
+<context>
     <name>CadbaseMacro</name>
     <message>
         <location filename="../CadbaseMacro.py" line="101"/>
@@ -525,6 +581,16 @@ When the authorization token expires, you will need to request a new authorizati
         <location filename="../CadbaseMacro.py" line="132"/>
         <source>CADBase Library</source>
         <translation>Библиотека CADBase</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="171"/>
+        <source>Please update the modification list for this component.</source>
+        <translation>Пожалуйста, обновите список модификаций для этого компонента.</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="181"/>
+        <source>Unable to find information about a set of files.</source>
+        <translation>Невозможно найти информацию о наборе файлов.</translation>
     </message>
     <message>
         <location filename="../CadbaseMacro.py" line="193"/>
@@ -567,6 +633,11 @@ When the authorization token expires, you will need to request a new authorizati
         <translation>Конфигурация обновлена</translation>
     </message>
     <message>
+        <location filename="../CadbaseMacro.py" line="305"/>
+        <source>Sending a request to create a new user</source>
+        <translation>Отправка запроса на создание нового пользователя</translation>
+    </message>
+    <message>
         <location filename="../CadbaseMacro.py" line="314"/>
         <source>Library path not found:</source>
         <translation>Путь к библиотеке не найден:</translation>
@@ -598,8 +669,8 @@ When the authorization token expires, you will need to request a new authorizati
     </message>
     <message>
         <location filename="../CadbaseMacro.py" line="343"/>
-        <source>Received data about component is not suitable for processing</source>
-        <translation>Полученные данные о компоненте не подходят для обработки</translation>
+        <source>It is not possible to create a component without a name</source>
+        <translation>Невозможно создать компонент без имени</translation>
     </message>
     <message>
         <location filename="../CadbaseMacro.py" line="346"/>
@@ -608,8 +679,8 @@ When the authorization token expires, you will need to request a new authorizati
     </message>
     <message>
         <location filename="../CadbaseMacro.py" line="350"/>
-        <source>Updated the list of component modifications</source>
-        <translation>Обновить список компонентов модификации</translation>
+        <source>Updated the list of modifications to the component</source>
+        <translation>Список модификаций компонентa обновлён</translation>
     </message>
     <message>
         <location filename="../CadbaseMacro.py" line="356"/>
@@ -645,6 +716,21 @@ When the authorization token expires, you will need to request a new authorizati
         <location filename="../CadbaseMacro.py" line="383"/>
         <source>Component modification files update completed</source>
         <translation>Файлы модификации компонента обновлены</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="418"/>
+        <source>Received data about component is not suitable for processing</source>
+        <translation>Полученные данные о компоненте не подходят для обработки</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="505"/>
+        <source>Focus shifted to the fileset folder.</source>
+        <translation>Фокус переместился на папку с набором файлов.</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="513"/>
+        <source>The selected file set does not belong to FreeCAD.</source>
+        <translation>Выбранный набор файлов не принадлежит FreeCAD.</translation>
     </message>
 </context>
 <context>

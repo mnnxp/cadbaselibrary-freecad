@@ -25,13 +25,13 @@ The tool (workbench) is designed to load and use components (parts) from CADBase
 
 import zipfile
 import tempfile
-import pathlib
 from pathlib import Path
 from types import SimpleNamespace
 from PySide import QtGui, QtCore  # FreeCAD's PySide
 import Part
 import FreeCADGui as Gui
 import CdbsModules.CdbsEvn
+from CdbsModules.CdbsNewUser import CdbsRegUser
 from CdbsModules.CdbsAuth import CdbsAuth
 from CdbsModules.CdbsApi import CdbsApi
 from CdbsModules.CdbsStorage import CdbsStorage
@@ -86,7 +86,7 @@ class ExpCdbsWidget(QtGui.QDockWidget):
     def __init__(self):
         QtGui.QDockWidget.__init__(self)
         self.setObjectName('CADBaseLibrary')
-        self.setWindowTitle(translate("InitGui", "CADBase Library"))
+        self.setWindowTitle(translate('InitGui', 'CADBase Library'))
         self.form = Gui.PySideUic.loadUi(CdbsModules.CdbsEvn.g_ui_file)
         self.dirmodel = ExpFileSystemModel()
         self.dirmodel.setRootPath(CdbsModules.CdbsEvn.g_library_path)
@@ -118,6 +118,8 @@ class ExpCdbsWidget(QtGui.QDockWidget):
         self.optbuttons = self.form.toolBox.widget(1)
         self.optbuttons.updatebutton = \
             self.optbuttons.findChild(QtGui.QToolButton, 'updatebutton')
+        self.optbuttons.newcomponentbtn = \
+            self.optbuttons.findChild(QtGui.QToolButton, 'newcomponentbtn')
         self.optbuttons.uploadbutton = \
             self.optbuttons.findChild(QtGui.QToolButton, 'uploadbutton')
         self.optbuttons.configbutton = \
@@ -131,13 +133,14 @@ class ExpCdbsWidget(QtGui.QDockWidget):
         self.form.folder.clicked.connect(self.clicked)
         self.form.folder.doubleClicked.connect(self.doubleclicked)
         self.optbuttons.updatebutton.clicked.connect(self.update_library)
+        self.optbuttons.newcomponentbtn.clicked.connect(self.new_component)
         self.optbuttons.uploadbutton.clicked.connect(self.upload_files)
         self.optbuttons.configbutton.clicked.connect(self.setconfig)
         self.optbuttons.tokenbutton.clicked.connect(self.settoken)
 
     def clicked(self, index):
         global g_last_clicked_object
-        g_last_clicked_object = pathlib.Path(self.dirmodel.filePath(index))
+        g_last_clicked_object = Path(self.dirmodel.filePath(index))
         self.previewframe.preview.clear()  # clear preview frame
         if g_last_clicked_object.suffix.lower() == '.fcstd':
             self.set_preview_img()
@@ -146,12 +149,12 @@ class ExpCdbsWidget(QtGui.QDockWidget):
 
     def doubleclicked(self, index):
         global g_last_clicked_object
-        g_last_clicked_object = pathlib.Path(self.dirmodel.filePath(index))
+        g_last_clicked_object = Path(self.dirmodel.filePath(index))
         if not g_last_clicked_object.is_dir():
             self.add_part()
             return
         if not CdbsModules.CdbsEvn.g_param.GetString('auth-token'):
-            DataHandler.logger('error', translate('CadbaseMacro', "Token not found"))
+            DataHandler.logger('error', translate('CadbaseMacro', 'Token not found'))
             return
         # user-clicked was on directory, need updating uuid of selected component or modification
         update_selected_object_uuid()
@@ -160,13 +163,33 @@ class ExpCdbsWidget(QtGui.QDockWidget):
             return
         if g_selected_modification_uuid:
             update_component_modificaion()
+            return
+        DataHandler.logger(
+            'error',
+            translate(
+                'CadbaseMacro',
+                'Please update the modification list for this component.'
+            )
+        )
 
     def update_library(self):
         update_components_list()
 
+    def new_component(self):
+        ComponentDialog(parent=self)
+
     def upload_files(self):
-        arg = (g_selected_modification_uuid, g_last_clicked_object)
-        CdbsStorage(arg)
+        if (
+            Path(g_last_clicked_object / CdbsModules.CdbsEvn.g_program_name).is_dir()
+            or g_last_clicked_object.name == CdbsModules.CdbsEvn.g_program_name
+        ):
+            arg = (g_selected_modification_uuid, g_last_clicked_object)
+            CdbsStorage(arg)
+            return
+        DataHandler.logger(
+            'error',
+            translate('CadbaseMacro', 'Unable to find information about a set of files.')
+        )
 
     def setconfig(self):
         ConfigDialog(parent=self)
@@ -218,12 +241,12 @@ class ExpCdbsWidget(QtGui.QDockWidget):
 
 
 class ConfigDialog(QtGui.QDialog):
-    """A dialog for workbench settings and get access token"""
+    """A dialog for workbench settings"""
 
     def __init__(self, parent=None):
         QtGui.QDialog.__init__(self, parent)
         self.setObjectName('CADBaseLibrarySettings')
-        self.setWindowTitle(translate('CadbaseMacro', "CADBase Library settings"))
+        self.setWindowTitle(translate('CadbaseMacro', 'CADBase Library settings'))
         self.form = Gui.PySideUic.loadUi(CdbsModules.CdbsEvn.g_ui_file_config)
         self._connect_widgets()
         self.form.show()
@@ -274,13 +297,15 @@ class ConfigDialog(QtGui.QDialog):
         self.form.close()
 
 class TokenDialog(QtGui.QDialog):
-    """A dialog for workbench settings and get access token"""
+    """A dialog for obtaining an access token"""
 
     def __init__(self, parent=None):
         QtGui.QDialog.__init__(self, parent)
         self.setObjectName('CADBaseLibraryAuthorization')
-        self.setWindowTitle(translate('CadbaseMacro', "Authorization on CADBase"))
+        self.setWindowTitle(translate('CadbaseMacro', 'Authorization on CADBase'))
         self.form = Gui.PySideUic.loadUi(CdbsModules.CdbsEvn.g_ui_file_token)
+        self.form.lineEdit_2.setText(CdbsModules.CdbsEvn.g_param.GetString('cdbs_username', ''))
+        self.form.lineEdit_4.setText(CdbsModules.CdbsEvn.g_param.GetString('cdbs_password', ''))
         self._connect_widgets()
         self.form.show()
 
@@ -296,8 +321,54 @@ class TokenDialog(QtGui.QDialog):
         if self.form.lineEdit_2.text() and self.form.lineEdit_4.text():
             username = self.form.lineEdit_2.text()
             password = self.form.lineEdit_4.text()
+            CdbsModules.CdbsEvn.g_param.SetString('cdbs_username', username)
+            CdbsModules.CdbsEvn.g_param.SetString('cdbs_password', password)
+            if self.form.checkBox.isChecked():
+                DataHandler.logger(
+                    'message',
+                    translate('CadbaseMacro', 'Sending a request to create a new user')
+                )
+                CdbsRegUser(username, password)
             CdbsAuth(username, password)
-        DataHandler.logger('message', translate('CadbaseMacro', 'Configuration updated'))
+        DataHandler.logger('debug', translate('CadbaseMacro', 'Configuration updated'))
+        self.form.close()
+
+class ComponentDialog(QtGui.QDialog):
+    """A dialog for create a new component"""
+
+    def __init__(self, parent=None):
+        QtGui.QDialog.__init__(self, parent)
+        self.setObjectName('CADBaseLibraryAuthorization')
+        self.setWindowTitle(translate('CadbaseMacro', 'Authorization on CADBase'))
+        self.form = Gui.PySideUic.loadUi(CdbsModules.CdbsEvn.g_ui_file_component)
+        self._connect_widgets()
+        self.form.show()
+
+    def _connect_widgets(self):
+        self.form.buttonBox.accepted.connect(self.accept)
+        self.form.buttonBox.rejected.connect(self.reject)
+
+    def reject(self):
+        DataHandler.logger('message', translate('CadbaseMacro', 'Changes not accepted'))
+        self.form.close()
+
+    def accept(self):
+        if not self.form.lineEdit_2.text():
+            DataHandler.logger(
+                'message',
+                translate(
+                    'CadbaseMacro', 'It is not possible to create a component without a name'
+                ),
+            )
+            self.form.close()
+            return
+        component_name = self.form.lineEdit_2.text()
+        component_description = '♥ FreeCAD'
+        CdbsApi(QueriesApi.register_component(component_name, component_description))
+        self.component_uuid = DataHandler.deep_parsing_gpl('registerComponent')
+        if len(self.component_uuid) == CdbsModules.CdbsEvn.g_len_uuid:
+            update_components_list()
+        DataHandler.logger('info', f'UUID: {self.component_uuid}')
         self.form.close()
 
 
@@ -314,7 +385,7 @@ if QtCore.QDir(CdbsModules.CdbsEvn.g_library_path).exists():
 else:
     DataHandler.logger(
         'warning',
-        translate('CadbaseMacro', "Library path not found:")
+        translate('CadbaseMacro', 'Library path not found:')
         + f' "{CdbsModules.CdbsEvn.g_library_path}"',
     )
 
@@ -342,7 +413,7 @@ def update_components_list():
             + f' {component.uuid}',
         )
         new_dir: Path = (
-            pathlib.Path(CdbsModules.CdbsEvn.g_library_path)
+            Path(CdbsModules.CdbsEvn.g_library_path)
             / f'{component.name} (@{component.ownerUser.username})'
         )
         DataHandler.create_object_path(new_dir, component, 'component')
@@ -370,7 +441,10 @@ def update_component():
     for modification in data.componentModifications:
         new_dir = g_last_clicked_object / modification.modificationName
         DataHandler.create_object_path(new_dir, modification, 'modification')
-    DataHandler.logger('message', translate('CadbaseMacro', 'Updated the list of component modifications'))
+    DataHandler.logger(
+        'message',
+        translate('CadbaseMacro', 'Updated the list of modifications to the component')
+    )
 
 
 def update_component_modificaion():
@@ -431,10 +505,19 @@ def update_selected_object_uuid():
     if Path(path_item / CdbsModules.CdbsEvn.g_program_name / 'modification').is_file():
         # switch to a set of files if the modification folder is selected for opening
         path_item = path_item / CdbsModules.CdbsEvn.g_program_name
+        DataHandler.logger('debug', translate('CadbaseMacro', 'Focus shifted to the fileset folder.'))
     modification_file = path_item / 'modification'
     # check file with modification info
     if modification_file.exists():
+        # check in case a set of files is selected for another program
+        if not Path(path_item).name == CdbsModules.CdbsEvn.g_program_name:
+            DataHandler.logger(
+                'warning',
+                translate('CadbaseMacro', 'The selected file set does not belong to FreeCAD.')
+            )
+            return
         modification_data = DataHandler.read_object_info(modification_file, 'modification')
         # save the uuid of the selected modification for uploading files
         g_selected_modification_uuid = modification_data.uuid
         g_last_clicked_object = path_item
+        return

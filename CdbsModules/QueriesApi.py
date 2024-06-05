@@ -7,6 +7,19 @@ import CdbsModules.CdbsEvn as CdbsEvn
 
 
 class QueriesApi:
+    def register_user(username: str, password: str):
+        return dict(
+          query=f'''mutation {{
+              registerUser (args: {{
+                email: ""
+                username: "{username}"
+                password: "{password}"
+              }}) {{
+                uuid
+              }}
+            }}'''
+        )
+
     @staticmethod
     def fav_components():
         return dict(
@@ -59,6 +72,20 @@ class QueriesApi:
                 filename
                 downloadUrl
               }}
+            }}'''
+        )
+
+    def register_component(component_name, component_description):
+        return dict(
+          query=f'''mutation {{
+                registerComponent (args: {{
+                    name: "{component_name}"
+                    description: "{component_description}"
+                    typeAccessId: 1
+                    componentTypeId: 1
+                    actualStatusId: 1
+                    isBase: false
+                }})
             }}'''
         )
 

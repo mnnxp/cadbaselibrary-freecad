@@ -19,6 +19,28 @@ Files uploaded to file sets are versioned, allowing you to restore earlier versi
 
 ![This GIF shows the process of uploading a new (second) version and then returning the first version.](./Resources/revisions.gif "Uploading a new (second) version and then returning the first version.")
 
+### CADBase Library Browser
+
+Favorite components are displayed at root level. After selecting and opening a component, a list of its modifications is displayed this Component level. These levels correspond to the location of folders in the directory that is specified in the Library path property. Files for FreeCAD will be downloaded through this add-on, files from kits for other programs will not be downloaded.
+
+The data display can be divided into three levels, the first one is the root level (**rl**), this level displays all components from the local library, the second one is the component level (**cl**), it displays the list of modifications of the open component, and the third level displays the data of a set of files (**fl**). The folder for FreeCAD file set in local storage is created regardless of the presence of file set in the modification on CADBase platform, the file set will be created automatically when sending files.
+
+<pre>
+-Library path                       # set in add-on (<b>rl</b>)
+├── Vertical Pump (@lookme)         # component folder (<b>cl</b>)
+│   ├── N1                          # modification folder
+│   │   ├── FreeCAD                 # FreeCAD fileset (<b>fl</b>)
+│   │   │   ├── modification        # technical data file
+│   │   │   ├── vertical Pump.FCStd # file of the FreeCAD fileset
+│   │   │   └── ...                 # files of the FreeCAD fileset
+│   │   └── ...                     # filesets for the modification (<b>fl</b>)
+│   ├── ...                         # modifications of the component
+│   └── component                   # technical data file
+├── ...                             # local library components (<b>rl</b>)
+├── cadbase_file_2018.log           # stores logs and responses (optional)
+└── cadbase_file_2018               # technical data file
+</pre>
+
 ## Install
 
 ### Addon Manager (recommended)
@@ -82,7 +104,8 @@ In the _CADBase library_ window, on the **Options** tab, click the **Settings** 
 
 When the _CADBase library configuration_ window opens, you need to set a **username** and **password** in order to access CADBase.
 
-After entering these data to receive the token and pressing the **OK** button. Please wait until you receive the token.
+To obtain a token for an existing account or create a new account to access CADBase, you must provide a username and password. After entering these data to receive the token need pressing the **OK** button.  
+Please wait until you receive the token. This data will be saved and available after restarting FreeCAD.
 
 ![This GIF shows the process of obtaining an authorization token and a list of components from bookmarks (favorites).](./Resources/retrieving_token.gif "Retrieving an authorization token and a list of components from bookmarks.")
 
@@ -106,6 +129,10 @@ Getting files of a fileset for FreeCAD occurs after double-clicking on a modific
 
 ![This GIF shows the process of getting the list of component modifications and a set of FreeCAD files.](./Resources/getting_data.gif "Getting the list of component modifications and a set of FreeCAD files.")
 
+### Create a new component
+
+The **Create component** button is used to create a new component on the CADBase platform. Сlicking on the button opens a modal window in which ability create a new component (part, project, etc.) with a given name.
+
 ### Sending data
 
 Select the modification from which you want to upload files.
@@ -126,9 +153,8 @@ In FreeCAD, you can find your user _modules folder_ by typing or pasting `App.ge
 
 ##### Used (reserved) names in the workbench
 
-Please don't use `cadbase_file_2018` and `cadbase_file_2018.log` as file or folder names in the CADBase library folder. These files store server responses and logs, if you use these filenames for your data, you may lose them.
-
-If you need to save logs to a file (for example, for debugging, studying, or other purposes), you need to create a _cadbase_file_2018.log_ file in the local library folder.
+Please don't use `cadbase_file_2018` and `cadbase_file_2018.log` as file or folder names in the CADBase library folder. These files store server responses and logs, if you use these filenames for your data, you may lose them.  
+If you need to save logs to a file (for example, for debugging, study, or other purposes), you need to create a `cadbase_file_2018.log` file in the local library folder.
 
 In the component folders, a `component` file is created with the technical data about the component.
 
@@ -153,6 +179,11 @@ Mirrors on [GitHub](https://github.com/mnnxp/cadbaselibrary-freecad) and [Codebe
 [Videos about the workbench (on YouTube)](https://youtube.com/playlist?list=PLhWY3rxxzvXKZs7-WrHjnW_d3EiEmCioV)
 
 ## Version
+
+v1.0.1 2023-06-05    * More functionality:
+- Possibility to create an account (on CADBase platform) via workbench;
+- Possibility to create a component (on CADBase platform) via workbench;
+- Saving login and password for quick retrieval of a new token.
 
 v1.0.0 2023-04-07    * Support for working with one local library from different programs.
 Changes:

@@ -4,8 +4,8 @@
   <description>The workbench is designed to use components (parts) from CADBase in the FreeCAD interface.
 Component modifications contain sets of files for various CAD systems.
 This workbench will work with data from the FreeCAD set, without downloading documentation and data from other file sets.</description>
-  <version>1.0.0</version>
-  <date>2024-04-07</date>
+  <version>1.0.1</version>
+  <date>2024-06-05</date>
   <maintainer email="in@cadbase.rs">mnnxp</maintainer>
   <license file="LICENSE">LGPL-3.0-or-later</license>
   <url branch="master" type="repository">https://github.com/mnnxp/cadbaselibrary-freecad</url>
