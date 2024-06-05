@@ -29,7 +29,7 @@ The data display can be divided into three levels, the first one is the root lev
 -Library path                       # set in add-on (<b>rl</b>)
 ├── Vertical Pump (@lookme)         # component folder (<b>cl</b>)
 │   ├── N1                          # modification folder
-│   │   ├── FreeCAD                 # FreeCAD fileset (<b>fl</b>
+│   │   ├── FreeCAD                 # FreeCAD fileset (<b>fl</b>)
 │   │   │   ├── modification        # technical data file
 │   │   │   ├── vertical Pump.FCStd # file of the FreeCAD fileset
 │   │   │   └── ...                 # files of the FreeCAD fileset
