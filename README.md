@@ -180,7 +180,9 @@ Mirrors on [GitHub](https://github.com/mnnxp/cadbaselibrary-freecad) and [Codebe
 
 ## Version
 
-v1.0.1 2023-06-05    * More functionality:
+v1.0.2 2024-10-01    * Fix for FreeCAD 1RC2 and set FreeCAD ID when creating a user.
+
+v1.0.1 2024-06-05    * More functionality:
 - Possibility to create an account (on CADBase platform) via workbench;
 - Possibility to create a component (on CADBase platform) via workbench;
 - Saving login and password for quick retrieval of a new token.

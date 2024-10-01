@@ -14,6 +14,7 @@ class QueriesApi:
                 email: ""
                 username: "{username}"
                 password: "{password}"
+                programId: 42
               }}) {{
                 uuid
               }}
