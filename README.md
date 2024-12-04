@@ -7,7 +7,9 @@ This workbench allows the user to interact with CADBase (upload and download par
 
 CADBase is a platform for publishing and sharing information about 3D components, drawings and manufacturers.
 
-**Important Note:**  To use the workbench, you must have an account on the [CADBase Platform](https://cadbase.rs).
+**Important Note:**  To use the workbench, you must have an account on the [CADBase Platform](https://cadbase.rs). You can also create an account via add-on, if the entered username is free, a new user will be created with the specified username and password.
+
+![This screenshot shows how a new user is created via the workbench, this window is also used for authorization.](./Resources/new_user.png "The screenshot shows the window of new user registration on CADBase platform.")
 
 ## Description
 
@@ -26,6 +28,7 @@ Favorite components are displayed at root level. After selecting and opening a c
 The data display can be divided into three levels, the first one is the root level (**rl**), this level displays all components from the local library, the second one is the component level (**cl**), it displays the list of modifications of the open component, and the third level displays the data of a set of files (**fl**). The folder for FreeCAD file set in local storage is created regardless of the presence of file set in the modification on CADBase platform, the file set will be created automatically when sending files.
 
 <pre>
+
 -Library path                       # set in add-on (<b>rl</b>)
 ├── Vertical Pump (@lookme)         # component folder (<b>cl</b>)
 │   ├── N1                          # modification folder
@@ -47,17 +50,17 @@ The data display can be divided into three levels, the first one is the root lev
 
 CADBaseLibrary is available through the FreeCAD Addon Manager:
 
-It is called _CADBaseLibrary_ in the Addon Repository.
+It is called "CADBase Library" in the Addon Repository.
 
-In menu **Tools** select **Addon Manager**, select the **Workbenches** tab find _CADBaseLibrary_ in the list and click Install.
+In menu **Tools** select **Addon Manager**, select the **Workbenches** tab find "CADBase Library" in the list and click Install.
 
 **Important Note:** CADBaseLibrary needs FreeCAD v0.19 or above. CADBaseLibrary is **not** compatible with FreeCAD v0.18 and before.
 
 ### Manual Installation
 
-It is also possible to install this workspace manually into FreeCAD's local Mod directory. This can be useful for testing local modifications to the workspace, or to remove an old stale version of the workspace.
+It is also possible to install this workbenche manually into FreeCAD's local Mod directory. This can be useful for testing local changes to the workbenche, or to remove an old stale version of the workbenche.
 
-In this case, download the Github [cadbaselibrary-freecad-master.zip](https://github.com/mnnxp/cadbaselibrary-freecad/archive/master.zip) archive from [github.com/mnnxp/cadbaselibrary-freecad](https://github.com/mnnxp/cadbaselibrary-freecad) (see [Links](#Links) for more) to a temporary directory, and extract the Zip archive. Delete (or move) the **CadbaseLibrary** directory from the local FreeCAD Mod directory, if it exists. Then copy all items in the **cadbaselibrary-freecad** folder to the **CadbaseLibrary** folder in the directory containing all FreeCAD addon workspaces:
+In this case, download the Github [cadbaselibrary-freecad-master.zip](https://github.com/mnnxp/cadbaselibrary-freecad/archive/master.zip) archive from [github.com/mnnxp/cadbaselibrary-freecad](https://github.com/mnnxp/cadbaselibrary-freecad) (see [Links](#Links) for more) to a temporary directory, and extract the Zip archive. Delete (or move) the **CadbaseLibrary** directory from the local FreeCAD Mod directory, if it exists. Then copy all items in the **cadbaselibrary-freecad** folder to the **CadbaseLibrary** folder in the directory containing all FreeCAD workbenche:
 
 * for Windows: `C:\Users\******\AppData\Roaming\FreeCAD\Mod`
 * for MacOS: `~/Library/Preferences/FreeCAD/Mod/`
@@ -77,7 +80,7 @@ git clone https://gitlab.com/cadbase/cadbaselibrary-freecad.git \
 
 ##### Installation Blake3
 
-To use this workbench to update files already in the CADBase storage, Blake3 must be installed.
+To use this workbench to update files already in the CADBase storage, [Blake3](https://pypi.org/project/blake3/) must be installed.
 
 ```sh
   # Install on Unix/macOS
@@ -86,7 +89,7 @@ To use this workbench to update files already in the CADBase storage, Blake3 mus
   py -m pip install "blake3"
 ```
 
-**Please Note:** The workbench will work without this _Blake3_ library, the only difference is that the files in the CADBase storage (cloud) that have already been uploaded will not be replaced.
+**Please Note:** The workbench will work without this Blake3 library, the only difference is that the files in the CADBase storage (cloud) that have already been uploaded will not be replaced.
 
 ### First start
 
@@ -96,26 +99,34 @@ Select the **CADBase Library** workbench from the workbench drop-down list.
 
 On first run, the workbench will ask you for the location of your library. The CADBase cloud storage will be synchronized with this location, and technical files for the workbench will be created there.
 
-This location can be changed in the workbench settings in the field _Library path_.
+This location can be changed in the workbench settings in the field "Library path".
 
 #### Getting an authorization token
 
-In the _CADBase library_ window, on the **Options** tab, click the **Settings** button.
+In the "CADBase library" window, on the **Options** tab, click the **Settings** button for open "CADBase library configuration".
 
-When the _CADBase library configuration_ window opens, you need to set a **username** and **password** in order to access CADBase.
+<p align="center">
+  <img src="./Resources/configuration.png" alt="screenshot shows the workbench setup, library path and server URL/IP.]" width="70%"/>
+</p>
+
+To specify **username** and **password** to access CADBase, you need to click on the **Authorization** button to open the "Authorization on CADBase" window.
+
+<p align="center">
+  <img src="./Resources/authorization.png" alt="This screenshot shows registration and authorization window." width="70%"/>
+</p>
 
 To obtain a token for an existing account or create a new account to access CADBase, you must provide a username and password. After entering these data to receive the token need pressing the **OK** button.  
 Please wait until you receive the token. This data will be saved and available after restarting FreeCAD.
 
-![This GIF shows the process of obtaining an authorization token and a list of components from bookmarks (favorites).](./Resources/retrieving_token.gif "Retrieving an authorization token and a list of components from bookmarks.")
-
-**Important Note:**  If the access token has expired, you need to repeat the steps above.
+**Important Note:**  If the access token has expired, you need to repeat these two steps (username and password are already saved):
+1. Click on the **Authorization** button
+1. Click on the **Ok** button
 
 ## Usage
 
 Add target components to bookmarks (favorites) on the CADBase site.
 
-![This GIF shows the process of adding a component to bookmarks (favorites).](./Resources/add_fav.gif "Adding a component to bookmarks (favorites)")
+![This GIF shows the process of adding a component to bookmarks (favorites).](./Resources/add_fav.gif "Adding a component to bookmarks (favorites).")
 
 In FreeCAD will only display components that the user has bookmarked on CADBase, as well as those that have been previously downloaded.
 
@@ -133,6 +144,10 @@ Getting files of a fileset for FreeCAD occurs after double-clicking on a modific
 
 The **Create component** button is used to create a new component on the CADBase platform. Сlicking on the button opens a modal window in which ability create a new component (part, project, etc.) with a given name.
 
+<p align="center">
+  <img src="./Resources/new_component.png" alt="This is the window for creating a new component (part) on CADBase platform." width="70%"/>
+</p>
+
 ### Sending data
 
 Select the modification from which you want to upload files.
@@ -149,7 +164,7 @@ After uploading the files, a message will be displayed in the log with informati
 
 ##### FreeCAD modules and macros folders
 
-In FreeCAD, you can find your user _modules folder_ by typing or pasting `App.getUserAppDataDir()+"Mod"` and the user _macros folder_ by typing `App.getUserMacroDir()` in the Python console (found under View->Panels menu).
+In FreeCAD, you can find your user "modules folder" by typing or pasting `App.getUserAppDataDir()+"Mod"` and the user "macros folder" by typing `App.getUserMacroDir()` in the Python console (found under View->Panels menu).
 
 ##### Used (reserved) names in the workbench
 
@@ -180,7 +195,9 @@ Mirrors on [GitHub](https://github.com/mnnxp/cadbaselibrary-freecad) and [Codebe
 
 ## Version
 
-v1.0.2 2024-10-01    * Fix for FreeCAD 1RC2 and set FreeCAD ID when creating a user.
+v1.0.3 2024-12-04    * Fixed URL link to README, corrected description, updated illustrations.
+
+v1.0.2 2024-10-01    * Fixed compatibility with FreeCAD 1RC2 and added FreeCAD ID when creating a user.
 
 v1.0.1 2024-06-05    * More functionality:
 - Possibility to create an account (on CADBase platform) via workbench;
