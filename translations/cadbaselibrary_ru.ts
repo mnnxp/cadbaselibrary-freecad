@@ -173,6 +173,44 @@ When the authorization token expires, you will need to request a new authorizati
     </message>
 </context>
 <context>
+    <name>UploadFiles</name>
+    <message>
+        <location filename="../CdbsModules/cadbase_library_upload.ui" line="14"/>
+        <source>CADBase Library Upload files</source>
+        <translation>Библиотека CADBase Отправка файлов</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library_upload.ui" line="20"/>
+        <source>Commit message</source>
+        <translation>Cообщение о фиксации</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library_upload.ui" line="28"/>
+        <source>A commit message is a succinct and accurate description of the changes.</source>
+        <translation>Сообщение о фиксации или комментарий к изменению - это краткое и ёмкое описание вносимых изменений.</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library_upload.ui" line="40"/>
+        <source>Enter message here</source>
+        <translation>Введите сообщение здесь</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library_upload.ui" line="50"/>
+        <source>Clear</source>
+        <translation>Очистить</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library_upload.ui" line="64"/>
+        <source>Please waiting data processing...</source>
+        <translation>Пожалуйста, подождите, идёт обработка файлов...</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library_upload.ui" line="79"/>
+        <source>Please note: the changes indicated in the table will be applied only after clicking the OK button.</source>
+        <translation>Обратите внимание: изменения, указанные в таблице, будут применены только после нажатия кнопки ОК.</translation>
+    </message>
+</context>
+<context>
     <name>CdbsApi</name>
     <message>
         <location filename="../CdbsModules/CdbsApi.py" line="15"/>
@@ -316,11 +354,6 @@ When the authorization token expires, you will need to request a new authorizati
         <translation>Новые файлы для загрузки:</translation>
     </message>
     <message>
-        <location filename="../CdbsModules/CdbsStorage.py" line="115"/>
-        <source>Blake3 import error:</source>
-        <translation>Ошибка при подключении Blake3:</translation>
-    </message>
-    <message>
         <location filename="../CdbsModules/CdbsStorage.py" line="116"/>
         <source>Warning: for compare hashes need install `blake3`. Please try to install it with: `pip install blake3` or some other way.</source>
         <translation>Внимание: для сравнения хэшей необходимо установить `blake3`. Пожалуйста, попробуйте установить его с помощью: `pip install blake3` или каким-либо другим способом.</translation>
@@ -334,6 +367,21 @@ When the authorization token expires, you will need to request a new authorizati
         <location filename="../CdbsModules/CdbsStorage.py" line="126"/>
         <source>Warning: found not file and it skipped</source>
         <translation>Предупреждение: файл не найден и пропущен</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/CdbsStorage.py" line="155"/>
+        <source>Uploading files to cloud storage (this can take a long time)</source>
+        <translation>Загрузка файлов в облачное хранилище (это может занять много времени)</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/CdbsStorage.py" line="203"/>
+        <source>Files for deletion:</source>
+        <translation>Файлы для удаления:</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/CdbsStorage.py" line="115"/>
+        <source>Blake3 import error:</source>
+        <translation>Ошибка при подключении Blake3:</translation>
     </message>
     <message>
         <location filename="../CdbsModules/CdbsStorage.py" line="133"/>
@@ -359,11 +407,6 @@ When the authorization token expires, you will need to request a new authorizati
         <location filename="../CdbsModules/CdbsStorage.py" line="149"/>
         <source>Selected files to upload:</source>
         <translation>Выбранные файлы для загрузки:</translation>
-    </message>
-    <message>
-        <location filename="../CdbsModules/CdbsStorage.py" line="155"/>
-        <source>Uploading files to cloud storage (this can take a long time)</source>
-        <translation>Загрузка файлов в облачное хранилище (это может занять много времени)</translation>
     </message>
     <message>
         <location filename="../CdbsModules/CdbsStorage.py" line="158"/>

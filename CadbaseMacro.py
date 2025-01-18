@@ -38,6 +38,7 @@ from CdbsModules.CdbsStorage import CdbsStorage
 from CdbsModules.QueriesApi import QueriesApi
 import CdbsModules.DataHandler as DataHandler
 from CdbsModules.Translate import translate
+from CdbsModules.UploadTable import TableUploadFiles
 
 try:
     QtCore.QTextCodec.setCodecForTr(QtCore.QTextCodec.codecForName('UTF-8'))
@@ -183,8 +184,7 @@ class ExpCdbsWidget(QtGui.QDockWidget):
             Path(g_last_clicked_object / CdbsModules.CdbsEvn.g_program_name).is_dir()
             or g_last_clicked_object.name == CdbsModules.CdbsEvn.g_program_name
         ):
-            arg = (g_selected_modification_uuid, g_last_clicked_object)
-            CdbsStorage(arg)
+            UploadDialog(parent=self)
             return
         DataHandler.logger(
             'error',
@@ -239,6 +239,54 @@ class ExpCdbsWidget(QtGui.QDockWidget):
             DataHandler.logger('error', f'{e}: {g_last_clicked_object}')
             self.previewframe.preview.clear()  # clear preview in case of any error
 
+
+class UploadDialog(QtGui.QDialog):
+    """Dialog for managing file uploads to remote (cloud) storage"""
+
+    def __init__(self, parent=None):
+        QtGui.QDialog.__init__(self, parent)
+        self.setObjectName('CADBaseLibraryUpload')
+        self.setWindowTitle(translate('CadbaseMacro', 'CADBase Library upload files'))
+        self.form = Gui.PySideUic.loadUi(CdbsModules.CdbsEvn.g_ui_file_upload)
+        self.form.lineEdit.setText('')
+        self._connect_widgets()
+        self.form.show()
+        arg = (g_selected_modification_uuid, g_last_clicked_object)
+        self.files = CdbsStorage(arg)
+        self.update_table()
+
+    def update_table(self):
+        items = self.files.processing_manager() or []
+        if items:
+            self.form.tableView.setModel(TableUploadFiles(items))
+            self.form.tableView.resizeColumnsToContents()
+            self.form.label.setText('Change information:')
+        else:
+            self.form.label.setText('Change information: no changes were found.')
+
+    def _connect_widgets(self):
+        self.form.buttonBox.accepted.connect(self.accept)
+        self.form.buttonBox.rejected.connect(self.reject)
+        self.form.pushButton.clicked.connect(self.clear)
+
+    def clear(self):
+        self.form.lineEdit.setText('')
+
+    def reject(self):
+        DataHandler.logger('message', translate('CadbaseMacro', 'Changes not accepted'))
+        self.form.close()
+
+    def accept(self):
+        self.form.groupBox.hide()
+        self.form.tableView.hide()
+        self.form.label_2.hide()
+        self.form.buttonBox.setEnabled(False)
+        self.form.label.setText(translate(
+                'CdbsStorage',
+                'Uploading files to cloud storage (this can take a long time)'
+            ))
+        self.files.processing_update(self.form.lineEdit.text())
+        self.form.close()
 
 class ConfigDialog(QtGui.QDialog):
     """A dialog for workbench settings"""

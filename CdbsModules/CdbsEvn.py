@@ -18,6 +18,10 @@ g_ui_file = (
     app.getUserAppDataDir()
     + 'Mod/CadbaseLibrary/CdbsModules/cadbase_library.ui'
 )
+g_ui_file_upload = (
+    app.getUserAppDataDir()
+    + 'Mod/CadbaseLibrary/CdbsModules/cadbase_library_upload.ui'
+)
 g_ui_file_config = (
     app.getUserAppDataDir()
     + 'Mod/CadbaseLibrary/CdbsModules/cadbase_library_config.ui'
