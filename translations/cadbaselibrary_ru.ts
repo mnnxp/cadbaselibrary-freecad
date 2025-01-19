@@ -437,7 +437,7 @@ When the authorization token expires, you will need to request a new authorizati
     </message>
     <message>
         <location filename="../CdbsModules/CdbsStorage.py" line="287"/>
-        <source>updated</source>
+        <source>modified</source>
         <translation>изменён</translation>
     </message>
     <message>

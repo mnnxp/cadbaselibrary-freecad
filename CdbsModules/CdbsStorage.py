@@ -183,7 +183,7 @@ the files were not uploaded to correctly',
                 if self.force_upload:
                     # add all conflicts to update in the remote repository
                     self.upload_filenames.append(l_filename)
-                    self.affected_files.append([l_filename, translate('CdbsStorage', 'updated')])
+                    self.affected_files.append([l_filename, translate('CdbsStorage', 'modified')])
                     continue
                 # save the name of the (old) file for hash check
                 dup_files.append(l_filename)
@@ -284,7 +284,7 @@ Please try to install it with: `pip install blake3` or some other way.',
                 and local_file_hash != cloud_file['hash']
             ):
                 self.upload_filenames.append(df)
-                self.affected_files.append([df, translate('CdbsStorage', 'updated')])
+                self.affected_files.append([df, translate('CdbsStorage', 'modified')])
 
     def upload(self):
         """Getting information (file IDs, pre-signed URLs) to upload files to CADBase storage
