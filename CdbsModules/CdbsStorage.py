@@ -24,6 +24,8 @@ class CdbsStorage:
         )
         self.modification_uuid = arg[0]
         self.last_clicked_dir = arg[1]  # set directory from which files will be pushed
+        self.skip_blake3 = arg[2]  # skip computing Blake3 hash
+        self.force_upload = arg[3]  # forced updating of files in remote storage
         self.commit_msg = ''  # change comment has length limit of 225
         if not Path.is_dir(self.last_clicked_dir):
             DataHandler.logger(
@@ -178,6 +180,11 @@ the files were not uploaded to correctly',
                     translate('CdbsStorage', 'The local file has a cloud version:')
                     + f' "{l_filename}"',
                 )
+                if self.force_upload:
+                    # add all conflicts to update in the remote repository
+                    self.upload_filenames.append(l_filename)
+                    self.affected_files.append([l_filename, translate('CdbsStorage', 'updated')])
+                    continue
                 # save the name of the (old) file for hash check
                 dup_files.append(l_filename)
             else:
@@ -188,18 +195,20 @@ the files were not uploaded to correctly',
                 )
                 # save the name of the new file to upload
                 self.upload_filenames.append(l_filename)
-                self.affected_files.append([l_filename, 'new'])
+                self.affected_files.append([l_filename, translate('CdbsStorage', 'new')])
         DataHandler.logger(
             'message',
             translate('CdbsStorage', 'New files to upload:')
             + f' {self.upload_filenames}',
         )
-        self.parsing_duplicate(dup_files, cloud_files)
+        # check hash if flags are false
+        if not self.skip_blake3 and not self.force_upload:
+            self.parsing_duplicate(dup_files, cloud_files)
         # comparing file names of local and remote storage to detect deleted files
         for cf in cloud_files:
             if cf.get('filename') not in local_filenames:
                 self.delete_file_uuids.append(cf.get('uuid'))
-                self.affected_files.append([cf.get('filename'), 'deleted'])
+                self.affected_files.append([cf.get('filename'), translate('CdbsStorage', 'deleted')])
         DataHandler.logger(
             'log',
             translate('CdbsStorage', 'Files for deletion:')
@@ -275,7 +284,7 @@ Please try to install it with: `pip install blake3` or some other way.',
                 and local_file_hash != cloud_file['hash']
             ):
                 self.upload_filenames.append(df)
-                self.affected_files.append([df, 'updated'])
+                self.affected_files.append([df, translate('CdbsStorage', 'updated')])
 
     def upload(self):
         """Getting information (file IDs, pre-signed URLs) to upload files to CADBase storage

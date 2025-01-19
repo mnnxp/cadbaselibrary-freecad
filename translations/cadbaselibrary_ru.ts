@@ -126,6 +126,28 @@ Changing the library path will require restarting FreeCAD.</source>
         <source>Set official</source>
         <translation>Сбросить</translation>
     </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library_config.ui" line="127"/>
+        <source>Upload settings</source>
+        <translation>Настройки выгрузки</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library_config.ui" line="135"/>
+        <source>By selecting the check boxes below, to change set update process.
+If set to `Skip calculate hash`, there will be no comparison between files in local and remote storage. `Forcibly update files` means that files should be uploaded to remote storage without additional checks.</source>
+        <translation>Установив значения ниже, можно изменить настройки процесса обновления.
+Если установлено значение `Пропускать вычисление хэша`, сравнение файлов в локальном и удаленном хранилищах производиться не будет. `Принудительное обновление файлов` означает, что файлы должны быть загружены в удаленное хранилище без дополнительных проверок.</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library_config.ui" line="151"/>
+        <source>Skip calculate hash</source>
+        <translation>Пропускать вычисление хэша</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library_config.ui" line="158"/>
+        <source>Forcibly update files</source>
+        <translation>Принудительное обновление файлов</translation>
+    </message>
 </context>
 <context>
     <name>Token</name>
@@ -349,11 +371,6 @@ When the authorization token expires, you will need to request a new authorizati
         <translation>Локальный файл не имеет облачную версию</translation>
     </message>
     <message>
-        <location filename="../CdbsModules/CdbsStorage.py" line="107"/>
-        <source>New files to upload:</source>
-        <translation>Новые файлы для загрузки:</translation>
-    </message>
-    <message>
         <location filename="../CdbsModules/CdbsStorage.py" line="116"/>
         <source>Warning: for compare hashes need install `blake3`. Please try to install it with: `pip install blake3` or some other way.</source>
         <translation>Внимание: для сравнения хэшей необходимо установить `blake3`. Пожалуйста, попробуйте установить его с помощью: `pip install blake3` или каким-либо другим способом.</translation>
@@ -372,6 +389,21 @@ When the authorization token expires, you will need to request a new authorizati
         <location filename="../CdbsModules/CdbsStorage.py" line="155"/>
         <source>Uploading files to cloud storage (this can take a long time)</source>
         <translation>Загрузка файлов в облачное хранилище (это может занять много времени)</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/CdbsStorage.py" line="198"/>
+        <source>new</source>
+        <translation>новый</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/CdbsStorage.py" line="107"/>
+        <source>New files to upload:</source>
+        <translation>Новые файлы для загрузки:</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/CdbsStorage.py" line="211"/>
+        <source>deleted</source>
+        <translation>удалён</translation>
     </message>
     <message>
         <location filename="../CdbsModules/CdbsStorage.py" line="203"/>
@@ -402,6 +434,11 @@ When the authorization token expires, you will need to request a new authorizati
         <location filename="../CdbsModules/CdbsStorage.py" line="135"/>
         <source>cloud</source>
         <translation>облачное храшилище</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/CdbsStorage.py" line="287"/>
+        <source>updated</source>
+        <translation>изменён</translation>
     </message>
     <message>
         <location filename="../CdbsModules/CdbsStorage.py" line="149"/>
@@ -654,6 +691,16 @@ When the authorization token expires, you will need to request a new authorizati
         <location filename="../CadbaseMacro.py" line="260"/>
         <source>CADBase Library Configuration</source>
         <translation>Конфигурация библиотеки CADBase</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="268"/>
+        <source>Change information:</source>
+        <translation>Информация об изменениях:</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="270"/>
+        <source>Change information: no changes were found.</source>
+        <translation>Информация об изменениях: изменений не обнаружено.</translation>
     </message>
     <message>
         <location filename="../CadbaseMacro.py" line="278"/>

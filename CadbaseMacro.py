@@ -251,7 +251,12 @@ class UploadDialog(QtGui.QDialog):
         self.form.lineEdit.setText('')
         self._connect_widgets()
         self.form.show()
-        arg = (g_selected_modification_uuid, g_last_clicked_object)
+        arg = (
+            g_selected_modification_uuid,
+            g_last_clicked_object,
+            bool(CdbsModules.CdbsEvn.g_param.GetString('skip-blake3', '')),
+            bool(CdbsModules.CdbsEvn.g_param.GetString('force-upload', ''))
+            )
         self.files = CdbsStorage(arg)
         self.update_table()
 
@@ -260,9 +265,9 @@ class UploadDialog(QtGui.QDialog):
         if items:
             self.form.tableView.setModel(TableUploadFiles(items))
             self.form.tableView.resizeColumnsToContents()
-            self.form.label.setText('Change information:')
+            self.form.label.setText(translate('CadbaseMacro', 'Change information:'))
         else:
-            self.form.label.setText('Change information: no changes were found.')
+            self.form.label.setText(translate('CadbaseMacro', 'Change information: no changes were found.'))
 
     def _connect_widgets(self):
         self.form.buttonBox.accepted.connect(self.accept)
@@ -300,6 +305,8 @@ class ConfigDialog(QtGui.QDialog):
         self.form.show()
         self.form.lineEdit_3.setText(CdbsModules.CdbsEvn.g_param.GetString('destination', ''))
         self.form.lineEdit.setText(CdbsModules.CdbsEvn.g_param.GetString('api-url', ''))
+        self.form.checkBox_1.setChecked(bool(CdbsModules.CdbsEvn.g_param.GetString('skip-blake3', '')))
+        self.form.checkBox_2.setChecked(bool(CdbsModules.CdbsEvn.g_param.GetString('force-upload', '')))
 
     def _connect_widgets(self):
         self.form.buttonBox.accepted.connect(self.accept)
@@ -329,19 +336,23 @@ class ConfigDialog(QtGui.QDialog):
         self.form.close()
 
     def accept(self):
-        update_settings = False
         if self.form.lineEdit.text():
             CdbsModules.CdbsEvn.g_param.SetString('api-url', self.form.lineEdit.text())
             CdbsModules.CdbsEvn.update_api_points()
-            update_settings = True
         if self.form.lineEdit_3.text() != CdbsModules.CdbsEvn.g_library_path:
             CdbsModules.CdbsEvn.g_param.SetString('destination', self.form.lineEdit_3.text())
             DataHandler.logger('warning', translate('CadbaseMacro', 'Please restart FreeCAD'))
-            update_settings = True
-        if update_settings:
-            DataHandler.logger('message', translate('CadbaseMacro', 'Configuration updated'))
+        # update flag for skip blake3
+        if self.form.checkBox_1.isChecked():
+            CdbsModules.CdbsEvn.g_param.SetString('skip-blake3', 'True')
         else:
-            DataHandler.logger('message', translate('CadbaseMacro', 'No changes found'))
+            CdbsModules.CdbsEvn.g_param.SetString('skip-blake3', '')
+        # update flag for upload without check
+        if self.form.checkBox_2.isChecked():
+            CdbsModules.CdbsEvn.g_param.SetString('force-upload', 'True')
+        else:
+            CdbsModules.CdbsEvn.g_param.SetString('force-upload', '')
+        DataHandler.logger('message', translate('CadbaseMacro', 'Configuration updated'))
         self.form.close()
 
 class TokenDialog(QtGui.QDialog):

@@ -65,6 +65,10 @@ def set_base_param():
         g_param.SetString('api-url', g_base_api)
     if not g_param.GetString('auth-token'):
         g_param.SetString('auth-token', '')
+    if not g_param.GetString('skip-blake3'):
+        g_param.SetString('skip-blake3', '')  # False is '' and True is 'True'
+    if not g_param.GetString('force-upload'):
+        g_param.SetString('force-upload', '')  # False is '' and True is 'True'
 
 
 def update_api_points():

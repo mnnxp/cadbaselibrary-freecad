@@ -24,6 +24,12 @@
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
          <widget class="QLabel" name="label_4">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>30</height>
+           </size>
+          </property>
           <property name="text">
            <string>A commit message is a succinct and accurate description of the changes.</string>
           </property>
