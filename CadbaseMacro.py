@@ -336,6 +336,7 @@ class ConfigDialog(QtGui.QDialog):
         self.form.close()
 
     def accept(self):
+        self.form.buttonBox.setEnabled(False)
         if self.form.lineEdit.text():
             CdbsModules.CdbsEvn.g_param.SetString('api-url', self.form.lineEdit.text())
             CdbsModules.CdbsEvn.update_api_points()
@@ -377,6 +378,7 @@ class TokenDialog(QtGui.QDialog):
         self.form.close()
 
     def accept(self):
+        self.form.buttonBox.setEnabled(False)
         if self.form.lineEdit_2.text() and self.form.lineEdit_4.text():
             username = self.form.lineEdit_2.text()
             password = self.form.lineEdit_4.text()
@@ -412,6 +414,7 @@ class ComponentDialog(QtGui.QDialog):
         self.form.close()
 
     def accept(self):
+        self.form.buttonBox.setEnabled(False)
         if not self.form.lineEdit_2.text():
             DataHandler.logger(
                 'message',
