@@ -222,6 +222,8 @@ Mirrors on [GitHub](https://github.com/mnnxp/cadbaselibrary-freecad) and [Codebe
 
 ## Version
 
+v2.0.0 2025-01-25    * Implemented preview of changes before sending update, added deletion of old files from remote storage, updated server API.
+
 v1.0.3 2024-12-04    * Fixed URL link to README, corrected description, updated illustrations.
 
 v1.0.2 2024-10-01    * Fixed compatibility with FreeCAD 1RC2 and added FreeCAD ID when creating a user.
