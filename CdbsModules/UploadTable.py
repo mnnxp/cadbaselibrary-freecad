@@ -1,12 +1,16 @@
 from PySide import QtGui, QtCore  # FreeCAD's PySide
 import FreeCADGui as Gui
+from CdbsModules.Translate import translate
 
 
 class TableUploadFiles(QtCore.QAbstractTableModel):
     def __init__(self, items):
         super().__init__()
         self.items = items
-        self.headers = ['Filename', 'Status']
+        self.headers = [
+            translate('CdbsStorage', 'Filename'),
+            translate('CdbsStorage', 'Status')
+        ]
 
     def data(self, index, role):
         if role == QtCore.Qt.DisplayRole:
