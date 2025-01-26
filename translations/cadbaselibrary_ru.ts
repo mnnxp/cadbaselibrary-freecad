@@ -480,6 +480,16 @@ When the authorization token expires, you will need to request a new authorizati
         <source>Total time:</source>
         <translation>Общее время:</translation>
     </message>
+    <message>
+        <location filename="../CdbsModules/UploadTable.py" line="11"/>
+        <source>Filename</source>
+        <translation>Имя файла</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/UploadTable.py" line="12"/>
+        <source>Status</source>
+        <translation>Состояние</translation>
+    </message>
 </context>
 <context>
     <name>CdbsStorageApi</name>
