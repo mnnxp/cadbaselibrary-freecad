@@ -206,9 +206,9 @@ In the modification folders, a `modification` file is created with the technical
 
 To avoid losing local data when downloading from CADBase storage (from the cloud), files already in local storage are skipped.
 
-Before uploading files to CADBase storage (to the cloud), the workbench checks for existing files in the cloud and excludes files from the upload list if their local and cloud hashes match. A hash is calculated using the Blake3 library.
+In general check is skipped and previously uploaded files (already in remote storage) are updated unless off force upload in settings.
 
-This check is skipped and previously uploaded files (already in the cloud) are not updated unless the Blake3 library is installed.
+As an option (Blake3 is needed), before uploading files to CADBase storage (remote storage) the add-on can check for existing files in the remote storage and excludes files from the upload list if their local and remote storage hashes match.
 
 ## Links
 
