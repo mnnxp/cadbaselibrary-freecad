@@ -58,9 +58,9 @@ In menu **Tools** select **Addon Manager**, select the **Workbenches** tab find 
 
 ### Manual Installation
 
-It is also possible to install this workbenche manually into FreeCAD's local Mod directory. This can be useful for testing local changes to the workbenche, or to remove an old stale version of the workbenche.
+It is also possible to install this workbench manually into FreeCAD's local Mod directory. This can be useful for testing local changes to the workbench, or to remove an old stale version of the workbench.
 
-In this case, download the Github [cadbaselibrary-freecad-master.zip](https://github.com/mnnxp/cadbaselibrary-freecad/archive/master.zip) archive from [github.com/mnnxp/cadbaselibrary-freecad](https://github.com/mnnxp/cadbaselibrary-freecad) (see [Links](#Links) for more) to a temporary directory, and extract the Zip archive. Delete (or move) the **CadbaseLibrary** directory from the local FreeCAD Mod directory, if it exists. Then copy all items in the **cadbaselibrary-freecad** folder to the **CadbaseLibrary** folder in the directory containing all FreeCAD workbenche:
+In this case, download the Github [cadbaselibrary-freecad-master.zip](https://github.com/mnnxp/cadbaselibrary-freecad/archive/master.zip) archive from [github.com/mnnxp/cadbaselibrary-freecad](https://github.com/mnnxp/cadbaselibrary-freecad) (see [Links](#Links) for more) to a temporary directory, and extract the Zip archive. Delete (or move) the **CadbaseLibrary** directory from the local FreeCAD Mod directory, if it exists. Then copy all items in the **cadbaselibrary-freecad** folder to the **CadbaseLibrary** folder in the directory containing all FreeCAD workbenches:
 
 * for Windows: `C:\Users\******\AppData\Roaming\FreeCAD\Mod`
 * for MacOS: `~/Library/Preferences/FreeCAD/Mod/`
@@ -101,19 +101,27 @@ On first run, the workbench will ask you for the location of your library. The C
 
 This location can be changed in the workbench settings in the field "Library path".
 
-#### Getting an authorization token
+#### Setting up the workbench
 
 In the "CADBase library" window, on the **Options** tab, click the **Settings** button for open "CADBase library configuration".
 
+The local library location is specified in the **Library path** section field. When the location is changed, the data from the previous location will not be moved (it can be moved manually).
+
+In the **Server URL** section you can set URL/IP for communication with the platform.
+
+The **Upload settings** section allows you to set parameters to improve workbench operation in the absence of Blake3 and in case of necessity of forced updating of files on CADBase storage.
+
+If you set **Forcibly update files** to True, the **Skip calculate hash** value will be ignored. The hash will not be calculated, as it is unnecessary.
+
+The parameters affect only the uploading of data to the server. When downloading data, existing files will not be overwritten regardless of the settings.
+
 <p align="center">
-  <img src="./Resources/configuration.png" alt="screenshot shows the workbench setup, library path and server URL/IP.]" width="70%"/>
+  <img src="./Resources/configuration.png" alt="screenshot shows the workbench setup, library path and server URL/IP." width="70%"/>
 </p>
+
+#### Getting an authorization token
 
 To specify **username** and **password** to access CADBase, you need to click on the **Authorization** button to open the "Authorization on CADBase" window.
-
-<p align="center">
-  <img src="./Resources/authorization.png" alt="This screenshot shows registration and authorization window." width="70%"/>
-</p>
 
 To obtain a token for an existing account or create a new account to access CADBase, you must provide a username and password. After entering these data to receive the token need pressing the **OK** button.  
 Please wait until you receive the token. This data will be saved and available after restarting FreeCAD.
@@ -122,13 +130,17 @@ Please wait until you receive the token. This data will be saved and available a
 1. Click on the **Authorization** button
 1. Click on the **Ok** button
 
+<p align="center">
+  <img src="./Resources/authorization.png" alt="This screenshot shows registration and authorization window." width="70%"/>
+</p>
+
 ## Usage
 
 Add target components to bookmarks (favorites) on the CADBase site.
 
-![This GIF shows the process of adding a component to bookmarks (favorites).](./Resources/add_fav.gif "Adding a component to bookmarks (favorites).")
-
 In FreeCAD will only display components that the user has bookmarked on CADBase, as well as those that have been previously downloaded.
+
+![This GIF shows the process of adding a component to bookmarks (favorites).](./Resources/add_fav.gif "Adding a component to bookmarks (favorites).")
 
 ### Getting data
 
@@ -136,7 +148,7 @@ Clicking **Update components** only updates the list of components from bookmark
 
 Double-clicking on a components folder to get a list of modifications for component.
 
-Getting files of a fileset for FreeCAD occurs after double-clicking on a modification folder.
+Getting files of a file set for FreeCAD occurs after double-clicking on a modification folder.
 
 ![This GIF shows the process of getting the list of component modifications and a set of FreeCAD files.](./Resources/getting_data.gif "Getting the list of component modifications and a set of FreeCAD files.")
 
@@ -150,15 +162,30 @@ The **Create component** button is used to create a new component on the CADBase
 
 ### Sending data
 
-Select the modification from which you want to upload files.
+Select the modification from which you want to load the files. You can select either the modification folder or the FreeCAD file set folder. In the first case the workbench will define the FreeCAD file set itself. Only files from FreeCAD file set will be loaded to CADBase storage.
 
-Click the **Upload files** button for upload local files of select modification folder to CADBase storage (cloud).
+Click the **Upload files** button to process data and display information about detected changes between local and remote storage. The local storage (library) is considered to be the reference storage.
 
-Information about the upload process will be displayed in the log.
+The **Commit message** section can optionally contain a message that allows users to better understand what has changed in this update. The message will be associated with all files that were added or changed in this update and can be viewed on the platform's website.
 
-After uploading the files, a message will be displayed in the log with information about the number of successfully uploaded files.
+Files affected by the update will be displayed in the table under the **Commit message** section. In addition to the file names, the type of changes is indicated:
+ * `new` - the file is not detected in the remote storage and will be uploaded as a new one
+ * `modified` - the file exists in remote storage and will be updated to the new revision
+ * `deleted` - the file no longer exists locally and will be deleted from remote storage in this update
 
-![This GIF shows the process of uploading files to a FreeCAD file set in cloud storage.](./Resources/sending_data.gif "Uploading files to a FreeCAD file set in cloud storage.")
+Click the **Ok** button for upload local files of select modification folder to CADBase storage (cloud).
+
+<p align="center">
+  <img src="./Resources/view_upload_files.png" alt="Preview file updates in the FreeCAD file set in cloud storage." width="70%"/>
+</p>
+
+Information about the download process will be displayed in the active window (widget) and log.
+
+After the files are uploaded, the window (widget) will close and a message will appear in the log with information about the number of successfully uploaded files.
+
+<p align="center">
+  <img src="./Resources/process_uploading.png" alt="This state indicates that the process of uploading files to the FreeCAD file set in cloud storage is in progress." width="70%"/>
+</p>
 
 ## Additional Information
 
@@ -179,9 +206,9 @@ In the modification folders, a `modification` file is created with the technical
 
 To avoid losing local data when downloading from CADBase storage (from the cloud), files already in local storage are skipped.
 
-Before uploading files to CADBase storage (to the cloud), the workbench checks for existing files in the cloud and excludes files from the upload list if their local and cloud hashes match. A hash is calculated using the Blake3 library.
+In general check is skipped and previously uploaded files (already in remote storage) are updated unless off force upload in settings.
 
-This check is skipped and previously uploaded files (already in the cloud) are not updated unless the Blake3 library is installed.
+As an option (Blake3 is needed), before uploading files to CADBase storage (remote storage) the add-on can check for existing files in the remote storage and excludes files from the upload list if their local and remote storage hashes match.
 
 ## Links
 
@@ -195,6 +222,8 @@ Mirrors on [GitHub](https://github.com/mnnxp/cadbaselibrary-freecad) and [Codebe
 
 ## Version
 
+v2.0.0 2025-01-25    * Implemented preview of changes before sending update, added deletion of old files from remote storage, updated server API.
+
 v1.0.3 2024-12-04    * Fixed URL link to README, corrected description, updated illustrations.
 
 v1.0.2 2024-10-01    * Fixed compatibility with FreeCAD 1RC2 and added FreeCAD ID when creating a user.
@@ -204,7 +233,7 @@ v1.0.1 2024-06-05    * More functionality:
 - Possibility to create a component (on CADBase platform) via workbench;
 - Saving login and password for quick retrieval of a new token.
 
-v1.0.0 2023-04-07    * Support for working with one local library from different programs.
+v1.0.0 2024-04-07    * Support for working with one local library from different programs.
 Changes:
 - In modifications, separate folders are created for FreeCAD file sets;
 - Changed the folder naming for components, it now looks like "Component Name (@user-owner)";

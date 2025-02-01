@@ -41,9 +41,7 @@ class QueriesApi:
     def component_modifications(object_uuid: str):
         return dict(
           query=f'''query {{
-              componentModifications (args: {{
-                componentUuid: "{object_uuid}"
-              }}) {{
+              componentModifications (componentUuid: "{object_uuid}") {{
                 uuid
                 modificationName
               }}
@@ -100,12 +98,14 @@ class QueriesApi:
             }}'''
         )
 
-    def upload_files_to_fileset(fileset_uuid, filenames):
+    def upload_files_to_fileset(fileset_uuid, filenames, commit_msg):
+        fix_commit_msg = commit_msg.replace('\\','\\\\').replace('\"','\\\"')
         return dict(
           query=f'''mutation {{
               uploadFilesToFileset (args: {{
                 filesetUuid: "{fileset_uuid}"
                 filenames: {json.dumps(filenames)}
+                commitMsg: "{fix_commit_msg}"
               }}) {{
                 fileUuid
                 filename

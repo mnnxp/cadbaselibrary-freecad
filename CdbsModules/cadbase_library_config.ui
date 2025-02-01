@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>600</width>
-    <height>300</height>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -111,6 +111,51 @@ Changing the library path will require restarting FreeCAD.</string>
             </property>
             <property name="text">
              <string>Set official</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>Upload settings</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <item>
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>By selecting the check boxes below, to change set update process.
+If set to `Skip calculate hash`, there will be no comparison between files in local and remote storage. `Forcibly update files` means that files should be uploaded to remote storage without additional checks.</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QCheckBox" name="checkBox_1">
+            <property name="text">
+             <string>Skip calculate hash</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="checkBox_2">
+            <property name="text">
+             <string>Forcibly update files</string>
             </property>
            </widget>
           </item>
