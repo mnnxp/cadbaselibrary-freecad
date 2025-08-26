@@ -24,7 +24,7 @@ class CdbsStorage:
         )
         self.modification_uuid = arg[0]
         self.last_clicked_dir = arg[1]  # set directory from which files will be pushed
-        self.skip_blake3 = arg[2]  # skip computing Blake3 hash
+        self.skip_hash = arg[2]  # skip computing SHA‑256 hash
         self.force_upload = arg[3]  # forced updating of files in remote storage
         self.commit_msg = ''  # change comment has length limit of 225
         if not Path.is_dir(self.last_clicked_dir):
@@ -202,7 +202,7 @@ the files were not uploaded to correctly',
             + f' {self.upload_filenames}',
         )
         # check hash if flags are false
-        if not self.skip_blake3 and not self.force_upload:
+        if not self.skip_hash and not self.force_upload:
             self.parsing_duplicate(dup_files, cloud_files)
         # comparing file names of local and remote storage to detect deleted files
         for cf in cloud_files:
@@ -218,25 +218,25 @@ the files were not uploaded to correctly',
     def parsing_duplicate(self, dup_files, cloud_files):
         """Compare hash for local and CADBase storage files, add files for update if hash don't equally"""
         try:
-            from blake3 import blake3
+            import hashlib
         except Exception as e:
             DataHandler.logger(
                 'error',
-                translate('CdbsStorage', 'Blake3 import error:')
+                translate('CdbsStorage', 'Hashlib import error:')
                 + f' {e}',
             )
             DataHandler.logger(
                 'warning',
                 translate(
                     'CdbsStorage',
-                    'Warning: for compare hashes need install `blake3`. \
-Please try to install it with: `pip install blake3` or some other way.',
+                    'Warning: for compare hashes need install `hashlib`. \
+Please try to install it with: `pip install hashlib` or some other way.',
                 ),
             )
             return
         for df in dup_files:
             cloud_file = next(item for item in cloud_files if item['filename'] == df)
-            if not cloud_file['hash']:
+            if not cloud_file['sha256Hash']:
                 DataHandler.logger(
                     'warning',
                     translate(
@@ -259,7 +259,7 @@ Please try to install it with: `pip install blake3` or some other way.',
                 break
             try:
                 file = local_file_path.open('rb', buffering=0)
-                local_file_hash = blake3(file.read()).hexdigest()
+                local_file_hash = hashlib.sha256(file.read()).hexdigest()
                 file.close()
             except Exception as e:
                 DataHandler.logger(
@@ -273,15 +273,15 @@ Please try to install it with: `pip install blake3` or some other way.',
                 translate('CdbsStorage', 'Hash file')
                 + f' {df}:\n{local_file_hash} ('
                 + translate('CdbsStorage', 'local')
-                + f')\n{cloud_file["hash"]} ('
+                + f')\n{cloud_file["sha256Hash"]} ('
                 + translate('CdbsStorage', 'cloud')
                 + ')',
             )
             # check the hash if it exists for both files
             if (
                 local_file_hash
-                and cloud_file['hash']
-                and local_file_hash != cloud_file['hash']
+                and cloud_file['sha256Hash']
+                and local_file_hash != cloud_file['sha256Hash']
             ):
                 self.upload_filenames.append(df)
                 self.affected_files.append([df, translate('CdbsStorage', 'modified')])

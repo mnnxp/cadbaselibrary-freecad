@@ -78,18 +78,7 @@ git clone https://gitlab.com/cadbase/cadbaselibrary-freecad.git \
 
 ### Dependencies
 
-##### Installation Blake3
-
-To use this workbench to update files already in the CADBase storage, [Blake3](https://pypi.org/project/blake3/) must be installed.
-
-```sh
-  # Install on Unix/macOS
-  python3 -m pip install "blake3"
-  # Install on Windows
-  py -m pip install "blake3"
-```
-
-**Please Note:** The workbench will work without this Blake3 library, the only difference is that the files in the CADBase storage (cloud) that have already been uploaded will not be replaced.
+The workbench does not require any external dependencies.
 
 ### First start
 
@@ -109,7 +98,7 @@ The local library location is specified in the **Library path** section field. W
 
 In the **Server URL** section you can set URL/IP for communication with the platform.
 
-The **Upload settings** section allows you to set parameters to improve workbench operation in the absence of Blake3 and in case of necessity of forced updating of files on CADBase storage.
+The **Upload settings** section allows you to set parameters to improve the workbench’s performance, enable or disable file verification by hash, and forced file updates to the CADBase storage.
 
 If you set **Forcibly update files** to True, the **Skip calculate hash** value will be ignored. The hash will not be calculated, as it is unnecessary.
 
@@ -208,7 +197,7 @@ To avoid losing local data when downloading from CADBase storage (from the cloud
 
 In general check is skipped and previously uploaded files (already in remote storage) are updated unless off force upload in settings.
 
-As an option (Blake3 is needed), before uploading files to CADBase storage (remote storage) the add-on can check for existing files in the remote storage and excludes files from the upload list if their local and remote storage hashes match.
+Before uploading files to CADBase storage (remote storage) the add-on can check for existing files in the remote storage and excludes files from the upload list if their local and remote storage hashes match.
 
 ## Links
 
@@ -221,6 +210,8 @@ Mirrors on [GitHub](https://github.com/mnnxp/cadbaselibrary-freecad) and [Codebe
 [Videos about the workbench (on YouTube)](https://youtube.com/playlist?list=PLhWY3rxxzvXKZs7-WrHjnW_d3EiEmCioV)
 
 ## Version
+
+v3.0.0 2025-08-26    * The Blake3 library has been replaced with Hashlib, and the hash algorithm is now SHA‑256.
 
 v2.0.0 2025-01-25    * Implemented preview of changes before sending update, added deletion of old files from remote storage, updated server API.
 

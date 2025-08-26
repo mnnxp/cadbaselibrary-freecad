@@ -372,8 +372,8 @@ When the authorization token expires, you will need to request a new authorizati
     </message>
     <message>
         <location filename="../CdbsModules/CdbsStorage.py" line="116"/>
-        <source>Warning: for compare hashes need install `blake3`. Please try to install it with: `pip install blake3` or some other way.</source>
-        <translation>Внимание: для сравнения хэшей необходимо установить `blake3`. Пожалуйста, попробуйте установить его с помощью: `pip install blake3` или каким-либо другим способом.</translation>
+        <source>Warning: for compare hashes need install `hashlib`. Please try to install it with: `pip install hashlib` or some other way.</source>
+        <translation>Внимание: для сравнения хэшей необходимо установить `hashlib`. Пожалуйста, попробуйте установить его с помощью: `pip install hashlib` или каким-либо другим способом.</translation>
     </message>
     <message>
         <location filename="../CdbsModules/CdbsStorage.py" line="122"/>
@@ -412,8 +412,8 @@ When the authorization token expires, you will need to request a new authorizati
     </message>
     <message>
         <location filename="../CdbsModules/CdbsStorage.py" line="115"/>
-        <source>Blake3 import error:</source>
-        <translation>Ошибка при подключении Blake3:</translation>
+        <source>Hashlib import error:</source>
+        <translation>Ошибка при подключении Hashlib:</translation>
     </message>
     <message>
         <location filename="../CdbsModules/CdbsStorage.py" line="133"/>

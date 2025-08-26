@@ -254,7 +254,7 @@ class UploadDialog(QtGui.QDialog):
         arg = (
             g_selected_modification_uuid,
             g_last_clicked_object,
-            bool(CdbsModules.CdbsEvn.g_param.GetString('skip-blake3', '')),
+            bool(CdbsModules.CdbsEvn.g_param.GetString('skip-hash', '')),
             bool(CdbsModules.CdbsEvn.g_param.GetString('force-upload', ''))
             )
         self.files = CdbsStorage(arg)
@@ -305,7 +305,7 @@ class ConfigDialog(QtGui.QDialog):
         self.form.show()
         self.form.lineEdit_3.setText(CdbsModules.CdbsEvn.g_param.GetString('destination', ''))
         self.form.lineEdit.setText(CdbsModules.CdbsEvn.g_param.GetString('api-url', ''))
-        self.form.checkBox_1.setChecked(bool(CdbsModules.CdbsEvn.g_param.GetString('skip-blake3', '')))
+        self.form.checkBox_1.setChecked(bool(CdbsModules.CdbsEvn.g_param.GetString('skip-hash', '')))
         self.form.checkBox_2.setChecked(bool(CdbsModules.CdbsEvn.g_param.GetString('force-upload', '')))
 
     def _connect_widgets(self):
@@ -343,11 +343,11 @@ class ConfigDialog(QtGui.QDialog):
         if self.form.lineEdit_3.text() != CdbsModules.CdbsEvn.g_library_path:
             CdbsModules.CdbsEvn.g_param.SetString('destination', self.form.lineEdit_3.text())
             DataHandler.logger('warning', translate('CadbaseMacro', 'Please restart FreeCAD'))
-        # update flag for skip blake3
+        # update flag for skip hash
         if self.form.checkBox_1.isChecked():
-            CdbsModules.CdbsEvn.g_param.SetString('skip-blake3', 'True')
+            CdbsModules.CdbsEvn.g_param.SetString('skip-hash', 'True')
         else:
-            CdbsModules.CdbsEvn.g_param.SetString('skip-blake3', '')
+            CdbsModules.CdbsEvn.g_param.SetString('skip-hash', '')
         # update flag for upload without check
         if self.form.checkBox_2.isChecked():
             CdbsModules.CdbsEvn.g_param.SetString('force-upload', 'True')

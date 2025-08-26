@@ -67,7 +67,7 @@ class QueriesApi:
                 filesetUuid: "{object_uuid}"
               }}) {{
                 uuid
-                hash
+                sha256Hash
                 filename
                 downloadUrl
               }}
