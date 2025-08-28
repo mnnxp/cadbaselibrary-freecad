@@ -683,6 +683,16 @@ When the authorization token expires, you will need to request a new authorizati
         <translation>Пожалуйста, обновите список модификаций для этого компонента.</translation>
     </message>
     <message>
+        <location filename="../CadbaseMacro.py" line="175"/>
+        <source>The link to the selected component has been copied to the clipboard.</source>
+        <translation>Ссылка на выбранный компонент вставлена в буфер обмена.</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="177"/>
+        <source>Component UUID is not set. Please select a component from the list of favorite components to copy the URL link to the selected component.</source>
+        <translation>UUID компонента не установлен. Пожалуйста, выберите компонент из списка избранных компонентов, чтобы скопировать URL-ссылку на выбранный компонент.</translation>
+    </message>
+    <message>
         <location filename="../CadbaseMacro.py" line="181"/>
         <source>Unable to find information about a set of files.</source>
         <translation>Невозможно найти информацию о наборе файлов.</translation>

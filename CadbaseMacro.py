@@ -119,6 +119,8 @@ class ExpCdbsWidget(QtGui.QDockWidget):
         self.optbuttons = self.form.toolBox.widget(1)
         self.optbuttons.updatebutton = \
             self.optbuttons.findChild(QtGui.QToolButton, 'updatebutton')
+        self.optbuttons.copyurlbutton = \
+            self.optbuttons.findChild(QtGui.QToolButton, 'copyurlbutton')
         self.optbuttons.newcomponentbtn = \
             self.optbuttons.findChild(QtGui.QToolButton, 'newcomponentbtn')
         self.optbuttons.uploadbutton = \
@@ -134,6 +136,7 @@ class ExpCdbsWidget(QtGui.QDockWidget):
         self.form.folder.clicked.connect(self.clicked)
         self.form.folder.doubleClicked.connect(self.doubleclicked)
         self.optbuttons.updatebutton.clicked.connect(self.update_library)
+        self.optbuttons.copyurlbutton.clicked.connect(self.copy_component_url)
         self.optbuttons.newcomponentbtn.clicked.connect(self.new_component)
         self.optbuttons.uploadbutton.clicked.connect(self.upload_files)
         self.optbuttons.configbutton.clicked.connect(self.setconfig)
@@ -175,6 +178,29 @@ class ExpCdbsWidget(QtGui.QDockWidget):
 
     def update_library(self):
         update_components_list()
+
+    def copy_component_url(self):
+        if len(g_selected_component_uuid) == 36:
+            cb = QtGui.QApplication.clipboard()
+            rooturl = CdbsModules.CdbsEvn.g_param.GetString('api-url')
+            if rooturl[0].isdigit():
+                # change port if api point is specified as ip:port
+                rooturl = rooturl.replace(':3000',':8080',1)
+            else:
+                # change subdomain if api point is specified as domain name
+                rooturl = rooturl.replace('api.','app.',1)
+            component_url = f'{rooturl}/#/component/{g_selected_component_uuid}'
+            cb.setText(component_url)
+            DataHandler.logger(
+                'log',
+                translate('CadbaseMacro', 'The link to the selected component has been copied to the clipboard.')
+                + f'\n{component_url}',
+            )
+        else:
+            DataHandler.logger(
+                'error',
+                translate('CadbaseMacro', 'Component UUID is not set. Please select a component from the list of favorite components to copy the URL link to the selected component.')
+            )
 
     def new_component(self):
         ComponentDialog(parent=self)
