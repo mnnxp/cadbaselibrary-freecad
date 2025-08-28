@@ -125,6 +125,9 @@
             <property name="autoExclusive">
              <bool>false</bool>
             </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
+            </property>
            </widget>
           </item>
           <item>
@@ -137,6 +140,9 @@
             </property>
             <property name="text">
              <string>Copy link</string>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
             </property>
            </widget>
           </item>
@@ -159,6 +165,9 @@
           <property name="autoExclusive">
            <bool>true</bool>
           </property>
+          <property name="toolButtonStyle">
+           <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
+          </property>
          </widget>
         </item>
         <item>
@@ -174,6 +183,9 @@
           </property>
           <property name="text">
            <string>Upload files</string>
+          </property>
+          <property name="toolButtonStyle">
+           <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
           </property>
          </widget>
         </item>
@@ -193,6 +205,9 @@
             <property name="text">
              <string>Settings</string>
             </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
+            </property>
            </widget>
           </item>
           <item>
@@ -208,6 +223,9 @@
             </property>
             <property name="text">
              <string>Authorization</string>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
             </property>
            </widget>
           </item>
