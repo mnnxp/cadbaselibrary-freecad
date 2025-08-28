@@ -20,8 +20,13 @@
     </message>
     <message>
         <location filename="../CdbsModules/cadbase_library.ui" line="96"/>
-        <source>Update components</source>
-        <translation>Обновить компоненты</translation>
+        <source>Update list</source>
+        <translation>Обновить список</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="142"/>
+        <source>Copy link</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../CdbsModules/cadbase_library.ui" line="140"/>

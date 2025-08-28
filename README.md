@@ -133,7 +133,7 @@ In FreeCAD will only display components that the user has bookmarked on CADBase,
 
 ### Getting data
 
-Clicking **Update components** only updates the list of components from bookmarks active user, without downloading component modifications and files.
+Clicking **Update list** only updates the list of components from bookmarks active user, without downloading component modifications and files.
 
 Double-clicking on a components folder to get a list of modifications for component.
 
