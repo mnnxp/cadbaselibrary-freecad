@@ -37,6 +37,8 @@ g_ui_file_component = (
 g_len_uuid = 36  # for a little uuid validation
 # for save the path to the local CADBase library
 g_library_path = g_param.GetString('destination')
+# flag for re-authorization in case of token expiration
+g_relogin_flag = False
 
 
 def set_library_path():

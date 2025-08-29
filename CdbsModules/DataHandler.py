@@ -128,6 +128,8 @@ def parsing_gpl():
             logger('error', translate('DataHandler', 'Error occurred:'))
             for error in res.errors:
                 logger('error', error.message)
+                if (error.message == 'Unauthorized'):
+                    CdbsEvn.g_relogin_flag = True
     except Exception as e:
         logger(
             'error',

@@ -178,6 +178,19 @@ class ExpCdbsWidget(QtGui.QDockWidget):
 
     def update_library(self):
         update_components_list()
+        if CdbsModules.CdbsEvn.g_relogin_flag == True:
+            self.try_relogin()
+
+    def try_relogin(self):
+        """
+        Obtains a new token using the credentials stored in the workbench configuration.
+        This method is typically invoked when the current authentication token is no longer valid.
+        """
+        CdbsModules.CdbsEvn.g_relogin_flag = False  # not to send this request again
+        username = CdbsModules.CdbsEvn.g_param.GetString('cdbs_username', '')
+        password = CdbsModules.CdbsEvn.g_param.GetString('cdbs_password', '')
+        if username and password:
+            CdbsAuth(username, password)
 
     def copy_component_url(self):
         if len(g_selected_component_uuid) == 36:
