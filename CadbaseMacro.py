@@ -192,7 +192,7 @@ class ExpCdbsWidget(QtGui.QDockWidget):
             component_url = f'{rooturl}/#/component/{g_selected_component_uuid}'
             cb.setText(component_url)
             DataHandler.logger(
-                'log',
+                'message',
                 translate('CadbaseMacro', 'The link to the selected component has been copied to the clipboard.')
                 + f'\n{component_url}',
             )
