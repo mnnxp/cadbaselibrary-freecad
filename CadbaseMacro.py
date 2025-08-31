@@ -572,13 +572,13 @@ def update_component_modificaion():
             ),
         )
         return
-    if not data.componentModificationFilesetFiles:
+    if not data.componentModificationFilesOfFileset:
         DataHandler.logger('warning', translate('CadbaseMacro', 'No files in fileset'))
         return
     # necessary data to start downloading files
     urls = []  # for store pre-signed URLs for downloading files
     fns = []  # for store full patches with filenames
-    for file_of_fileset in data.componentModificationFilesetFiles:
+    for file_of_fileset in data.componentModificationFilesOfFileset:
         urls.append(file_of_fileset.downloadUrl)
         fns.append(g_last_clicked_object / file_of_fileset.filename)
     inputs = zip(urls, fns)

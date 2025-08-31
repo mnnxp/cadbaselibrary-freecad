@@ -1,6 +1,7 @@
 """Functionality for processing requests to the storage of CADBase platform"""
 
 import time
+from datetime import datetime
 from pathlib import Path
 from multiprocessing import cpu_count
 from multiprocessing.pool import ThreadPool
@@ -10,6 +11,18 @@ from CdbsModules.QueriesApi import QueriesApi
 import CdbsModules.DataHandler as DataHandler
 from CdbsModules.Translate import translate
 
+def convert_bytes(num):
+    """Convert a size expressed in bytes to a human‑readable string."""
+    for x in ['bytes', 'KB', 'MB', 'GB', 'TB']:
+        if num < 1024.0:
+            return "%3.1f %s" % (num, x)
+        num /= 1024.0
+
+def utc2local(utc):
+    """Converts a UTC datetime to datetime in local timezone."""
+    epoch = time.mktime(utc.timetuple())
+    offset = datetime.fromtimestamp(epoch) - datetime.utcfromtimestamp(epoch)
+    return utc + offset
 
 class CdbsStorage:
     """The class functions determine which files are suitable for uploading to the CADBase storage,
@@ -51,6 +64,7 @@ class CdbsStorage:
                 ),
             )
             return
+        self.cloud_files = []  # files from CADBase storage
         self.upload_filenames = []  # filenames for upload to the CADBase storage
         self.delete_file_uuids = []  # uuids of old files on the CADBase storage
         self.affected_files = [] #  preparing data to be displayed in table for user
@@ -159,13 +173,12 @@ the files were not uploaded to correctly',
         )
         if not local_filenames:
             return  # no potential files for uploads found
-        cloud_files = []  # files from CADBase storage
         cloud_filenames = []  # filenames of CADBase storage files
         if not self.new_fileset:
             # get file list with hash from CADBase storage
             CdbsApi(QueriesApi.fileset_files(self.fileset_uuid))
-            cloud_files = DataHandler.deep_parsing_gpl('componentModificationFilesetFiles', True)
-        for cf in cloud_files:
+            self.cloud_files = DataHandler.deep_parsing_gpl('componentModificationFilesOfFileset', True)
+        for cf in self.cloud_files:
             cloud_filenames.append(cf.get('filename'))  # selecting cloud filenames for validation with locale files
         DataHandler.logger(
             'log',
@@ -183,7 +196,7 @@ the files were not uploaded to correctly',
                 if self.force_upload:
                     # add all conflicts to update in the remote repository
                     self.upload_filenames.append(l_filename)
-                    self.affected_files.append([l_filename, translate('CdbsStorage', 'modified')])
+                    self.add_change_log(l_filename, 'modified')
                     continue
                 # save the name of the (old) file for hash check
                 dup_files.append(l_filename)
@@ -195,7 +208,7 @@ the files were not uploaded to correctly',
                 )
                 # save the name of the new file to upload
                 self.upload_filenames.append(l_filename)
-                self.affected_files.append([l_filename, translate('CdbsStorage', 'new')])
+                self.add_change_log(l_filename, 'new')
         DataHandler.logger(
             'message',
             translate('CdbsStorage', 'New files to upload:')
@@ -203,19 +216,19 @@ the files were not uploaded to correctly',
         )
         # check hash if flags are false
         if not self.skip_hash and not self.force_upload:
-            self.parsing_duplicate(dup_files, cloud_files)
+            self.parsing_duplicate(dup_files)
         # comparing file names of local and remote storage to detect deleted files
-        for cf in cloud_files:
+        for cf in self.cloud_files:
             if cf.get('filename') not in local_filenames:
                 self.delete_file_uuids.append(cf.get('uuid'))
-                self.affected_files.append([cf.get('filename'), translate('CdbsStorage', 'deleted')])
+                self.add_change_log(cf.get('filename'), 'deleted')
         DataHandler.logger(
             'log',
             translate('CdbsStorage', 'Files for deletion:')
             + f' {self.delete_file_uuids}',
         )
 
-    def parsing_duplicate(self, dup_files, cloud_files):
+    def parsing_duplicate(self, dup_files):
         """Compare hash for local and CADBase storage files, add files for update if hash don't equally"""
         try:
             import hashlib
@@ -235,7 +248,7 @@ Please try to install it with: `pip install hashlib` or some other way.',
             )
             return
         for df in dup_files:
-            cloud_file = next(item for item in cloud_files if item['filename'] == df)
+            cloud_file = next(item for item in self.cloud_files if item['filename'] == df)
             if not cloud_file['sha256Hash']:
                 DataHandler.logger(
                     'warning',
@@ -284,7 +297,7 @@ Please try to install it with: `pip install hashlib` or some other way.',
                 and local_file_hash != cloud_file['sha256Hash']
             ):
                 self.upload_filenames.append(df)
-                self.affected_files.append([df, translate('CdbsStorage', 'modified')])
+                self.add_change_log(df, 'modified')
 
     def upload(self):
         """Getting information (file IDs, pre-signed URLs) to upload files to CADBase storage
@@ -369,3 +382,49 @@ Please try to install it with: `pip install hashlib` or some other way.',
             DataHandler.logger('log', f'Delete files from fileset: {res}')
             return res
         return False
+
+    def add_change_log(self, filename, file_action):
+        """Creates a change log entry, adding reference information about files in local and remote storage."""
+        dt_format = '%Y-%m-%d %H:%M:%S'
+        # preparation of information about the remote file
+        cloud_file_size = ''
+        cloud_file_utime = ''
+        for cf in self.cloud_files:
+            if cf.get('filename') == filename:
+                cloud_file_size = convert_bytes(cf.get('filesize'))
+                cloud_file_utime = utc2local(
+                    datetime.fromisoformat(cf.get('updatedAt'))
+                ).strftime(dt_format)
+                break
+        # preparation of information about the local file
+        l_file_size = ''
+        l_file_mtime = ''
+        l_file = Path(self.last_clicked_dir) / filename
+        if l_file.is_file():
+            l_file_size = convert_bytes(l_file.stat().st_size)
+            l_file_mtime = datetime.fromtimestamp(
+                float(l_file.stat().st_mtime)
+            ).strftime(dt_format)
+        # data collection for the change log entry
+        new_row = [
+            filename,
+            l_file_size,
+            l_file_mtime,
+            cloud_file_size,
+            cloud_file_utime,
+            translate('CdbsStorage', file_action)
+            ]
+        # notify if the file is unavailable, but not deleted
+        if file_action != 'deleted' and not l_file.is_file():
+            DataHandler.logger(
+                'warning',
+                translate(
+                    'CdbsStorage',
+                    'Warning: found not file and it skipped',
+                )
+                + f' ("{l_file}")',
+            )
+            return
+        # adding a new entry to the general change log
+        self.affected_files.append(new_row)
+        return

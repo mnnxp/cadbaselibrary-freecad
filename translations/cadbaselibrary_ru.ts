@@ -492,6 +492,26 @@ When the authorization token expires, you will need to request a new authorizati
     </message>
     <message>
         <location filename="../CdbsModules/UploadTable.py" line="12"/>
+        <source>Size (local)</source>
+        <translation>Размер (локального)</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/UploadTable.py" line="13"/>
+        <source>Date modified</source>
+        <translation>Дата изменения</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/UploadTable.py" line="14"/>
+        <source>Size (remote)</source>
+        <translation>Размер (удалённого)</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/UploadTable.py" line="15"/>
+        <source>Upload date</source>
+        <translation>Дата загрузки</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/UploadTable.py" line="16"/>
         <source>Status</source>
         <translation>Состояние</translation>
     </message>

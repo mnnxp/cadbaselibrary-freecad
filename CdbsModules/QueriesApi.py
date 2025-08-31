@@ -63,12 +63,18 @@ class QueriesApi:
     def fileset_files(object_uuid):
         return dict(
           query=f'''query {{
-              componentModificationFilesetFiles (args: {{
-                filesetUuid: "{object_uuid}"
-              }}) {{
+              componentModificationFilesOfFileset (
+                args: {{ filesetUuid: "{object_uuid}" }}
+                paginate: {{
+                  currentPage: 1
+                  perPage: 1000
+                  }}
+              ) {{
                 uuid
                 sha256Hash
                 filename
+                filesize
+                updatedAt
                 downloadUrl
               }}
             }}'''

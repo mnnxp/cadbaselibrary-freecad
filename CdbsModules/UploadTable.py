@@ -9,6 +9,10 @@ class TableUploadFiles(QtCore.QAbstractTableModel):
         self.items = items
         self.headers = [
             translate('CdbsStorage', 'Filename'),
+            translate('CdbsStorage', 'Size (local)'),
+            translate('CdbsStorage', 'Date modified'),
+            translate('CdbsStorage', 'Size (remote)'),
+            translate('CdbsStorage', 'Upload date'),
             translate('CdbsStorage', 'Status')
         ]
 
