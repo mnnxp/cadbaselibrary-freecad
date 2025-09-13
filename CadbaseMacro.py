@@ -23,6 +23,8 @@
 """ This code to integrate FreeCAD with CADBase.
 The tool (workbench) is designed to load and use components (parts) from CADBase in the FreeCAD interface. """
 
+import subprocess
+import platform
 import zipfile
 import tempfile
 from pathlib import Path
@@ -119,14 +121,16 @@ class ExpCdbsWidget(QtGui.QDockWidget):
         self.optbuttons = self.form.toolBox.widget(1)
         self.optbuttons.updatebutton = \
             self.optbuttons.findChild(QtGui.QToolButton, 'updatebutton')
+        self.optbuttons.uploadbutton = \
+            self.optbuttons.findChild(QtGui.QToolButton, 'uploadbutton')
+        self.optbuttons.opendirbutton = \
+            self.optbuttons.findChild(QtGui.QToolButton, 'opendirbutton')
         self.optbuttons.copyurlbutton = \
             self.optbuttons.findChild(QtGui.QToolButton, 'copyurlbutton')
         self.optbuttons.mergefilebtn = \
             self.optbuttons.findChild(QtGui.QToolButton, 'mergefilebtn')
         self.optbuttons.newcomponentbtn = \
             self.optbuttons.findChild(QtGui.QToolButton, 'newcomponentbtn')
-        self.optbuttons.uploadbutton = \
-            self.optbuttons.findChild(QtGui.QToolButton, 'uploadbutton')
         self.optbuttons.configbutton = \
             self.optbuttons.findChild(QtGui.QToolButton, 'configbutton')
         self.optbuttons.tokenbutton = \
@@ -138,10 +142,11 @@ class ExpCdbsWidget(QtGui.QDockWidget):
         self.form.folder.clicked.connect(self.clicked)
         self.form.folder.doubleClicked.connect(self.doubleclicked)
         self.optbuttons.updatebutton.clicked.connect(self.update_library)
+        self.optbuttons.uploadbutton.clicked.connect(self.upload_files)
+        self.optbuttons.opendirbutton.clicked.connect(self.open_directory)
         self.optbuttons.copyurlbutton.clicked.connect(self.copy_component_url)
         self.optbuttons.mergefilebtn.clicked.connect(self.merge_file)
         self.optbuttons.newcomponentbtn.clicked.connect(self.new_component)
-        self.optbuttons.uploadbutton.clicked.connect(self.upload_files)
         self.optbuttons.configbutton.clicked.connect(self.setconfig)
         self.optbuttons.tokenbutton.clicked.connect(self.settoken)
 
@@ -195,6 +200,33 @@ class ExpCdbsWidget(QtGui.QDockWidget):
         if username and password:
             CdbsAuth(username, password)
 
+    def open_directory(self):
+        """Opens the directory at the selected path."""
+        if not g_last_clicked_object:
+            return
+        current_path = Path(g_last_clicked_object)
+        if current_path.is_file():
+            current_path = current_path.parent
+        folder_path = str(current_path)
+        if platform.system() == 'Windows':
+            command = ['explorer', folder_path]
+        elif platform.system() == 'Darwin':  # macOS
+            command = ['open', folder_path]
+        elif platform.system() == 'Linux':
+            command = ['xdg-open', folder_path]  # Common for many Linux distributions
+        else:
+            DataHandler.logger('warning', translate('CadbaseMacro', 'Unsupported operating system.'))
+            command = None
+        if command:
+            try:
+                subprocess.Popen(command)
+            except Exception as e:
+                DataHandler.logger(
+                    'error',
+                    translate('CadbaseMacro', 'Exception occurred while trying to open path:')
+                    + f' {str(e)}',
+                )
+
     def copy_component_url(self):
         if len(g_selected_component_uuid) == 36:
             cb = QtGui.QApplication.clipboard()
@@ -215,7 +247,8 @@ class ExpCdbsWidget(QtGui.QDockWidget):
         else:
             DataHandler.logger(
                 'error',
-                translate('CadbaseMacro', 'Component UUID is not set. Please select a component from the list of favorite components to copy the URL link to the selected component.')
+                translate('CadbaseMacro', 'Component UUID is not set. Please select a component from the list of \
+favorite components to copy the URL link to the selected component.')
             )
 
     def new_component(self):
@@ -286,6 +319,7 @@ class ExpCdbsWidget(QtGui.QDockWidget):
                 thumb.close()
                 im = QtGui.QPixmap(thumbfile)
                 self.previewframe.preview.setPixmap(im)
+                self.previewframe.preview.adjustSize()
         except Exception as e:
             DataHandler.logger('error', f'{e}: {g_last_clicked_object}')
             self.previewframe.preview.clear()  # clear preview in case of any error

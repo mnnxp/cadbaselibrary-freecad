@@ -31,12 +31,14 @@ This workbench will work with data from the FreeCAD set, without downloading doc
         w = m.findChild(QtGui.QDockWidget, 'CADBaseLibrary')
         optbuttons = w.form.toolBox.widget(1)
         self.UpdateIcon(optbuttons, 'updatebutton', 'update_bookmark.svg')
+        self.UpdateIcon(optbuttons, 'opendirbutton', 'open_directory.svg')
         self.UpdateIcon(optbuttons, 'copyurlbutton', 'copy_link.svg')
         self.UpdateIcon(optbuttons, 'mergefilebtn', 'merge_file.svg')
         self.UpdateIcon(optbuttons, 'newcomponentbtn', 'new_component.svg')
         self.UpdateIcon(optbuttons, 'uploadbutton', 'upload_files.svg')
         self.UpdateIcon(optbuttons, 'configbutton', 'config.svg')
         self.UpdateIcon(optbuttons, 'tokenbutton', 'key.svg')
+        w.form.verticalWidget.adjustSize()
         if w and hasattr(w, 'isVisible') and not w.isVisible():
             w.show()
         return
