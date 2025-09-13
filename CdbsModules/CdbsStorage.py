@@ -11,6 +11,7 @@ from CdbsModules.QueriesApi import QueriesApi
 import CdbsModules.DataHandler as DataHandler
 from CdbsModules.Translate import translate
 
+
 def convert_bytes(num):
     """Convert a size expressed in bytes to a human‑readable string."""
     for x in ['bytes', 'KB', 'MB', 'GB', 'TB']:
@@ -75,6 +76,8 @@ class CdbsStorage:
     def processing_manager(self):
         """Defines a uuid for a set of files and calls functions
         to determine the type of changes before sending the update to CADBase platform
+        Returns a list of arrays containing:
+        filename, size (local), modification date, size (remote), upload date, event.
         """
         DataHandler.logger('log', translate('CdbsStorage', 'Getting fileset UUID...'))
         # getting the uuid of a set of files for FreeCAD
