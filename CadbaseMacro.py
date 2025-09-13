@@ -121,6 +121,8 @@ class ExpCdbsWidget(QtGui.QDockWidget):
             self.optbuttons.findChild(QtGui.QToolButton, 'updatebutton')
         self.optbuttons.copyurlbutton = \
             self.optbuttons.findChild(QtGui.QToolButton, 'copyurlbutton')
+        self.optbuttons.mergefilebtn = \
+            self.optbuttons.findChild(QtGui.QToolButton, 'mergefilebtn')
         self.optbuttons.newcomponentbtn = \
             self.optbuttons.findChild(QtGui.QToolButton, 'newcomponentbtn')
         self.optbuttons.uploadbutton = \
@@ -137,6 +139,7 @@ class ExpCdbsWidget(QtGui.QDockWidget):
         self.form.folder.doubleClicked.connect(self.doubleclicked)
         self.optbuttons.updatebutton.clicked.connect(self.update_library)
         self.optbuttons.copyurlbutton.clicked.connect(self.copy_component_url)
+        self.optbuttons.mergefilebtn.clicked.connect(self.merge_file)
         self.optbuttons.newcomponentbtn.clicked.connect(self.new_component)
         self.optbuttons.uploadbutton.clicked.connect(self.upload_files)
         self.optbuttons.configbutton.clicked.connect(self.setconfig)
@@ -236,9 +239,18 @@ class ExpCdbsWidget(QtGui.QDockWidget):
     def settoken(self):
         TokenDialog(parent=self)
 
+    def merge_file(self):
+        if Path(g_last_clicked_object).is_file():
+            self.add_part()
+        else:
+            DataHandler.logger(
+                'message',
+                translate('CadbaseMacro', 'Please select a file to merge and then click the button again.')
+                )
+
     def add_part(self):
         """Adding a part to an open document or in a new one"""
-        DataHandler.logger('message', translate('CadbaseMacro', 'Processing the part...'))
+        DataHandler.logger('message', translate('CadbaseMacro', 'Processing the file...'))
         str_path = str(g_last_clicked_object.resolve())
         path_suffix = g_last_clicked_object.suffix.lower()
         try:

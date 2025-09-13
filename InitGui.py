@@ -32,6 +32,7 @@ This workbench will work with data from the FreeCAD set, without downloading doc
         optbuttons = w.form.toolBox.widget(1)
         self.UpdateIcon(optbuttons, 'updatebutton', 'update_bookmark.svg')
         self.UpdateIcon(optbuttons, 'copyurlbutton', 'copy_link.svg')
+        self.UpdateIcon(optbuttons, 'mergefilebtn', 'merge_file.svg')
         self.UpdateIcon(optbuttons, 'newcomponentbtn', 'new_component.svg')
         self.UpdateIcon(optbuttons, 'uploadbutton', 'upload_files.svg')
         self.UpdateIcon(optbuttons, 'configbutton', 'config.svg')
