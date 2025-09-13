@@ -143,7 +143,7 @@ Getting files of a file set for FreeCAD occurs after double-clicking on a modifi
 
 ### Create a new component
 
-The **Create component** button is used to create a new component on the CADBase platform. Сlicking on the button opens a modal window in which ability create a new component (part, project, etc.) with a given name.
+The **Add component** button is used to create a new component on the CADBase platform. Сlicking on the button opens a modal window in which ability create a new component (part, project, etc.) with a given name.
 
 <p align="center">
   <img src="./Resources/new_component.png" alt="This is the window for creating a new component (part) on CADBase platform." width="70%"/>
