@@ -24,19 +24,29 @@
         <translation>Обновить список</translation>
     </message>
     <message>
-        <location filename="../CdbsModules/cadbase_library.ui" line="142"/>
-        <source>Copy link</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../CdbsModules/cadbase_library.ui" line="140"/>
-        <source>Create component</source>
-        <translation>Создание компонента</translation>
-    </message>
-    <message>
         <location filename="../CdbsModules/cadbase_library.ui" line="128"/>
         <source>Upload files</source>
         <translation>Выгрузить файлы</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="144"/>
+        <source>Open directory</source>
+        <translation>Открыть каталог</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="142"/>
+        <source>Copy link</source>
+        <translation>Копировать ссылку</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="171"/>
+        <source>Merge</source>
+        <translation>Объединить</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="140"/>
+        <source>Add component</source>
+        <translation>Новый компонент</translation>
     </message>
     <message>
         <location filename="../CdbsModules/cadbase_library.ui" line="112"/>
@@ -724,8 +734,18 @@ When the authorization token expires, you will need to request a new authorizati
     </message>
     <message>
         <location filename="../CadbaseMacro.py" line="215"/>
-        <source>Processing the part...</source>
-        <translation>Обработка детали...</translation>
+        <source>Processing the file...</source>
+        <translation>Обработка выбранного файла...</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="218"/>
+        <source>Unsupported operating system.</source>
+        <translation>Неподдерживаемая операционная система.</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="221"/>
+        <source>Exception occurred while trying to open path:</source>
+        <translation>Произошло исключение при попытке открыть путь:</translation>
     </message>
     <message>
         <location filename="../CadbaseMacro.py" line="239"/>
@@ -751,6 +771,11 @@ When the authorization token expires, you will need to request a new authorizati
         <location filename="../CadbaseMacro.py" line="278"/>
         <source>Local location of your existing CADBase library</source>
         <translation>Локальное расположение данных библиотеки CADBase</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="281"/>
+        <source>Please select a file to merge and then click the button again.</source>
+        <translation>Для объединения, пожалуйста, выберите файл и нажмите кнопку еще раз.</translation>
     </message>
     <message>
         <location filename="../CadbaseMacro.py" line="285"/>
