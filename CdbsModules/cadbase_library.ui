@@ -89,6 +89,9 @@
             <property name="text">
              <string>Update list</string>
             </property>
+            <property name="toolTip">
+             <string>Retrieves data from remote (cloud) storage and updates the list of favorite components.</string>
+            </property>
             <property name="toolButtonStyle">
              <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
             </property>
@@ -101,6 +104,9 @@
              </property>
              <property name="text">
               <string>Upload files</string>
+             </property>
+             <property name="toolTip">
+              <string>Opens dialog to uploading local changes to remote storage.</string>
              </property>
              <property name="toolButtonStyle">
               <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
@@ -116,6 +122,9 @@
             <property name="text">
              <string>Open directory</string>
             </property>
+            <property name="toolTip">
+             <string>Opens the folder containing the selected file or directory in system's file explorer.</string>
+            </property>
             <property name="toolButtonStyle">
              <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
             </property>
@@ -125,6 +134,9 @@
            <widget class="QToolButton" name="copyurlbutton">
             <property name="text">
              <string>Copy link</string>
+            </property>
+            <property name="toolTip">
+             <string>Copies the URL of the selected component to clipboard.</string>
             </property>
             <property name="toolButtonStyle">
              <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
@@ -143,6 +155,9 @@
             <property name="text">
              <string>Merge</string>
             </property>
+            <property name="toolTip">
+             <string>Imports a copy of the selected file into the current document (no link). Supports STEP, BRP, BREP, and FCStd files.</string>
+            </property>
             <property name="toolButtonStyle">
              <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
             </property>
@@ -155,6 +170,9 @@
             </property>
             <property name="text">
              <string>Add component</string>
+            </property>
+            <property name="toolTip">
+             <string>Registers a new component (part) on CADBase platform.</string>
             </property>
             <property name="toolButtonStyle">
              <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
@@ -173,6 +191,9 @@
             <property name="text">
              <string>Settings</string>
             </property>
+            <property name="toolTip">
+             <string>Opens the workbench settings.</string>
+            </property>
             <property name="toolButtonStyle">
              <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
             </property>
@@ -185,6 +206,9 @@
             </property>
             <property name="text">
              <string>Authorization</string>
+            </property>
+            <property name="toolTip">
+             <string>Opens the authorization window to update the CADBase platform access token.</string>
             </property>
             <property name="toolButtonStyle">
              <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>

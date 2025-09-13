@@ -24,9 +24,19 @@
         <translation>Обновить список</translation>
     </message>
     <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="93"/>
+        <source>Retrieves data from remote (cloud) storage and updates the list of favorite components.</source>
+        <translation>Получает данные из удалённого (облачного) хранилища и обновляет список избранных компонентов.</translation>
+    </message>
+    <message>
         <location filename="../CdbsModules/cadbase_library.ui" line="128"/>
         <source>Upload files</source>
         <translation>Выгрузить файлы</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="109"/>
+        <source>Opens dialog to uploading local changes to remote storage.</source>
+        <translation>Открывает диалоговое окно для отправки локальных изменений в удалённое хранилище.</translation>
     </message>
     <message>
         <location filename="../CdbsModules/cadbase_library.ui" line="144"/>
@@ -34,9 +44,19 @@
         <translation>Открыть каталог</translation>
     </message>
     <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="126"/>
+        <source>Opens the folder containing the selected file or directory in system&apos;s file explorer.</source>
+        <translation>Открывает выбранный каталог или папку, содержащую файл, в системном проводнике.</translation>
+    </message>
+    <message>
         <location filename="../CdbsModules/cadbase_library.ui" line="142"/>
         <source>Copy link</source>
         <translation>Копировать ссылку</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="139"/>
+        <source>Copies the URL of the selected component to clipboard.</source>
+        <translation>Копирует URL выбранного компонента в буфер обмена.</translation>
     </message>
     <message>
         <location filename="../CdbsModules/cadbase_library.ui" line="171"/>
@@ -44,9 +64,19 @@
         <translation>Объединить</translation>
     </message>
     <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="159"/>
+        <source>Imports a copy of the selected file into the current document (no link). Supports STEP, BRP, BREP, and FCStd files.</source>
+        <translation>Импортирует копию выбранного файла в текущий документ (без ссылки). Поддерживает файлы STEP, BRP, BREP и FCStd.</translation>
+    </message>
+    <message>
         <location filename="../CdbsModules/cadbase_library.ui" line="140"/>
         <source>Add component</source>
         <translation>Новый компонент</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="175"/>
+        <source>Registers a new component (part) on CADBase platform.</source>
+        <translation>Регистрирует новый компонент (деталь) на платформе CADBase.</translation>
     </message>
     <message>
         <location filename="../CdbsModules/cadbase_library.ui" line="112"/>
@@ -54,9 +84,19 @@
         <translation>Настройки</translation>
     </message>
     <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="195"/>
+        <source>Opens the workbench settings.</source>
+        <translation>Открывает настройки верстака.</translation>
+    </message>
+    <message>
         <location filename="../CdbsModules/cadbase_library.ui" line="144"/>
         <source>Authorization</source>
         <translation>Авторизация</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="211"/>
+        <source>Opens the authorization window to update the CADBase platform access token.</source>
+        <translation>Открывает окно авторизации для обновления токена доступа платформы CADBase.</translation>
     </message>
     <message>
         <location filename="../CdbsModules/CdbsEvn.py" line="30"/>
@@ -151,7 +191,7 @@ Changing the library path will require restarting FreeCAD.</source>
         <source>By selecting the check boxes below, to change set update process.
 If set to `Skip calculate hash`, there will be no comparison between files in local and remote storage. `Forcibly update files` means that files should be uploaded to remote storage without additional checks.</source>
         <translation>Установив значения ниже, можно изменить настройки процесса обновления.
-Если установлено значение `Пропускать вычисление хэша`, сравнение файлов в локальном и удаленном хранилищах производиться не будет. `Принудительное обновление файлов` означает, что файлы должны быть загружены в удаленное хранилище без дополнительных проверок.</translation>
+Если установлено значение `Пропускать вычисление хэша`, сравнение файлов в локальном и удалённом хранилищах производиться не будет. `Принудительное обновление файлов` означает, что файлы должны быть загружены в удалённое хранилище без дополнительных проверок.</translation>
     </message>
     <message>
         <location filename="../CdbsModules/cadbase_library_config.ui" line="151"/>
