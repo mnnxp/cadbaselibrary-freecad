@@ -2,10 +2,10 @@
 
 import pathlib
 from PySide.QtGui import QFileDialog, QApplication  # FreeCAD's PySide
-import FreeCAD as app
+import FreeCAD as App
 
 
-g_param = app.ParamGet('User parameter:Plugins/cadbase_library')
+g_param = App.ParamGet('User parameter:Plugins/cadbase_library')
 g_base_api = 'https://api.cadbase.rs'  # default CADBase platform point
 g_api_login = f'{g_base_api}/login'
 g_cdbs_api = f'{g_base_api}/graphql'
@@ -14,26 +14,12 @@ g_program_name = 'FreeCAD'
 g_user_agent = b'Mozilla/5.0 (Macintosh; Intel Mac OS 10 12.3; rv:42.0) \
                 Gecko/20100101 Firefox/42.0'
 g_content_type = b'application/json'
-g_ui_file = (
-    app.getUserAppDataDir()
-    + 'Mod/CadbaseLibrary/CdbsModules/cadbase_library.ui'
-)
-g_ui_file_upload = (
-    app.getUserAppDataDir()
-    + 'Mod/CadbaseLibrary/CdbsModules/cadbase_library_upload.ui'
-)
-g_ui_file_config = (
-    app.getUserAppDataDir()
-    + 'Mod/CadbaseLibrary/CdbsModules/cadbase_library_config.ui'
-)
-g_ui_file_token = (
-    app.getUserAppDataDir()
-    + 'Mod/CadbaseLibrary/CdbsModules/cadbase_library_token.ui'
-)
-g_ui_file_component = (
-    app.getUserAppDataDir()
-    + 'Mod/CadbaseLibrary/CdbsModules/cadbase_library_object.ui'
-)
+ui_path = 'Mod/CadbaseLibrary/CdbsModules/ui/'
+g_ui_file = App.getUserAppDataDir() + ui_path + 'cadbase_library.ui'
+g_ui_file_upload = App.getUserAppDataDir() + ui_path + 'cadbase_library_upload.ui'
+g_ui_file_config = App.getUserAppDataDir() + ui_path + 'cadbase_library_config.ui'
+g_ui_file_token = App.getUserAppDataDir() + ui_path + 'cadbase_library_token.ui'
+g_ui_file_component = App.getUserAppDataDir() + ui_path + 'cadbase_library_object.ui'
 g_len_uuid = 36  # for a little uuid validation
 # for save the path to the local CADBase library
 g_library_path = g_param.GetString('destination')
