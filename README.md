@@ -19,7 +19,9 @@ The CADBaseLibrary workbench empowers FreeCAD users to effortlessly discover, ma
 
 Designed for flexibility, CADBaseLibrary transforms your FreeCAD environment into a collaborative hub for component sharing and management, accelerating your product development lifecycle.
 
-![This GIF shows the process of uploading a new (second) version and then returning the first version.](./Resources/revisions.gif "Uploading a new (second) version and then returning the first version.")
+<p align="center">
+  <img src="./Resources/getting_data.gif" alt="Animation showing how to retrieve components from CADBase and add them to the active document in FreeCAD." width="70%"/>
+</p>
 
 ### Key Features  
 
@@ -159,11 +161,11 @@ Please wait until you receive the token. This data will be saved and available a
 
 ## Usage
 
-Add target components to bookmarks (favorites) on the CADBase site.
+Add target components to bookmarks (favorites) on the platform's website.
 
 In FreeCAD will only display components that the user has bookmarked on CADBase, as well as those that have been previously downloaded.
 
-![This GIF shows the process of adding a component to bookmarks (favorites).](./Resources/add_fav.gif "Adding a component to bookmarks (favorites).")
+The created components are automatically added to your favorites. You can remove them from your favorites via the platform's website.
 
 ### Getting data
 
@@ -173,7 +175,11 @@ Double-clicking on a components folder to get a list of modifications for compon
 
 Getting files of a file set for FreeCAD occurs after double-clicking on a modification folder.
 
-![This GIF shows the process of getting the list of component modifications and a set of FreeCAD files.](./Resources/getting_data.gif "Getting the list of component modifications and a set of FreeCAD files.")
+**Note:**  If you don't need to sync with remote storage, but want to see the contents of a folder, please click on the arrow next to the folder instead of directly clicking on it. This will allow you to view local data without needing to request and download remote data.
+
+<p align="center">
+  <img src="./Resources/ope_without_sync.png" alt="Screenshot showing how to open a local folder by clicking on the arrow next to it, without synchronizing with remote storage." width="70%"/>
+</p>
 
 ### Create Components
 
