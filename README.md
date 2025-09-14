@@ -20,7 +20,7 @@ The CADBaseLibrary workbench empowers FreeCAD users to effortlessly discover, ma
 Designed for flexibility, CADBaseLibrary transforms your FreeCAD environment into a collaborative hub for component sharing and management, accelerating your product development lifecycle.
 
 <p align="center">
-  <img src="./Resources/getting_data.gif" alt="Animation showing how to retrieve components from CADBase and add them to the active document in FreeCAD." width="70%"/>
+  <img src="./Resources/getting_data.gif" alt="Animation showing how to retrieve components from CADBase and add them to the active document in FreeCAD." width="60%"/>
 </p>
 
 ### Key Features  
@@ -195,7 +195,7 @@ By default, components have private access, which means that only the creator ha
 You can do this by going to the component settings on the CADBase platform and changing the component `Type access` from `private` to `public`. This will allow other users to see the component.
 
 <p align="center">
-  <img src="./Resources/change_type_access.png" alt="Screenshot of the component settings demonstrating how to change the access type from private to public on the CADBase platform." width="50%"/>
+  <img src="./Resources/change_type_access.png" alt="Screenshot of the component settings demonstrating how to change the access type from private to public on the CADBase platform." width="60%"/>
 </p>
 
 ### Sending data
