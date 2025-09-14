@@ -184,6 +184,14 @@ This opens a modal window for entering the component name.
   <img src="./Resources/new_component.png" alt="This is the window for creating a new component (part) on CADBase platform." width="70%"/>
 </p>
 
+By default, components have private access, which means that only the creator has access to them. To make a component publicly accessible, you need to change the access type to `public`.
+
+You can do this by going to the component settings on the CADBase platform and changing the component `Type access` from `private` to `public`. This will allow other users to see the component.
+
+<p align="center">
+  <img src="./Resources/change_type_access.png" alt="Screenshot of the component settings demonstrating how to change the access type from private to public on the CADBase platform." width="50%"/>
+</p>
+
 ### Sending data
 
 Select the modification from which you want to load the files. You can select either the modification folder or the FreeCAD file set folder. In the first case the workbench will define the FreeCAD file set itself. Only files from FreeCAD file set will be loaded to CADBase storage.
