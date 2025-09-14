@@ -20,7 +20,7 @@ The CADBaseLibrary workbench empowers FreeCAD users to effortlessly discover, ma
 Designed for flexibility, CADBaseLibrary transforms your FreeCAD environment into a collaborative hub for component sharing and management, accelerating your product development lifecycle.
 
 <p align="center">
-  <img src="./Resources/getting_data.gif" alt="Animation showing how to retrieve components from CADBase and add them to the active document in FreeCAD." width="60%"/>
+  <img src="./Resources/getting_data.gif" alt="Animation showing how to retrieve components from CADBase and add them to the active document in FreeCAD." width="70%"/>
 </p>
 
 ### Key Features  
