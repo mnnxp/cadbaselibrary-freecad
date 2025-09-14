@@ -247,7 +247,7 @@ However, during download, files are always skipped if they already exist locally
 
 ## Version
 
-v3.0.0 2025-08-15    * The Blake3 library has been replaced with `hashlib`, and the hash algorithm is now SHA‑256, added buttons for opening local folders and copying component links, duplicated navigation buttons, added tooltips.
+v3.0.0 2025-09-15    * The Blake3 library has been replaced with `hashlib`, and the hash algorithm is now SHA‑256, added buttons for opening local folders and copying component links, duplicated navigation buttons, added tooltips.
 
 v2.0.0 2025-01-25    * Implemented preview of changes before sending update, added deletion of old files from remote storage, updated server API.
 
