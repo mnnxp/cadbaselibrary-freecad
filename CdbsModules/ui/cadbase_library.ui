@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CADBaseLibrary</class>
+ <widget class="QWidget" name="CADBaseLibrary">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>CADBase Library</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTreeView" name="folder">
+     <property name="headerHidden">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QToolBox" name="toolBox">
+     <property name="currentIndex">
+      <number>1</number>
+     </property>
+     <widget class="QWidget" name="previewframe">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+         <width>128</width>
+         <height>128</height>
+       </size>
+      </property>
+      <attribute name="label">
+       <string>Preview</string>
+      </attribute>
+      <widget class="QLabel" name="preview">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>0</y>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="scaledContents">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="optbuttons">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>222</width>
+        <height>144</height>
+       </size>
+      </property>
+      <attribute name="label">
+       <string>Options</string>
+      </attribute>
+      <widget class="QWidget" name="verticalWidget">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QToolButton" name="updatebutton">
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="text">
+             <string>Update list</string>
+            </property>
+            <property name="toolTip">
+             <string>Retrieves data from remote (cloud) storage and updates the list of favorite components.</string>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+            <widget class="QToolButton" name="uploadbutton">
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="text">
+              <string>Upload files</string>
+             </property>
+             <property name="toolTip">
+              <string>Opens dialog to uploading local changes to remote storage.</string>
+             </property>
+             <property name="toolButtonStyle">
+              <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
+             </property>
+            </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QToolButton" name="opendirbutton">
+            <property name="text">
+             <string>Open directory</string>
+            </property>
+            <property name="toolTip">
+             <string>Opens the folder containing the selected file or directory in system's file explorer.</string>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="copyurlbutton">
+            <property name="text">
+             <string>Copy link</string>
+            </property>
+            <property name="toolTip">
+             <string>Copies the URL of the selected component to clipboard.</string>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QToolButton" name="mergefilebtn">
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="text">
+             <string>Merge</string>
+            </property>
+            <property name="toolTip">
+             <string>Imports a copy of the selected file into the current document (no link). Supports STEP, BRP, BREP, and FCStd files.</string>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="newcomponentbtn">
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="text">
+             <string>Add component</string>
+            </property>
+            <property name="toolTip">
+             <string>Registers a new component (part) on CADBase platform.</string>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QToolButton" name="configbutton">
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="text">
+             <string>Settings</string>
+            </property>
+            <property name="toolTip">
+             <string>Opens the workbench settings.</string>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="tokenbutton">
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="text">
+             <string>Authorization</string>
+            </property>
+            <property name="toolTip">
+             <string>Opens the authorization window to update the CADBase platform access token.</string>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

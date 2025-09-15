@@ -17,7 +17,7 @@ do
    if [ -f "cadbaselibrary_$lang.ts" ]; then
       echo -e '\033[1;32m\n     <<< Update translation for '$lang' language >>> \n\033[m';
       # Creation of uifiles.ts file from ../CdbsModules/*.ui files with designation of language code
-      lupdate ../CdbsModules/*.ui -ts uifiles.ts -source-language en_US -target-language $lang -no-obsolete
+      lupdate ../CdbsModules/ui/*.ui -ts uifiles.ts -source-language en_US -target-language $lang -no-obsolete
       # Creation of pyfiles.ts file from ../CdbsModules/*.py files
       pylupdate5 ../CdbsModules/*.py -ts pyfiles.ts -verbose
       # Join uifiles.ts and pyfiles.ts files to cadbaselibrary.ts

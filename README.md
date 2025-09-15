@@ -1,48 +1,65 @@
-# Workbench Cadbase Library
+# CADBaseLibrary Workbench for FreeCAD
 
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
-[![FreeCAD >= 0.19.0](https://img.shields.io/badge/FreeCAD->=0.19.0-gren)](https://www.freecad.org)
+[![FreeCAD >= 0.21.0](https://img.shields.io/badge/FreeCAD->=0.21.0-green)](https://www.freecad.org)
 
-This workbench allows the user to interact with CADBase (upload and download parts) via the FreeCAD interface.
+This workbench enables users to upload and download parts from CADBase directly within the FreeCAD interface.
 
-CADBase is a platform for publishing and sharing information about 3D components, drawings and manufacturers.
+CADBase is a platform for publishing and sharing information about components, 3D models, drawings and manufacturers.
 
-**Important Note:**  To use the workbench, you must have an account on the [CADBase Platform](https://cadbase.rs). You can also create an account via add-on, if the entered username is free, a new user will be created with the specified username and password.
+**Important Note:**  To use the workbench, you must have an account on the [CADBase Platform](https://cadbase.rs). You can also create an account via workbench, if the entered username is free, a new user will be created with the specified username and password.
 
 ![This screenshot shows how a new user is created via the workbench, this window is also used for authorization.](./Resources/new_user.png "The screenshot shows the window of new user registration on CADBase platform.")
 
 ## Description
 
-The workbench is designed to use components (parts) from CADBase in the FreeCAD interface.
+Seamlessly integrate betwen CADBase platform and FreeCAD.
 
-Component modifications contain sets of files for various CAD systems. This workbench will work with data from the FreeCAD set, without downloading documentation and data from other file sets.
+The CADBaseLibrary workbench empowers FreeCAD users to effortlessly discover, manage, and utilize a public/private library of components hosted on CADBase — a platform for sharing 3D models, parts, and technical data. With this workbench, you can browse favorite components, synchronize modifications, and upload your own parts, streamlining your design process and fostering collaborative development.
 
-Files uploaded to file sets are versioned, allowing you to restore earlier versions, get the old state they were in before the changes, review the changes, and find out who last changed something and caused the problem.
+Designed for flexibility, CADBaseLibrary transforms your FreeCAD environment into a collaborative hub for component sharing and management, accelerating your product development lifecycle.
 
-![This GIF shows the process of uploading a new (second) version and then returning the first version.](./Resources/revisions.gif "Uploading a new (second) version and then returning the first version.")
+<p align="center">
+  <img src="./Resources/getting_data.gif" alt="Animation showing how to retrieve components from CADBase and add them to the active document in FreeCAD." width="70%"/>
+</p>
+
+### Key Features  
+
+ - Versioned File Handling: Easily upload new versions, revert to previous revisions, and review change histories for each file.
+ - Easy Integration: Open, view and include components in your projects using the FreeCAD user interface.
+ - Cloud Storage Synchronization: Upload and download files with hash comparison.
+ - Component Creation & Sharing: Create new components on CADBase and share your designs with the community via FreeCAD.
 
 ### CADBase Library Browser
 
-Favorite components are displayed at root level. After selecting and opening a component, a list of its modifications is displayed this Component level. These levels correspond to the location of folders in the directory that is specified in the Library path property. Files for FreeCAD will be downloaded through this add-on, files from kits for other programs will not be downloaded.
+Favorite components are displayed at the root level. These levels correspond to folder locations in the directory specified in the **Library path** property.  
+Files for the FreeCAD fileset are loaded via this workbench; files for other filesets are not loaded.
 
-The data display can be divided into three levels, the first one is the root level (**rl**), this level displays all components from the local library, the second one is the component level (**cl**), it displays the list of modifications of the open component, and the third level displays the data of a set of files (**fl**). The folder for FreeCAD file set in local storage is created regardless of the presence of file set in the modification on CADBase platform, the file set will be created automatically when sending files.
+The data display is organized into three levels:
 
-<pre>
+- **Root level (`rl`)**: Displays all local library components.
+- **Component level (`cl`)**: Shows the list of modifications for the selected component.
+- **File set level (`fl`)**: Displays files within a selected modification’s FreeCAD file set.
 
--Library path                       # set in add-on (<b>rl</b>)
-├── Vertical Pump (@lookme)         # component folder (<b>cl</b>)
+The folder for FreeCAD files in local storage is created automatically when files are uploaded, regardless of whether the modification exists on CADBase.
+
+**Folder structure example:**
+
+```plaintext
+-Library path                       # set in workbench (rl)
+├── Vertical Pump (@lookme)         # component folder (cl)
 │   ├── N1                          # modification folder
-│   │   ├── FreeCAD                 # FreeCAD fileset (<b>fl</b>)
+│   │   ├── FreeCAD                 # FreeCAD fileset (fl)
 │   │   │   ├── modification        # technical data file
-│   │   │   ├── vertical Pump.FCStd # file of the FreeCAD fileset
-│   │   │   └── ...                 # files of the FreeCAD fileset
-│   │   └── ...                     # filesets for the modification (<b>fl</b>)
-│   ├── ...                         # modifications of the component
-│   └── component                   # technical data file
-├── ...                             # local library components (<b>rl</b>)
-├── cadbase_file_2018.log           # stores logs and responses (optional)
-└── cadbase_file_2018               # technical data file
-</pre>
+│   │   │   ├── vertical Pump.FCStd # FreeCAD file
+│   │   │   └── ...                   # other files
+│   │   └── ...                       # other filesets
+│   ├── ...                           # other modifications
+│   └── component                     # technical data file
+├── ...                               # other components
+├── cadbase_file_2018.log             # logs and responses (optional)
+└── cadbase_file_2018                 # technical data file
+```
 
 ## Install
 
@@ -54,7 +71,7 @@ It is called "CADBase Library" in the Addon Repository.
 
 In menu **Tools** select **Addon Manager**, select the **Workbenches** tab find "CADBase Library" in the list and click Install.
 
-**Important Note:** CADBaseLibrary needs FreeCAD v0.19 or above. CADBaseLibrary is **not** compatible with FreeCAD v0.18 and before.
+**Important Note:** CADBaseLibrary Workbench needs FreeCAD v0.21 or above. Between FreeCAD versions 0.19 and 0.20, users can try using the CADBaseLibrary Macro version 0.2.0 [GitLab](https://gitlab.com/cadbase/cadbaselibrary-freecad/-/tree/c5f0aa061a3003c014d1876a967aa42f350f6343). CADBaseLibrary is **not** compatible with FreeCAD v0.18 and before.
 
 ### Manual Installation
 
@@ -64,32 +81,20 @@ In this case, download the Github [cadbaselibrary-freecad-master.zip](https://gi
 
 * for Windows: `C:\Users\******\AppData\Roaming\FreeCAD\Mod`
 * for MacOS: `~/Library/Preferences/FreeCAD/Mod/`
-* for Linux, _FreeCAD version v0.19_ : `~/.FreeCAD/Mod`
-* for Linux, _FreeCAD version v0.20_ : `~/.local/share/FreeCAD/Mod/`
+* for Linux: `~/.local/share/FreeCAD/Mod/`
 
 Below is a method for those who like to install manually, but in a shorter way:
 ```sh
-# Example for the Linux platform and FreeCAD versions above v0.20
+# Example for the Linux platform and FreeCAD versions above v0.21
 git clone https://gitlab.com/cadbase/cadbaselibrary-freecad.git \
 ~/.local/share/FreeCAD/Mod/CadbaseLibrary/
 ```
 
-**Please Note:** You can see the current mod folder path through the Python console in FreeCAD. The method is described in the [additional section](#freeecad-modules-and-macros-folders).
+**Please Note:** You can see the current mod folder path through the Python console in FreeCAD. The method is described in the [Additional Information](#freecad-modules-and-macros-folders).
 
 ### Dependencies
 
-##### Installation Blake3
-
-To use this workbench to update files already in the CADBase storage, [Blake3](https://pypi.org/project/blake3/) must be installed.
-
-```sh
-  # Install on Unix/macOS
-  python3 -m pip install "blake3"
-  # Install on Windows
-  py -m pip install "blake3"
-```
-
-**Please Note:** The workbench will work without this Blake3 library, the only difference is that the files in the CADBase storage (cloud) that have already been uploaded will not be replaced.
+The workbench does not require any external dependencies.
 
 ### First start
 
@@ -97,23 +102,31 @@ After it is installed and restart FreeCAD, the workbench will be available in th
 
 Select the **CADBase Library** workbench from the workbench drop-down list.
 
-On first run, the workbench will ask you for the location of your library. The CADBase cloud storage will be synchronized with this location, and technical files for the workbench will be created there.
+On first run, select the location of your library. The CADBase cloud storage will be synchronized with this location, and technical files for the workbench will be created there.
 
 This location can be changed in the workbench settings in the field "Library path".
 
-#### Setting up the workbench
+#### Setting up the Workbench
 
 In the "CADBase library" window, on the **Options** tab, click the **Settings** button for open "CADBase library configuration".
 
-The local library location is specified in the **Library path** section field. When the location is changed, the data from the previous location will not be moved (it can be moved manually).
+###### Library path
+
+Specify the local library location in the **Library path** field. When you change the location, the existing data in the previous location will not be moved automatically; you will need to move it manually if desired.  
+Change to the path will only take effect after restarting FreeCAD.
+
+###### Server URL
 
 In the **Server URL** section you can set URL/IP for communication with the platform.
 
-The **Upload settings** section allows you to set parameters to improve workbench operation in the absence of Blake3 and in case of necessity of forced updating of files on CADBase storage.
+###### Upload settings
 
-If you set **Forcibly update files** to True, the **Skip calculate hash** value will be ignored. The hash will not be calculated, as it is unnecessary.
+The **Upload settings** section allows you to configure parameters to improve the workbench’s performance, enable or disable file compare via hash, and force file updates to the remote storage.
 
-The parameters affect only the uploading of data to the server. When downloading data, existing files will not be overwritten regardless of the settings.
+- **Skip calculate hash:** If this option is enabled, files will not be compared using hashes; this is useful for skipping updates of existing files in remote storage.
+- **Forcibly update files:** When enabled, hash compare is skipped, and files are uploaded in all cases.
+
+The parameters affect only the uploading of data to remote (cloud) storage. When downloading data, existing files will not be overwritten regardless of the settings.
 
 <p align="center">
   <img src="./Resources/configuration.png" alt="screenshot shows the workbench setup, library path and server URL/IP." width="70%"/>
@@ -134,30 +147,54 @@ Please wait until you receive the token. This data will be saved and available a
   <img src="./Resources/authorization.png" alt="This screenshot shows registration and authorization window." width="70%"/>
 </p>
 
+## Control Buttons
+
+- **Update list:** Retrieve data from the remote platform, updating the local and navigation view.
+- **Upload files:** Open a window to upload local files to CADBase.
+- **Open directory:** Open the folder containing the selected file/directory in your system’s file explorer.
+- **Copy link:** Copy the URL of a selected component to the clipboard.
+- **Merge:** Imports a copy of the selected file into the current document (no link). Supports STEP, BRP, BREP, and FCStd files.
+- **Add component:** Create a new component via a modal dialog.
+- **Settings:** Configure the local library path and CADBase server address.
+- **Authorization:** Enter login credentials to generate or refresh the access token.
+
 ## Usage
 
-Add target components to bookmarks (favorites) on the CADBase site.
+Add target components to bookmarks (favorites) on the platform's website.
 
 In FreeCAD will only display components that the user has bookmarked on CADBase, as well as those that have been previously downloaded.
 
-![This GIF shows the process of adding a component to bookmarks (favorites).](./Resources/add_fav.gif "Adding a component to bookmarks (favorites).")
+The created components are automatically added to your favorites. You can remove them from your favorites via the platform's website.
 
 ### Getting data
 
-Clicking **Update components** only updates the list of components from bookmarks active user, without downloading component modifications and files.
+Clicking **Update list** only updates the list of components from bookmarks active user, without downloading component modifications and files.
 
 Double-clicking on a components folder to get a list of modifications for component.
 
 Getting files of a file set for FreeCAD occurs after double-clicking on a modification folder.
 
-![This GIF shows the process of getting the list of component modifications and a set of FreeCAD files.](./Resources/getting_data.gif "Getting the list of component modifications and a set of FreeCAD files.")
+**Note:**  If you don't need to sync with remote storage, but want to see the contents of a folder, please click on the arrow next to the folder instead of directly clicking on it. This will allow you to view local data without needing to request and download remote data.
 
-### Create a new component
+<p align="center">
+  <img src="./Resources/ope_without_sync.png" alt="Screenshot showing how to open a local folder by clicking on the arrow next to it, without synchronizing with remote storage." width="70%"/>
+</p>
 
-The **Create component** button is used to create a new component on the CADBase platform. Сlicking on the button opens a modal window in which ability create a new component (part, project, etc.) with a given name.
+### Create Components
+
+Use **Add component** to create a new component (part, project, etc.) on CADBase.  
+This opens a modal window for entering the component name.
 
 <p align="center">
   <img src="./Resources/new_component.png" alt="This is the window for creating a new component (part) on CADBase platform." width="70%"/>
+</p>
+
+By default, components have private access, which means that only the creator has access to them. To make a component publicly accessible, you need to change the access type to `public`.
+
+You can do this by going to the component settings on the CADBase platform and changing the component `Type access` from `private` to `public`. This will allow other users to see the component.
+
+<p align="center">
+  <img src="./Resources/change_type_access.png" alt="Screenshot of the component settings demonstrating how to change the access type from private to public on the CADBase platform." width="60%"/>
 </p>
 
 ### Sending data
@@ -168,12 +205,14 @@ Click the **Upload files** button to process data and display information about 
 
 The **Commit message** section can optionally contain a message that allows users to better understand what has changed in this update. The message will be associated with all files that were added or changed in this update and can be viewed on the platform's website.
 
-Files affected by the update will be displayed in the table under the **Commit message** section. In addition to the file names, the type of changes is indicated:
- * `new` - the file is not detected in the remote storage and will be uploaded as a new one
- * `modified` - the file exists in remote storage and will be updated to the new revision
- * `deleted` - the file no longer exists locally and will be deleted from remote storage in this update
+You can also compare local and remote files before uploading.  
+Affected files are listed with change types:
+- `new`: Not on remote, will be uploaded
+- `modified`: Will be updated
+- `deleted`: Will be removed from remote
 
-Click the **Ok** button for upload local files of select modification folder to CADBase storage (cloud).
+Click **Ok** to confirm upload.  
+The progress will be shown in FreeCAD's report.
 
 <p align="center">
   <img src="./Resources/view_upload_files.png" alt="Preview file updates in the FreeCAD file set in cloud storage." width="70%"/>
@@ -191,36 +230,37 @@ After the files are uploaded, the window (widget) will close and a message will 
 
 ##### FreeCAD modules and macros folders
 
-In FreeCAD, you can find your user "modules folder" by typing or pasting `App.getUserAppDataDir()+"Mod"` and the user "macros folder" by typing `App.getUserMacroDir()` in the Python console (found under View->Panels menu).
+In FreeCAD's Python console, type or paste `App.getUserAppDataDir() + "Mod"` to get the path to the modules folder, and `App.getUserMacroDir()` to get the path to the macros folder. The console can be accessed via the **View > Panels** menu.
 
 ##### Used (reserved) names in the workbench
 
 Please don't use `cadbase_file_2018` and `cadbase_file_2018.log` as file or folder names in the CADBase library folder. These files store server responses and logs, if you use these filenames for your data, you may lose them.  
 If you need to save logs to a file (for example, for debugging, study, or other purposes), you need to create a `cadbase_file_2018.log` file in the local library folder.
 
-In the component folders, a `component` file is created with the technical data about the component.
+A file named `component` is created within each component folder containing technical data about the component.
 
-In the modification folders, a `modification` file is created with the technical data about the component modification.
+A file named `modification` is created within each modification folder containing technical data about the component modification.
 
 ##### How the workbench work with data
 
 To avoid losing local data when downloading from CADBase storage (from the cloud), files already in local storage are skipped.
 
-In general check is skipped and previously uploaded files (already in remote storage) are updated unless off force upload in settings.
+Before uploading files to CADBase storage (remote storage) the workbench can check for existing files in the remote storage and excludes files from the upload list if their local and remote storage hashes match.
 
-As an option (Blake3 is needed), before uploading files to CADBase storage (remote storage) the add-on can check for existing files in the remote storage and excludes files from the upload list if their local and remote storage hashes match.
+When the `Forcibly update files` setting is enabled, remote files are updated regardless.
+
+However, during download, files are always skipped if they already exist locally.
 
 ## Links
 
-[Forum thread](https://forum.freecadweb.org/viewtopic.php?f=22&t=69389)
-
-Workbench development happens in [this](https://gitlab.com/cadbase/cadbaselibrary-freecad) repository (GitLab).
-
-Mirrors on [GitHub](https://github.com/mnnxp/cadbaselibrary-freecad) and [Codeberg](https://codeberg.org/mnnxp/cadbaselibrary-freecad).
-
-[Videos about the workbench (on YouTube)](https://youtube.com/playlist?list=PLhWY3rxxzvXKZs7-WrHjnW_d3EiEmCioV)
+- CADBase Library Workbench: [Forum thread](https://forum.freecadweb.org/viewtopic.php?f=22&t=69389)
+- Development repository: [GitLab](https://gitlab.com/cadbase/cadbaselibrary-freecad)
+- Mirrors: [GitHub](https://github.com/mnnxp/cadbaselibrary-freecad), [Codeberg](https://codeberg.org/mnnxp/cadbaselibrary-freecad)
+- About CADBase Platform: [Website](https://cadbase.rs/), [YouTube](https://www.youtube.com/@cadbaseplatform)
 
 ## Version
+
+v3.0.0 2025-09-15    * The `blake3` library has been replaced with `hashlib`, and the hash algorithm is now SHA‑256, added buttons for opening local folders and copying component links, duplicated navigation buttons, added tooltips.
 
 v2.0.0 2025-01-25    * Implemented preview of changes before sending update, added deletion of old files from remote storage, updated server API.
 
@@ -245,7 +285,7 @@ Other changes:
 - Fixed window name display;
 - Disabled deletion of old versions of files;
 - Added interface translation;
-- Reversed log this release notes.
+- Reversed order of release notes in the log.
 
 v0.2.0 2023-02-02    * Added the ability to upload files to the CADBase storage. Added comparing local and cloud-stored files using Blake3 hash.
 

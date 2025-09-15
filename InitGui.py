@@ -29,8 +29,31 @@ This workbench will work with data from the FreeCAD set, without downloading doc
         from PySide import QtGui
         m = Gui.getMainWindow()
         w = m.findChild(QtGui.QDockWidget, 'CADBaseLibrary')
+        optbuttons = w.form.toolBox.widget(1)
+        self.UpdateIcon(optbuttons, 'updatebutton', 'update_bookmark.svg')
+        self.UpdateIcon(optbuttons, 'opendirbutton', 'open_directory.svg')
+        self.UpdateIcon(optbuttons, 'copyurlbutton', 'copy_link.svg')
+        self.UpdateIcon(optbuttons, 'mergefilebtn', 'merge_file.svg')
+        self.UpdateIcon(optbuttons, 'newcomponentbtn', 'new_component.svg')
+        self.UpdateIcon(optbuttons, 'uploadbutton', 'upload_files.svg')
+        self.UpdateIcon(optbuttons, 'configbutton', 'config.svg')
+        self.UpdateIcon(optbuttons, 'tokenbutton', 'key.svg')
+        w.form.verticalWidget.adjustSize()
         if w and hasattr(w, 'isVisible') and not w.isVisible():
             w.show()
+        return
+
+    def UpdateIcon(self, optbuttons, namebutton, nameicon):
+        """This function sets icon for button."""
+        from PySide import QtGui
+        optbuttons.findChild(QtGui.QToolButton, namebutton).setIcon(
+            QtGui.QIcon(
+                os.path.join(
+                    App.getUserAppDataDir() + 'Mod/CadbaseLibrary/Icons',
+                    nameicon
+                )
+            )
+        )
         return
 
     def Deactivated(self):

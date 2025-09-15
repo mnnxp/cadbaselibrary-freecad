@@ -23,6 +23,8 @@
 """ This code to integrate FreeCAD with CADBase.
 The tool (workbench) is designed to load and use components (parts) from CADBase in the FreeCAD interface. """
 
+import subprocess
+import platform
 import zipfile
 import tempfile
 from pathlib import Path
@@ -119,10 +121,16 @@ class ExpCdbsWidget(QtGui.QDockWidget):
         self.optbuttons = self.form.toolBox.widget(1)
         self.optbuttons.updatebutton = \
             self.optbuttons.findChild(QtGui.QToolButton, 'updatebutton')
-        self.optbuttons.newcomponentbtn = \
-            self.optbuttons.findChild(QtGui.QToolButton, 'newcomponentbtn')
         self.optbuttons.uploadbutton = \
             self.optbuttons.findChild(QtGui.QToolButton, 'uploadbutton')
+        self.optbuttons.opendirbutton = \
+            self.optbuttons.findChild(QtGui.QToolButton, 'opendirbutton')
+        self.optbuttons.copyurlbutton = \
+            self.optbuttons.findChild(QtGui.QToolButton, 'copyurlbutton')
+        self.optbuttons.mergefilebtn = \
+            self.optbuttons.findChild(QtGui.QToolButton, 'mergefilebtn')
+        self.optbuttons.newcomponentbtn = \
+            self.optbuttons.findChild(QtGui.QToolButton, 'newcomponentbtn')
         self.optbuttons.configbutton = \
             self.optbuttons.findChild(QtGui.QToolButton, 'configbutton')
         self.optbuttons.tokenbutton = \
@@ -134,8 +142,11 @@ class ExpCdbsWidget(QtGui.QDockWidget):
         self.form.folder.clicked.connect(self.clicked)
         self.form.folder.doubleClicked.connect(self.doubleclicked)
         self.optbuttons.updatebutton.clicked.connect(self.update_library)
-        self.optbuttons.newcomponentbtn.clicked.connect(self.new_component)
         self.optbuttons.uploadbutton.clicked.connect(self.upload_files)
+        self.optbuttons.opendirbutton.clicked.connect(self.open_directory)
+        self.optbuttons.copyurlbutton.clicked.connect(self.copy_component_url)
+        self.optbuttons.mergefilebtn.clicked.connect(self.merge_file)
+        self.optbuttons.newcomponentbtn.clicked.connect(self.new_component)
         self.optbuttons.configbutton.clicked.connect(self.setconfig)
         self.optbuttons.tokenbutton.clicked.connect(self.settoken)
 
@@ -175,6 +186,70 @@ class ExpCdbsWidget(QtGui.QDockWidget):
 
     def update_library(self):
         update_components_list()
+        if CdbsModules.CdbsEvn.g_relogin_flag == True:
+            self.try_relogin()
+
+    def try_relogin(self):
+        """
+        Obtains a new token using the credentials stored in the workbench configuration.
+        This method is typically invoked when the current authentication token is no longer valid.
+        """
+        CdbsModules.CdbsEvn.g_relogin_flag = False  # not to send this request again
+        username = CdbsModules.CdbsEvn.g_param.GetString('cdbs_username', '')
+        password = CdbsModules.CdbsEvn.g_param.GetString('cdbs_password', '')
+        if username and password:
+            CdbsAuth(username, password)
+
+    def open_directory(self):
+        """Opens the directory at the selected path."""
+        if not g_last_clicked_object:
+            return
+        current_path = Path(g_last_clicked_object)
+        if current_path.is_file():
+            current_path = current_path.parent
+        folder_path = str(current_path)
+        if platform.system() == 'Windows':
+            command = ['explorer', folder_path]
+        elif platform.system() == 'Darwin':  # macOS
+            command = ['open', folder_path]
+        elif platform.system() == 'Linux':
+            command = ['xdg-open', folder_path]  # Common for many Linux distributions
+        else:
+            DataHandler.logger('warning', translate('CadbaseMacro', 'Unsupported operating system.'))
+            command = None
+        if command:
+            try:
+                subprocess.Popen(command)
+            except Exception as e:
+                DataHandler.logger(
+                    'error',
+                    translate('CadbaseMacro', 'Exception occurred while trying to open path:')
+                    + f' {str(e)}',
+                )
+
+    def copy_component_url(self):
+        if len(g_selected_component_uuid) == 36:
+            cb = QtGui.QApplication.clipboard()
+            rooturl = CdbsModules.CdbsEvn.g_param.GetString('api-url')
+            if rooturl[0].isdigit():
+                # change port if api point is specified as ip:port
+                rooturl = rooturl.replace(':3000',':8080',1)
+            else:
+                # change subdomain if api point is specified as domain name
+                rooturl = rooturl.replace('api.','app.',1)
+            component_url = f'{rooturl}/#/component/{g_selected_component_uuid}'
+            cb.setText(component_url)
+            DataHandler.logger(
+                'message',
+                translate('CadbaseMacro', 'The link to the selected component has been copied to the clipboard.')
+                + f'\n{component_url}',
+            )
+        else:
+            DataHandler.logger(
+                'error',
+                translate('CadbaseMacro', 'Component UUID is not set. Please select a component from the list of \
+favorite components to copy the URL link to the selected component.')
+            )
 
     def new_component(self):
         ComponentDialog(parent=self)
@@ -197,9 +272,18 @@ class ExpCdbsWidget(QtGui.QDockWidget):
     def settoken(self):
         TokenDialog(parent=self)
 
+    def merge_file(self):
+        if Path(g_last_clicked_object).is_file():
+            self.add_part()
+        else:
+            DataHandler.logger(
+                'message',
+                translate('CadbaseMacro', 'Please select a file to merge and then click the button again.')
+                )
+
     def add_part(self):
         """Adding a part to an open document or in a new one"""
-        DataHandler.logger('message', translate('CadbaseMacro', 'Processing the part...'))
+        DataHandler.logger('message', translate('CadbaseMacro', 'Processing the file...'))
         str_path = str(g_last_clicked_object.resolve())
         path_suffix = g_last_clicked_object.suffix.lower()
         try:
@@ -235,6 +319,7 @@ class ExpCdbsWidget(QtGui.QDockWidget):
                 thumb.close()
                 im = QtGui.QPixmap(thumbfile)
                 self.previewframe.preview.setPixmap(im)
+                self.previewframe.preview.adjustSize()
         except Exception as e:
             DataHandler.logger('error', f'{e}: {g_last_clicked_object}')
             self.previewframe.preview.clear()  # clear preview in case of any error
@@ -254,7 +339,7 @@ class UploadDialog(QtGui.QDialog):
         arg = (
             g_selected_modification_uuid,
             g_last_clicked_object,
-            bool(CdbsModules.CdbsEvn.g_param.GetString('skip-blake3', '')),
+            bool(CdbsModules.CdbsEvn.g_param.GetString('skip-hash', '')),
             bool(CdbsModules.CdbsEvn.g_param.GetString('force-upload', ''))
             )
         self.files = CdbsStorage(arg)
@@ -305,7 +390,7 @@ class ConfigDialog(QtGui.QDialog):
         self.form.show()
         self.form.lineEdit_3.setText(CdbsModules.CdbsEvn.g_param.GetString('destination', ''))
         self.form.lineEdit.setText(CdbsModules.CdbsEvn.g_param.GetString('api-url', ''))
-        self.form.checkBox_1.setChecked(bool(CdbsModules.CdbsEvn.g_param.GetString('skip-blake3', '')))
+        self.form.checkBox_1.setChecked(bool(CdbsModules.CdbsEvn.g_param.GetString('skip-hash', '')))
         self.form.checkBox_2.setChecked(bool(CdbsModules.CdbsEvn.g_param.GetString('force-upload', '')))
 
     def _connect_widgets(self):
@@ -343,11 +428,11 @@ class ConfigDialog(QtGui.QDialog):
         if self.form.lineEdit_3.text() != CdbsModules.CdbsEvn.g_library_path:
             CdbsModules.CdbsEvn.g_param.SetString('destination', self.form.lineEdit_3.text())
             DataHandler.logger('warning', translate('CadbaseMacro', 'Please restart FreeCAD'))
-        # update flag for skip blake3
+        # update flag for skip hash
         if self.form.checkBox_1.isChecked():
-            CdbsModules.CdbsEvn.g_param.SetString('skip-blake3', 'True')
+            CdbsModules.CdbsEvn.g_param.SetString('skip-hash', 'True')
         else:
-            CdbsModules.CdbsEvn.g_param.SetString('skip-blake3', '')
+            CdbsModules.CdbsEvn.g_param.SetString('skip-hash', '')
         # update flag for upload without check
         if self.form.checkBox_2.isChecked():
             CdbsModules.CdbsEvn.g_param.SetString('force-upload', 'True')
@@ -533,13 +618,13 @@ def update_component_modificaion():
             ),
         )
         return
-    if not data.componentModificationFilesetFiles:
+    if not data.componentModificationFilesOfFileset:
         DataHandler.logger('warning', translate('CadbaseMacro', 'No files in fileset'))
         return
     # necessary data to start downloading files
     urls = []  # for store pre-signed URLs for downloading files
     fns = []  # for store full patches with filenames
-    for file_of_fileset in data.componentModificationFilesetFiles:
+    for file_of_fileset in data.componentModificationFilesOfFileset:
         urls.append(file_of_fileset.downloadUrl)
         fns.append(g_last_clicked_object / file_of_fileset.filename)
     inputs = zip(urls, fns)

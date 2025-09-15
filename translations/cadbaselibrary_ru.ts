@@ -20,13 +20,13 @@
     </message>
     <message>
         <location filename="../CdbsModules/cadbase_library.ui" line="96"/>
-        <source>Update components</source>
-        <translation>Обновить компоненты</translation>
+        <source>Update list</source>
+        <translation>Обновить список</translation>
     </message>
     <message>
-        <location filename="../CdbsModules/cadbase_library.ui" line="140"/>
-        <source>Create component</source>
-        <translation>Создание компонента</translation>
+        <location filename="../CdbsModules/cadbase_library.ui" line="93"/>
+        <source>Retrieves data from remote (cloud) storage and updates the list of favorite components.</source>
+        <translation>Получает данные из удалённого (облачного) хранилища и обновляет список избранных компонентов.</translation>
     </message>
     <message>
         <location filename="../CdbsModules/cadbase_library.ui" line="128"/>
@@ -34,14 +34,69 @@
         <translation>Выгрузить файлы</translation>
     </message>
     <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="109"/>
+        <source>Opens dialog to uploading local changes to remote storage.</source>
+        <translation>Открывает диалоговое окно для отправки локальных изменений в удалённое хранилище.</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="144"/>
+        <source>Open directory</source>
+        <translation>Открыть каталог</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="126"/>
+        <source>Opens the folder containing the selected file or directory in system&apos;s file explorer.</source>
+        <translation>Открывает выбранный каталог или папку, содержащую файл, в системном проводнике.</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="142"/>
+        <source>Copy link</source>
+        <translation>Копировать ссылку</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="139"/>
+        <source>Copies the URL of the selected component to clipboard.</source>
+        <translation>Копирует URL выбранного компонента в буфер обмена.</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="171"/>
+        <source>Merge</source>
+        <translation>Объединить</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="159"/>
+        <source>Imports a copy of the selected file into the current document (no link). Supports STEP, BRP, BREP, and FCStd files.</source>
+        <translation>Импортирует копию выбранного файла в текущий документ (без ссылки). Поддерживает файлы STEP, BRP, BREP и FCStd.</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="140"/>
+        <source>Add component</source>
+        <translation>Новый компонент</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="175"/>
+        <source>Registers a new component (part) on CADBase platform.</source>
+        <translation>Регистрирует новый компонент (деталь) на платформе CADBase.</translation>
+    </message>
+    <message>
         <location filename="../CdbsModules/cadbase_library.ui" line="112"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="195"/>
+        <source>Opens the workbench settings.</source>
+        <translation>Открывает настройки верстака.</translation>
+    </message>
+    <message>
         <location filename="../CdbsModules/cadbase_library.ui" line="144"/>
         <source>Authorization</source>
         <translation>Авторизация</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/cadbase_library.ui" line="211"/>
+        <source>Opens the authorization window to update the CADBase platform access token.</source>
+        <translation>Открывает окно авторизации для обновления токена доступа платформы CADBase.</translation>
     </message>
     <message>
         <location filename="../CdbsModules/CdbsEvn.py" line="30"/>
@@ -136,7 +191,7 @@ Changing the library path will require restarting FreeCAD.</source>
         <source>By selecting the check boxes below, to change set update process.
 If set to `Skip calculate hash`, there will be no comparison between files in local and remote storage. `Forcibly update files` means that files should be uploaded to remote storage without additional checks.</source>
         <translation>Установив значения ниже, можно изменить настройки процесса обновления.
-Если установлено значение `Пропускать вычисление хэша`, сравнение файлов в локальном и удаленном хранилищах производиться не будет. `Принудительное обновление файлов` означает, что файлы должны быть загружены в удаленное хранилище без дополнительных проверок.</translation>
+Если установлено значение `Пропускать вычисление хэша`, сравнение файлов в локальном и удалённом хранилищах производиться не будет. `Принудительное обновление файлов` означает, что файлы должны быть загружены в удалённое хранилище без дополнительных проверок.</translation>
     </message>
     <message>
         <location filename="../CdbsModules/cadbase_library_config.ui" line="151"/>
@@ -372,8 +427,8 @@ When the authorization token expires, you will need to request a new authorizati
     </message>
     <message>
         <location filename="../CdbsModules/CdbsStorage.py" line="116"/>
-        <source>Warning: for compare hashes need install `blake3`. Please try to install it with: `pip install blake3` or some other way.</source>
-        <translation>Внимание: для сравнения хэшей необходимо установить `blake3`. Пожалуйста, попробуйте установить его с помощью: `pip install blake3` или каким-либо другим способом.</translation>
+        <source>Warning: for compare hashes need install `hashlib`. Please try to install it with: `pip install hashlib` or some other way.</source>
+        <translation>Внимание: для сравнения хэшей необходимо установить `hashlib`. Пожалуйста, попробуйте установить его с помощью: `pip install hashlib` или каким-либо другим способом.</translation>
     </message>
     <message>
         <location filename="../CdbsModules/CdbsStorage.py" line="122"/>
@@ -412,8 +467,8 @@ When the authorization token expires, you will need to request a new authorizati
     </message>
     <message>
         <location filename="../CdbsModules/CdbsStorage.py" line="115"/>
-        <source>Blake3 import error:</source>
-        <translation>Ошибка при подключении Blake3:</translation>
+        <source>Hashlib import error:</source>
+        <translation>Ошибка при подключении Hashlib:</translation>
     </message>
     <message>
         <location filename="../CdbsModules/CdbsStorage.py" line="133"/>
@@ -487,6 +542,26 @@ When the authorization token expires, you will need to request a new authorizati
     </message>
     <message>
         <location filename="../CdbsModules/UploadTable.py" line="12"/>
+        <source>Size (local)</source>
+        <translation>Размер (локального)</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/UploadTable.py" line="13"/>
+        <source>Date modified</source>
+        <translation>Дата изменения</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/UploadTable.py" line="14"/>
+        <source>Size (remote)</source>
+        <translation>Размер (удалённого)</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/UploadTable.py" line="15"/>
+        <source>Upload date</source>
+        <translation>Дата загрузки</translation>
+    </message>
+    <message>
+        <location filename="../CdbsModules/UploadTable.py" line="16"/>
         <source>Status</source>
         <translation>Состояние</translation>
     </message>
@@ -678,6 +753,16 @@ When the authorization token expires, you will need to request a new authorizati
         <translation>Пожалуйста, обновите список модификаций для этого компонента.</translation>
     </message>
     <message>
+        <location filename="../CadbaseMacro.py" line="175"/>
+        <source>The link to the selected component has been copied to the clipboard.</source>
+        <translation>Ссылка на выбранный компонент вставлена в буфер обмена.</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="177"/>
+        <source>Component UUID is not set. Please select a component from the list of favorite components to copy the URL link to the selected component.</source>
+        <translation>UUID компонента не установлен. Пожалуйста, выберите компонент из списка избранных компонентов, чтобы скопировать URL-ссылку на выбранный компонент.</translation>
+    </message>
+    <message>
         <location filename="../CadbaseMacro.py" line="181"/>
         <source>Unable to find information about a set of files.</source>
         <translation>Невозможно найти информацию о наборе файлов.</translation>
@@ -689,8 +774,18 @@ When the authorization token expires, you will need to request a new authorizati
     </message>
     <message>
         <location filename="../CadbaseMacro.py" line="215"/>
-        <source>Processing the part...</source>
-        <translation>Обработка детали...</translation>
+        <source>Processing the file...</source>
+        <translation>Обработка выбранного файла...</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="218"/>
+        <source>Unsupported operating system.</source>
+        <translation>Неподдерживаемая операционная система.</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="221"/>
+        <source>Exception occurred while trying to open path:</source>
+        <translation>Произошло исключение при попытке открыть путь:</translation>
     </message>
     <message>
         <location filename="../CadbaseMacro.py" line="239"/>
@@ -716,6 +811,11 @@ When the authorization token expires, you will need to request a new authorizati
         <location filename="../CadbaseMacro.py" line="278"/>
         <source>Local location of your existing CADBase library</source>
         <translation>Локальное расположение данных библиотеки CADBase</translation>
+    </message>
+    <message>
+        <location filename="../CadbaseMacro.py" line="281"/>
+        <source>Please select a file to merge and then click the button again.</source>
+        <translation>Для объединения, пожалуйста, выберите файл и нажмите кнопку еще раз.</translation>
     </message>
     <message>
         <location filename="../CadbaseMacro.py" line="285"/>
