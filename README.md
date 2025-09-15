@@ -71,7 +71,7 @@ It is called "CADBase Library" in the Addon Repository.
 
 In menu **Tools** select **Addon Manager**, select the **Workbenches** tab find "CADBase Library" in the list and click Install.
 
-**Important Note:** CADBaseLibrary needs FreeCAD v0.19 or above. CADBaseLibrary is **not** compatible with FreeCAD v0.18 and before.
+**Important Note:** CADBaseLibrary Workbench needs FreeCAD v0.21 or above. Between FreeCAD versions 0.19 and 0.20, users can try using the [CADBaseLibrary Macro version 0.2.0](mnnxp@c5f0aa061a3003c014d1876a967aa42f350f6343). CADBaseLibrary is **not** compatible with FreeCAD v0.18 and before.
 
 ### Manual Installation
 

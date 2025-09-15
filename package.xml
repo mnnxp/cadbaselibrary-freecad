@@ -19,7 +19,7 @@ This workbench will work with data from the FreeCAD set, without the need to dow
       <description>The workbench for syncing with the CADBase platform from the FreeCAD interface.</description>
       <subdirectory>./</subdirectory>
       <icon>Icons/CadbaseLibrary.svg</icon>
-      <freecadmin>0.19.0</freecadmin>
+      <freecadmin>0.21.0</freecadmin>
       <tag>cadbase</tag>
       <tag>database</tag>
       <tag>cloud</tag>
