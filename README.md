@@ -1,7 +1,7 @@
 # CADBaseLibrary Workbench for FreeCAD
 
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
-[![FreeCAD >= 0.19.0](https://img.shields.io/badge/FreeCAD->=0.19.0-green)](https://www.freecad.org)
+[![FreeCAD >= 0.21.0](https://img.shields.io/badge/FreeCAD->=0.21.0-green)](https://www.freecad.org)
 
 This workbench enables users to upload and download parts from CADBase directly within the FreeCAD interface.
 
@@ -71,7 +71,7 @@ It is called "CADBase Library" in the Addon Repository.
 
 In menu **Tools** select **Addon Manager**, select the **Workbenches** tab find "CADBase Library" in the list and click Install.
 
-**Important Note:** CADBaseLibrary Workbench needs FreeCAD v0.21 or above. Between FreeCAD versions 0.19 and 0.20, users can try using the [CADBaseLibrary Macro version 0.2.0](mnnxp@c5f0aa061a3003c014d1876a967aa42f350f6343). CADBaseLibrary is **not** compatible with FreeCAD v0.18 and before.
+**Important Note:** CADBaseLibrary Workbench needs FreeCAD v0.21 or above. Between FreeCAD versions 0.19 and 0.20, users can try using the CADBaseLibrary Macro version 0.2.0 [GitLab](https://gitlab.com/cadbase/cadbaselibrary-freecad/-/tree/c5f0aa061a3003c014d1876a967aa42f350f6343). CADBaseLibrary is **not** compatible with FreeCAD v0.18 and before.
 
 ### Manual Installation
 
@@ -81,8 +81,7 @@ In this case, download the Github [cadbaselibrary-freecad-master.zip](https://gi
 
 * for Windows: `C:\Users\******\AppData\Roaming\FreeCAD\Mod`
 * for MacOS: `~/Library/Preferences/FreeCAD/Mod/`
-* for Linux, _FreeCAD version v0.19_ : `~/.FreeCAD/Mod`
-* for Linux, _FreeCAD version v0.20_ : `~/.local/share/FreeCAD/Mod/`
+* for Linux: `~/.local/share/FreeCAD/Mod/`
 
 Below is a method for those who like to install manually, but in a shorter way:
 ```sh
